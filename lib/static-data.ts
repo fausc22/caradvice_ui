@@ -48,11 +48,12 @@ export async function loadStaticData(): Promise<StaticData | null> {
       try {
         if (fs.existsSync(filePath)) {
           const fileContent = fs.readFileSync(filePath, 'utf-8');
-          cachedStaticData = JSON.parse(fileContent);
+          const parsedData = JSON.parse(fileContent) as StaticData;
+          cachedStaticData = parsedData;
           
           if (process.env.NODE_ENV !== 'production') {
             console.log(`[loadStaticData] Archivo cargado desde: ${filePath}`);
-            console.log(`[loadStaticData] Total vehículos: ${cachedStaticData.vehicles.length}`);
+            console.log(`[loadStaticData] Total vehículos: ${parsedData.vehicles.length}`);
           }
           
           return cachedStaticData;
@@ -70,10 +71,12 @@ export async function loadStaticData(): Promise<StaticData | null> {
           for (const altPath of altPaths) {
             if (fs.existsSync(altPath)) {
               const fileContent = fs.readFileSync(altPath, 'utf-8');
-              cachedStaticData = JSON.parse(fileContent);
+              const parsedData = JSON.parse(fileContent) as StaticData;
+              cachedStaticData = parsedData;
               
               if (process.env.NODE_ENV !== 'production') {
                 console.log(`[loadStaticData] Archivo cargado desde ruta alternativa: ${altPath}`);
+                console.log(`[loadStaticData] Total vehículos: ${parsedData.vehicles.length}`);
               }
               
               return cachedStaticData;

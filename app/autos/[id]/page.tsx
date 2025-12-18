@@ -13,6 +13,45 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+// Configuración para modo estático
+// Si está en modo estático, no permitir páginas dinámicas
+// Si no está en modo estático, permitir generación bajo demanda
+export const dynamicParams = process.env.NEXT_PUBLIC_STATIC_MODE === 'true' ? false : true;
+export const dynamic = process.env.NEXT_PUBLIC_STATIC_MODE === 'true' ? 'force-static' : 'auto';
+
+// Generar rutas estáticas para todos los vehículos en modo estático
+export async function generateStaticParams() {
+  // Solo generar en modo estático
+  if (process.env.NEXT_PUBLIC_STATIC_MODE !== 'true') {
+    return [];
+  }
+
+  try {
+    const { loadStaticData } = await import('@/lib/static-data');
+    const staticData = await loadStaticData();
+    
+    if (!staticData || !staticData.vehicles) {
+      console.warn('[generateStaticParams] No se pudieron cargar los datos estáticos');
+      console.warn('[generateStaticParams] Verifica que NEXT_PUBLIC_STATIC_MODE=true y que vehicles.json existe');
+      return [];
+    }
+
+    console.log(`[generateStaticParams] Generando ${staticData.vehicles.length} páginas estáticas`);
+
+    // Retornar todos los IDs de vehículos para generar páginas estáticas
+    const params = staticData.vehicles.map((vehicle) => ({
+      id: vehicle.id.toString(),
+    }));
+    
+    console.log(`[generateStaticParams] Primeros 5 IDs: ${params.slice(0, 5).map(p => p.id).join(', ')}`);
+    
+    return params;
+  } catch (error) {
+    console.error('[generateStaticParams] Error al generar rutas estáticas:', error);
+    return [];
+  }
+}
+
 // Función para generar metadata dinámica
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
