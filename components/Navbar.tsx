@@ -6,12 +6,17 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+
 interface NavLinkProps {
   href: string;
   label: string;
+  imageSrc?: string;
+  logoHeightDesktop?: string;
+  logoHeightMobile?: string;
+  logoWidth?: number;
 }
 
-function NavLink({ href, label }: NavLinkProps) {
+function NavLink({ href, label, imageSrc, logoHeightDesktop = "h-12", logoHeightMobile = "h-10", logoWidth = 180 }: NavLinkProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -21,13 +26,28 @@ function NavLink({ href, label }: NavLinkProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <span
-        className={`transition-colors duration-300 ${
-          isHovered ? "text-orange-500" : "text-white"
-        }`}
-      >
-        {label}
-      </span>
+      {imageSrc ? (
+        <div className={`relative ${logoHeightDesktop} w-auto flex items-center`}>
+          <Image
+            src={imageSrc}
+            alt={label}
+            width={logoWidth}
+            height={logoWidth * 0.3}
+            className={`transition-opacity duration-300 object-contain ${
+              isHovered ? "opacity-80" : "opacity-100"
+            }`}
+            style={{ height: "auto", width: "auto", maxHeight: "100%" }}
+          />
+        </div>
+      ) : (
+        <span
+          className={`transition-colors duration-300 ${
+            isHovered ? "text-orange-500" : "text-white"
+          }`}
+        >
+          {label}
+        </span>
+      )}
       <motion.div
         className="absolute top-0 left-0 right-0 h-0.5 bg-orange-500"
         initial={{ scaleX: 0 }}
@@ -43,12 +63,17 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // TAMAÑO DEL LOGO VESTRI - Modifica estos valores para ajustar el tamaño
+  const VESTRI_LOGO_HEIGHT_DESKTOP = "h-20"; // Altura en desktop (ej: h-8, h-10, h-12, h-14, h-16)
+  const VESTRI_LOGO_HEIGHT_MOBILE = "h-20"; // Altura en móvil (ej: h-6, h-8, h-10, h-12)
+  const VESTRI_LOGO_WIDTH = 180; // Ancho en píxeles (ajusta según necesites)
+
   const menuItems = [
     { href: "/", label: "Inicio" },
     { href: "/autos", label: "Vehiculos" },
     { href: "/nosotros", label: "Nosotros" },
     { href: "/contacto", label: "Contacto" },
-    { href: "/vestri", label: "Vestri" },
+    { href: "/vestri", label: "Vestri", imageSrc: "/IMG/vestri-navbar.png" },
   ];
 
   useEffect(() => {
@@ -98,7 +123,15 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {menuItems.map((item) => (
-              <NavLink key={item.href} href={item.href} label={item.label} />
+              <NavLink
+                key={item.href}
+                href={item.href}
+                label={item.label}
+                imageSrc={item.imageSrc}
+                logoHeightDesktop={VESTRI_LOGO_HEIGHT_DESKTOP}
+                logoHeightMobile={VESTRI_LOGO_HEIGHT_MOBILE}
+                logoWidth={VESTRI_LOGO_WIDTH}
+              />
             ))}
           </div>
 
@@ -136,7 +169,20 @@ export default function Navbar() {
                       className="block py-3 px-4 text-white hover:text-orange-500 hover:bg-white/5 rounded-lg transition-all duration-300 relative group"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <span className="relative z-10">{item.label}</span>
+                      {item.imageSrc ? (
+                        <div className={`relative z-10 ${VESTRI_LOGO_HEIGHT_MOBILE} w-auto flex items-center`}>
+                          <Image
+                            src={item.imageSrc}
+                            alt={item.label}
+                            width={VESTRI_LOGO_WIDTH}
+                            height={VESTRI_LOGO_WIDTH * 0.3}
+                            className="transition-opacity duration-300 object-contain group-hover:opacity-80"
+                            style={{ height: "auto", width: "auto", maxHeight: "100%" }}
+                          />
+                        </div>
+                      ) : (
+                        <span className="relative z-10">{item.label}</span>
+                      )}
                       <motion.div
                         className="absolute left-0 top-0 bottom-0 w-1 bg-orange-500 rounded-r"
                         initial={{ scaleY: 0 }}

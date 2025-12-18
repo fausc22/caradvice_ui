@@ -1,192 +1,184 @@
-"use client";
-
-import { useVehicleFilters } from "@/hooks/useVehicleFilters";
-import { useVehicles, useFilterOptions } from "@/hooks/useVehicles";
-import { useVehicleStore } from "@/store/useVehicleStore";
-import VehicleFilters from "@/components/vehicles/VehicleFilters";
-import VehicleGrid from "@/components/vehicles/VehicleGrid";
-import ViewControls from "@/components/vehicles/ViewControls";
-import Pagination from "@/components/vehicles/Pagination";
+import type { Metadata } from "next";
+import { Suspense } from "react";
 import HeroVideo from "@/components/HeroVideo";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import CompareFloatButton from "@/components/CompareFloatButton";
+import AutosPageClient from "@/components/autos/AutosPageClient";
+import InitialVehicleList from "@/components/autos/InitialVehicleList";
+import { getVehicles, getFilterOptions } from "@/lib/server-api";
 import { Loader2 } from "lucide-react";
-import { useEffect, useRef, Suspense } from "react";
+import { CarFilters } from "@/types/car";
 
-function AutosPageContent() {
-  const { filters, updateFilters, clearFilters, setFilters } = useVehicleFilters();
-  const { viewMode, currency, setViewMode, setCurrency } = useVehicleStore();
-  const hasInitialized = useRef(false);
+interface PageProps {
+  searchParams: Promise<{
+    page?: string;
+    brand?: string;
+    model?: string;
+    condition?: string;
+    transmission?: string;
+    fuel_type?: string;
+    color?: string;
+    segment?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    minYear?: string;
+    maxYear?: string;
+    minKilometres?: string;
+    maxKilometres?: string;
+    search?: string;
+    currency?: "ARS" | "USD";
+    sortBy?: string;
+    sortOrder?: "ASC" | "DESC";
+  }>;
+}
 
-  // Limpiar filtros al recargar la página SOLO si no hay filtros en la URL
-  useEffect(() => {
-    if (!hasInitialized.current && typeof window !== 'undefined') {
-      hasInitialized.current = true;
-      
-      // Verificar si hay filtros en la URL (excluyendo page, limit, sortBy, sortOrder)
-      const urlParams = new URLSearchParams(window.location.search);
-      const hasFiltersInUrl = Array.from(urlParams.keys()).some(key => 
-        !['page', 'limit', 'sortBy', 'sortOrder'].includes(key) && urlParams.get(key) !== null
-      );
-      
-      // Solo limpiar si NO hay filtros en la URL (navegación directa sin parámetros)
-      if (!hasFiltersInUrl) {
-        const defaultFilters = {
-          page: 1,
-          limit: 20,
-          sortBy: "created_at" as const,
-          sortOrder: "DESC" as const,
-          brand: null,
-          model: null,
-          condition: null,
-          transmission: null,
-          fuel_type: null,
-          color: null,
-          segment: null,
-          minPrice: null,
-          maxPrice: null,
-          minYear: null,
-          maxYear: null,
-          minKilometres: null,
-          maxKilometres: null,
-          search: null,
-          currency: null,
-        };
-        
-        setFilters(defaultFilters);
-      }
-    }
-  }, [setFilters]);
-  
-  const { data: vehiclesData, isLoading } = useVehicles(filters);
-  // Pasar filtros actuales (sin page/limit) para obtener conteos dinámicos
-  // Usar el currency del filtro si está definido, sino usar el del store (para visualización)
-  const displayCurrency = filters.currency || currency;
-  const { data: filterOptions, isLoading: filtersLoading } = useFilterOptions({
-    condition: filters.condition,
-    brand: filters.brand,
-    minPrice: filters.minPrice,
-    maxPrice: filters.maxPrice,
-    minYear: filters.minYear,
-    maxYear: filters.maxYear,
-    minKilometres: filters.minKilometres,
-    maxKilometres: filters.maxKilometres,
-    currency: filters.currency, // Usar el currency del filtro, no del store
-  });
+// Metadata dinámica según filtros
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const brand = params.brand;
+  const model = params.model;
 
-  // Scroll to top when page changes
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [filters.page]);
+  let title: string;
+  let description: string;
 
-  const handlePageChange = (newPage: number) => {
-    updateFilters({ page: newPage });
+  if (brand && model) {
+    title = `${brand} ${model} Usados en Córdoba | CAR ADVICE`;
+    description = `Encontrá autos ${brand} ${model} usados en Córdoba. Catálogo actualizado con financiación disponible.`;
+  } else if (brand) {
+    title = `Autos ${brand} Usados en Córdoba | CAR ADVICE`;
+    description = `Encontrá autos ${brand} usados en Córdoba. Catálogo actualizado con financiación disponible.`;
+  } else {
+    title = "Catálogo de Autos Usados en Córdoba | CAR ADVICE";
+    description =
+      "Explorá nuestro catálogo de autos usados y 0km en Córdoba. Financiación disponible y compra de usados.";
+  }
+
+  // Canonical: siempre apuntar a /autos sin parámetros para evitar duplicados
+  const canonical = "https://caradvice.com.ar/autos";
+
+  return {
+    title,
+    description,
+    robots: {
+      index: true,
+      follow: true,
+    },
+    openGraph: {
+      type: "website",
+      locale: "es_AR",
+      url: canonical,
+      siteName: "CAR ADVICE",
+      title,
+      description,
+      images: [
+        {
+          url: "https://caradvice.com.ar/IMG/logo_transparente.png",
+          width: 1200,
+          height: 630,
+          alt: "CAR ADVICE - Catálogo de Autos Córdoba",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://caradvice.com.ar/IMG/logo_transparente.png"],
+    },
+    alternates: {
+      canonical,
+    },
+  };
+}
+
+// Componente principal como Server Component
+export default async function AutosPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+
+  // Convertir searchParams a CarFilters
+  const filters: CarFilters = {
+    page: params.page ? parseInt(params.page) : 1,
+    limit: 20,
+    brand: params.brand || undefined,
+    model: params.model || undefined,
+    condition: params.condition || undefined,
+    transmission: params.transmission || undefined,
+    fuel_type: params.fuel_type || undefined,
+    color: params.color || undefined,
+    segment: params.segment || undefined,
+    minPrice: params.minPrice ? parseInt(params.minPrice) : undefined,
+    maxPrice: params.maxPrice ? parseInt(params.maxPrice) : undefined,
+    minYear: params.minYear ? parseInt(params.minYear) : undefined,
+    maxYear: params.maxYear ? parseInt(params.maxYear) : undefined,
+    minKilometres: params.minKilometres ? parseInt(params.minKilometres) : undefined,
+    maxKilometres: params.maxKilometres ? parseInt(params.maxKilometres) : undefined,
+    search: params.search || undefined,
+    currency: params.currency || undefined,
+    sortBy: (params.sortBy as any) || "created_at",
+    sortOrder: (params.sortOrder as any) || "DESC",
   };
 
-  const handleSortChange = (sortBy: string, sortOrder: "ASC" | "DESC") => {
-    updateFilters({ sortBy: sortBy as any, sortOrder, page: 1 });
-  };
+  // Obtener datos iniciales en el servidor
+  const [vehiclesData, filterOptions] = await Promise.all([
+    getVehicles(filters),
+    getFilterOptions({
+      brand: filters.brand,
+      condition: filters.condition,
+      minPrice: filters.minPrice,
+      maxPrice: filters.maxPrice,
+      minYear: filters.minYear,
+      maxYear: filters.maxYear,
+      minKilometres: filters.minKilometres,
+      maxKilometres: filters.maxKilometres,
+      currency: filters.currency,
+    }),
+  ]);
 
-  const handleCurrencyChange = (newCurrency: "ARS" | "USD") => {
-    setCurrency(newCurrency);
-    updateFilters({ currency: newCurrency, page: 1 });
+  // Valores por defecto si no hay datos
+  const initialVehicles = vehiclesData?.vehicles || [];
+  const initialPagination = vehiclesData?.pagination || {
+    page: 1,
+    limit: 20,
+    total: 0,
+    totalPages: 0,
+  };
+  const initialFilterOptions = filterOptions || {
+    conditions: [],
+    brands: [],
+    models: [],
+    ranges: {},
   };
 
   return (
     <div className="font-antenna min-h-screen bg-gray-50">
       {/* Video y Botones Hero */}
       <HeroVideo />
-      
+
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
-        {/* Filtros */}
-        {!filtersLoading && filterOptions && (
-          <VehicleFilters
-            filters={filters}
-            filterOptions={filterOptions}
-            onFiltersChange={updateFilters}
-            onClearFilters={clearFilters}
-            currency={displayCurrency}
-            onCurrencyChange={handleCurrencyChange}
-          />
-        )}
+        {/* H1 único para SEO (oculto visualmente) */}
+        <h1 className="sr-only">Catálogo de Autos Usados en Córdoba</h1>
 
-        {/* Header con resultados y controles */}
-        <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 mb-4 sm:mb-6 mt-4 sm:mt-6">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 truncate">
-                  {vehiclesData?.pagination.total || 0}{" "}
-                  <span className="whitespace-nowrap">
-                    {vehiclesData?.pagination.total === 1 ? "Resultado" : "Resultados"}
-                  </span>
-                </h2>
-                {isLoading && (
-                  <Loader2 className="animate-spin text-orange-500 flex-shrink-0" size={20} />
-                )}
-              </div>
+        {/* Listado inicial indexable en HTML (oculto visualmente) */}
+        <InitialVehicleList vehicles={initialVehicles} />
+
+        {/* Componente Client para interactividad */}
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <Loader2 className="animate-spin text-orange-500" size={40} />
             </div>
-
-            <ViewControls
-              viewMode={viewMode}
-              onViewModeChange={setViewMode}
-              sortBy={filters.sortBy ?? "created_at"}
-              sortOrder={filters.sortOrder ?? "DESC"}
-              onSortChange={handleSortChange}
-            />
-          </div>
-        </div>
-
-        {/* Grid de vehículos */}
-        <VehicleGrid
-          vehicles={vehiclesData?.vehicles || []}
-          loading={isLoading}
-          viewMode={viewMode}
-          currency={displayCurrency}
-        />
-
-        {/* Paginación */}
-        {vehiclesData && vehiclesData.pagination.totalPages > 1 && (
-          <Pagination
-            currentPage={vehiclesData.pagination.page}
-            totalPages={vehiclesData.pagination.totalPages}
-            onPageChange={handlePageChange}
+          }
+        >
+          <AutosPageClient
+            initialVehicles={initialVehicles}
+            initialPagination={initialPagination}
+            initialFilterOptions={initialFilterOptions}
+            initialFilters={filters}
           />
-        )}
-
-        {/* Mensaje cuando no hay resultados */}
-        {!isLoading && vehiclesData && vehiclesData.vehicles.length === 0 && (
-          <div className="bg-white rounded-lg shadow-sm p-8 sm:p-12 text-center">
-            <p className="text-gray-600 text-base sm:text-lg mb-4">
-              No se encontraron vehículos con los filtros seleccionados.
-            </p>
-            <button
-              onClick={clearFilters}
-              className="text-orange-500 hover:text-orange-600 font-medium text-sm sm:text-base"
-            >
-              Limpiar filtros
-            </button>
-          </div>
-        )}
+        </Suspense>
       </div>
 
       {/* Botón flotante de WhatsApp */}
       <WhatsAppButton />
-      
-      {/* Botón flotante de Comparar */}
-      <CompareFloatButton />
     </div>
-  );
-}
-
-export default function AutosPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin text-orange-500" size={40} />
-      </div>
-    }>
-      <AutosPageContent />
-    </Suspense>
   );
 }

@@ -66,3 +66,127 @@ export async function getRelatedVehicles(
   }
 }
 
+/**
+ * Obtiene vehículos con filtros en el servidor
+ */
+export async function getVehicles(filters?: {
+  page?: number;
+  limit?: number;
+  brand?: string;
+  model?: string;
+  condition?: string;
+  transmission?: string;
+  fuel_type?: string;
+  color?: string;
+  segment?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  minYear?: number;
+  maxYear?: number;
+  minKilometres?: number;
+  maxKilometres?: number;
+  search?: string;
+  currency?: "ARS" | "USD";
+  sortBy?: string;
+  sortOrder?: "ASC" | "DESC";
+}): Promise<{
+  vehicles: Car[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+} | null> {
+  try {
+    const response = await api.get<{
+      success: boolean;
+      data: {
+        vehicles: Car[];
+        pagination: {
+          page: number;
+          limit: number;
+          total: number;
+          totalPages: number;
+        };
+      };
+    }>("/api/vehicles", filters || {});
+
+    if (!response.success || !response.data) {
+      return null;
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching vehicles:", error);
+    return null;
+  }
+}
+
+/**
+ * Obtiene opciones de filtros en el servidor
+ */
+export async function getFilterOptions(filters?: {
+  brand?: string;
+  condition?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  minYear?: number;
+  maxYear?: number;
+  minKilometres?: number;
+  maxKilometres?: number;
+  currency?: "ARS" | "USD";
+}): Promise<{
+  conditions: { name: string; count: number }[];
+  brands: { name: string; count: number }[];
+  models: { name: string; count: number }[];
+  segments?: { name: string; count: number }[];
+  transmissions?: { name: string; count: number }[];
+  fuelTypes?: { name: string; count: number }[];
+  colors?: { name: string; count: number }[];
+  ranges: {
+    min_price_usd?: number;
+    max_price_usd?: number;
+    min_price_ars?: number;
+    max_price_ars?: number;
+    min_year?: number;
+    max_year?: number;
+    min_kilometres?: number;
+    max_kilometres?: number;
+  };
+} | null> {
+  try {
+    const response = await api.get<{
+      success: boolean;
+      data: {
+        conditions: { name: string; count: number }[];
+        brands: { name: string; count: number }[];
+        models: { name: string; count: number }[];
+        segments?: { name: string; count: number }[];
+        transmissions?: { name: string; count: number }[];
+        fuelTypes?: { name: string; count: number }[];
+        colors?: { name: string; count: number }[];
+        ranges: {
+          min_price_usd?: number;
+          max_price_usd?: number;
+          min_price_ars?: number;
+          max_price_ars?: number;
+          min_year?: number;
+          max_year?: number;
+          min_kilometres?: number;
+          max_kilometres?: number;
+        };
+      };
+    }>("/api/vehicles/filters/options", filters || {});
+
+    if (!response.success || !response.data) {
+      return null;
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching filter options:", error);
+    return null;
+  }
+}
+

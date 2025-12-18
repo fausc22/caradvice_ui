@@ -24,11 +24,24 @@ export default function NavbarVestri() {
   }, []);
 
   const handleMenuClick = (href: string) => {
+    // Cerrar el menú móvil primero
     setIsMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    
+    // Esperar un poco para que el menú se cierre antes de hacer scroll
+    setTimeout(() => {
+      const element = document.querySelector(href);
+      if (element) {
+        // Calcular el offset para compensar el navbar sticky
+        const headerOffset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 300); // Esperar 300ms para que la animación de cierre del menú termine
   };
 
   return (
