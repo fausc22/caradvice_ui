@@ -1,86 +1,131 @@
-"use client";
-
-import { useVehicle, useRelatedVehicles } from "@/hooks/useVehicles";
-import { Loader2, ChevronRight, Share2, MessageCircle, X, Maximize2, ChevronLeft } from "lucide-react";
-import RelatedVehiclesCarousel from "@/components/RelatedVehiclesCarousel";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CarCard from "@/components/CarCard";
-import { useParams } from "next/navigation";
+import { ChevronRight, MessageCircle } from "lucide-react";
+import { getVehicle, getRelatedVehicles } from "@/lib/server-api";
+import { Car } from "@/types/car";
+import VehicleGallery from "@/components/vehicles/VehicleGallery";
+import VehicleShareButtons from "@/components/vehicles/VehicleShareButtons";
+import RelatedVehiclesCarousel from "@/components/RelatedVehiclesCarousel";
 import Image from "next/image";
 
-export default function VehicleDetailPage() {
-  // La fuente se aplica globalmente desde el layout
-  const params = useParams();
-  const id = params.id as string;
-  const { data: vehicle, isLoading, error } = useVehicle(id);
-  const { data: relatedVehicles } = useRelatedVehicles(id, 8);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
 
-  // Obtener imágenes (con valor por defecto para evitar errores)
-  const images = vehicle?.images || [];
+// Función para generar metadata dinámica
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const vehicle = await getVehicle(id);
 
-  // Navegación de imágenes
-  const handleNextImage = useCallback(() => {
-    if (images.length === 0) return;
-    setActiveImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }, [images.length]);
-
-  const handlePreviousImage = useCallback(() => {
-    if (images.length === 0) return;
-    setActiveImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  }, [images.length]);
-
-  // Manejar teclas en pantalla completa
-  useEffect(() => {
-    if (!isFullscreen || !vehicle || images.length === 0) return;
-
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsFullscreen(false);
-      } else if (e.key === "ArrowLeft") {
-        handlePreviousImage();
-      } else if (e.key === "ArrowRight") {
-        handleNextImage();
-      }
+  if (!vehicle) {
+    return {
+      title: "Vehículo no encontrado | CAR ADVICE",
+      description: "El vehículo que buscas no está disponible.",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
-
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [isFullscreen, activeImageIndex, images.length, vehicle, handleNextImage, handlePreviousImage]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin text-orange-500" size={48} />
-      </div>
-    );
   }
 
-  if (error || !vehicle) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Vehículo no encontrado</h1>
-          <Link href="/autos" className="text-orange-500 hover:text-orange-600">
-            Volver a autos disponibles
-          </Link>
-        </div>
-      </div>
-    );
+  const brand = vehicle.taxonomies?.brand?.[0] || "";
+  const model = vehicle.taxonomies?.model?.[0] || "";
+  const year = vehicle.year || "";
+  const kilometres = vehicle.kilometres
+    ? `${vehicle.kilometres.toLocaleString("es-AR")} km`
+    : "";
+  const vehicleCurrency = vehicle.price_usd && vehicle.price_usd > 0 ? "USD" : "ARS";
+  const vehiclePrice = vehicleCurrency === "USD" ? vehicle.price_usd! : vehicle.price_ars!;
+  
+  const formatPrice = (price: number, currency: "ARS" | "USD") => {
+    const formatted = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return currency === "USD" ? `U$${formatted}` : `$${formatted}`;
+  };
+
+  const priceFormatted = formatPrice(vehiclePrice, vehicleCurrency);
+  
+  // Construir título dinámico
+  const title = `${brand} ${model} ${year ? year : ""} - ${priceFormatted} | CAR ADVICE Córdoba`.trim();
+  
+  // Construir descripción dinámica
+  const descriptionParts = [];
+  if (brand && model) {
+    descriptionParts.push(`${brand} ${model}`);
+  }
+  if (year) {
+    descriptionParts.push(`${year}`);
+  }
+  if (kilometres) {
+    descriptionParts.push(`con ${kilometres}`);
+  }
+  descriptionParts.push("Disponible en Córdoba.");
+  descriptionParts.push("Financiación y toma de usados en CAR ADVICE.");
+  
+  const description = descriptionParts.join(" ");
+
+  // Obtener imagen principal para Open Graph
+  const getImageUrl = (vehicle: Car): string => {
+    if (vehicle.featured_image_path?.startsWith("/IMG/static/")) {
+      return `https://caradvice.com.ar${vehicle.featured_image_path}`;
+    }
+    if (vehicle.featured_image_path) {
+      return `${process.env.NEXT_PUBLIC_API_URL || "https://caradvice.com.ar"}/api/image?path=${encodeURIComponent(vehicle.featured_image_path)}`;
+    }
+    if (vehicle.featured_image_url?.startsWith("/IMG/static/")) {
+      return `https://caradvice.com.ar${vehicle.featured_image_url}`;
+    }
+    return vehicle.featured_image_url || "https://caradvice.com.ar/IMG/logo_transparente.png";
+  };
+
+  const ogImage = getImageUrl(vehicle);
+  const canonicalUrl = `https://caradvice.com.ar/autos/${id}`;
+
+  return {
+    title,
+    description,
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "CAR ADVICE",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: vehicle.title,
+        },
+      ],
+      locale: "es_AR",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
+}
+
+// Componente principal como Server Component
+export default async function VehicleDetailPage({ params }: PageProps) {
+  const { id } = await params;
+  const vehicle = await getVehicle(id);
+
+  if (!vehicle) {
+    notFound();
   }
 
-  const activeImage = images[activeImageIndex] || images[0];
-  // Construir URL de imagen activa: si es ruta estática, usarla directamente; si es uploads, usar API
-  const activeImageUrl = activeImage?.file_path?.startsWith("/IMG/static/")
-    ? activeImage.file_path
-    : activeImage?.file_path
-    ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(activeImage.file_path)}`
-    : activeImage?.image_url?.startsWith("/IMG/static/")
-    ? activeImage.image_url
-    : activeImage?.image_url || "/IMG/logo_transparente.png";
+  const relatedVehicles = await getRelatedVehicles(id, 8);
 
   const formatPrice = (price: number, currency: "ARS" | "USD") => {
     const formatted = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -100,42 +145,106 @@ export default function VehicleDetailPage() {
   );
   const whatsappLink = `https://wa.me/543515158848?text=${whatsappMessage}`;
 
-  // Share links
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-  const shareTitle = vehicle.title;
-  const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-  const twitterShare = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`;
-  const whatsappShare = `https://wa.me/?text=${encodeURIComponent(`${shareTitle} ${shareUrl}`)}`;
-
-  // Función para compartir nativo (Sharer)
-  const handleNativeShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: shareTitle,
-          text: `Mira este vehículo: ${shareTitle}`,
-          url: shareUrl,
-        });
-      } catch (err) {
-        // Usuario canceló o error
-        console.log("Error al compartir:", err);
-      }
-    } else {
-      // Fallback: copiar al portapapeles
-      try {
-        await navigator.clipboard.writeText(shareUrl);
-        alert("Link copiado al portapapeles");
-      } catch (err) {
-        console.log("Error al copiar:", err);
-      }
+  // Structured Data (Schema.org) - Product
+  const getImageUrl = (image?: { file_path?: string; image_url?: string }): string => {
+    if (image?.file_path?.startsWith("/IMG/static/")) {
+      return `https://caradvice.com.ar${image.file_path}`;
     }
+    if (image?.file_path) {
+      return `${process.env.NEXT_PUBLIC_API_URL || "https://caradvice.com.ar"}/api/image?path=${encodeURIComponent(image.file_path)}`;
+    }
+    if (image?.image_url?.startsWith("/IMG/static/")) {
+      return `https://caradvice.com.ar${image.image_url}`;
+    }
+    return image?.image_url || "https://caradvice.com.ar/IMG/logo_transparente.png";
+  };
+
+  const productImages = vehicle.images?.map((img) => getImageUrl(img)) || [];
+  if (vehicle.featured_image_path || vehicle.featured_image_url) {
+    const featuredUrl = getImageUrl({
+      file_path: vehicle.featured_image_path,
+      image_url: vehicle.featured_image_url,
+    });
+    if (!productImages.includes(featuredUrl)) {
+      productImages.unshift(featuredUrl);
+    }
+  }
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: vehicle.title,
+    image: productImages.length > 0 ? productImages : ["https://caradvice.com.ar/IMG/logo_transparente.png"],
+    description: vehicle.content
+      ? vehicle.content.replace(/<[^>]*>/g, "").substring(0, 200)
+      : `${brand} ${model} ${vehicle.year || ""} disponible en CAR ADVICE Córdoba.`,
+    brand: brand
+      ? {
+          "@type": "Brand",
+          name: brand,
+        }
+      : undefined,
+    offers: {
+      "@type": "Offer",
+      price: vehiclePrice,
+      priceCurrency: vehicleCurrency === "USD" ? "USD" : "ARS",
+      availability: "https://schema.org/InStock",
+      url: `https://caradvice.com.ar/autos/${id}`,
+      seller: {
+        "@type": "Organization",
+        name: "CAR ADVICE",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Córdoba",
+          addressRegion: "Córdoba",
+          addressCountry: "AR",
+        },
+      },
+    },
+    itemCondition: vehicle.taxonomies?.condition?.[0]
+      ? `https://schema.org/${vehicle.taxonomies.condition[0] === "Usado" ? "UsedCondition" : "NewCondition"}`
+      : undefined,
+    additionalProperty: [
+      vehicle.year && {
+        "@type": "PropertyValue",
+        name: "Año",
+        value: vehicle.year.toString(),
+      },
+      vehicle.kilometres && {
+        "@type": "PropertyValue",
+        name: "Kilómetros",
+        value: vehicle.kilometres.toString(),
+      },
+      vehicle.taxonomies?.transmission?.[0] && {
+        "@type": "PropertyValue",
+        name: "Transmisión",
+        value: vehicle.taxonomies.transmission[0],
+      },
+      vehicle.taxonomies?.fuel_type?.[0] && {
+        "@type": "PropertyValue",
+        name: "Combustible",
+        value: vehicle.taxonomies.fuel_type[0],
+      },
+      vehicle.taxonomies?.color?.[0] && {
+        "@type": "PropertyValue",
+        name: "Color",
+        value: vehicle.taxonomies.color[0],
+      },
+    ].filter(Boolean),
   };
 
   return (
+    <>
+      {/* Structured Data JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-6">
         {/* Breadcrumbs */}
-        <nav className="mb-6">
+          <nav className="mb-6" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
             <li>
               <Link href="/" className="hover:text-orange-500">
@@ -152,7 +261,10 @@ export default function VehicleDetailPage() {
               <>
                 <ChevronRight size={16} className="text-gray-400" />
                 <li>
-                  <Link href={`/autos?brand=${encodeURIComponent(brand)}`} className="hover:text-orange-500">
+                    <Link
+                      href={`/autos?brand=${encodeURIComponent(brand)}`}
+                      className="hover:text-orange-500"
+                    >
                     {brand}
                   </Link>
                 </li>
@@ -162,128 +274,29 @@ export default function VehicleDetailPage() {
               <>
                 <ChevronRight size={16} className="text-gray-400" />
                 <li>
-                  <Link href={`/autos?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(model)}`} className="hover:text-orange-500">
+                    <Link
+                      href={`/autos?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(model)}`}
+                      className="hover:text-orange-500"
+                    >
                     {model}
                   </Link>
                 </li>
               </>
             )}
             <ChevronRight size={16} className="text-gray-400" />
-            <li className="text-gray-800 font-medium">{vehicle.title}</li>
+              <li className="text-gray-800 font-medium" aria-current="page">
+                {vehicle.title}
+              </li>
           </ol>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Galería de Imágenes */}
           <div>
-            {/* Imagen Principal */}
-            <motion.div
-              className="relative w-full aspect-[4/3] bg-gray-200 rounded-lg overflow-hidden mb-4 cursor-pointer"
-              onClick={() => setIsFullscreen(true)}
-              whileHover={{ scale: 1.01 }}
-              transition={{ duration: 0.2 }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={activeImageIndex}
-                  src={activeImageUrl}
-                  alt={vehicle.title}
-                  className="w-full h-full object-cover"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
-                  }}
-                />
-              </AnimatePresence>
-              
-              {/* Contador de imágenes */}
-              {images.length > 0 && (
-                <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1.5 rounded text-sm font-medium">
-                  {activeImageIndex + 1}/{images.length}
-                </div>
-              )}
-
-              {/* Botón expandir */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsFullscreen(true);
-                }}
-                className="absolute top-4 right-4 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 transition-colors"
-              >
-                <Maximize2 size={20} />
-              </button>
-
-              {/* Navegación de imágenes */}
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePreviousImage();
-                    }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNextImage();
-                    }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </>
-              )}
-            </motion.div>
-
-            {/* Thumbnails */}
-            {images.length > 1 && (
-              <div className="grid grid-cols-5 gap-2">
-                {images.slice(0, 5).map((image, index) => {
-                  // Si es ruta estática, usarla directamente; si es uploads, usar API; si no, usar URL
-                  let thumbUrl: string;
-                  if (image.file_path?.startsWith("/IMG/static/")) {
-                    thumbUrl = image.file_path;
-                  } else if (image.file_path) {
-                    thumbUrl = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(image.file_path)}`;
-                  } else if (image.image_url?.startsWith("/IMG/static/")) {
-                    thumbUrl = image.image_url;
-                  } else {
-                    thumbUrl = image.image_url || "/IMG/logo_transparente.png";
-                  }
-                  
-                  return (
-                    <motion.button
-                      key={index}
-                      onClick={() => setActiveImageIndex(index)}
-                      className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                        activeImageIndex === index
-                          ? "border-orange-500 ring-2 ring-orange-200"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={thumbUrl}
-                        alt={`${vehicle.title} - Imagen ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
-                        }}
-                      />
-                    </motion.button>
-                  );
-                })}
-              </div>
-            )}
+              <VehicleGallery
+                images={vehicle.images || []}
+                vehicleTitle={vehicle.title}
+              />
 
             {/* Descripción debajo de la galería */}
             <div className="mt-6">
@@ -295,9 +308,11 @@ export default function VehicleDetailPage() {
                     dangerouslySetInnerHTML={{ __html: vehicle.content }}
                   />
                 ) : (
-                  <p className="text-gray-600">No hay descripción disponible para este vehículo.</p>
+                    <p className="text-gray-600">
+                      No hay descripción disponible para este vehículo.
+                    </p>
                 )}
-              </div>
+                </div>
             </div>
           </div>
 
@@ -330,17 +345,23 @@ export default function VehicleDetailPage() {
                 </div>
                 <div>
                   <span className="text-sm text-gray-600">Transmisión:</span>
-                  <p className="font-medium text-gray-800">{vehicle.taxonomies?.transmission?.[0] || "N/A"}</p>
+                    <p className="font-medium text-gray-800">
+                      {vehicle.taxonomies?.transmission?.[0] || "N/A"}
+                    </p>
                 </div>
                 <div>
                   <span className="text-sm text-gray-600">Kilómetros:</span>
                   <p className="font-medium text-gray-800">
-                    {vehicle.kilometres ? `${vehicle.kilometres.toLocaleString("es-AR")} Kms` : "N/A"}
+                      {vehicle.kilometres
+                        ? `${vehicle.kilometres.toLocaleString("es-AR")} Kms`
+                        : "N/A"}
                   </p>
                 </div>
                 <div>
                   <span className="text-sm text-gray-600">Combustible:</span>
-                  <p className="font-medium text-gray-800">{vehicle.taxonomies?.fuel_type?.[0] || "N/A"}</p>
+                    <p className="font-medium text-gray-800">
+                      {vehicle.taxonomies?.fuel_type?.[0] || "N/A"}
+                    </p>
                 </div>
                 {vehicle.license_plate && (
                   <div>
@@ -350,8 +371,10 @@ export default function VehicleDetailPage() {
                 )}
                 <div>
                   <span className="text-sm text-gray-600">Condición:</span>
-                  <p className="font-medium text-gray-800">{vehicle.taxonomies?.condition?.[0] || "N/A"}</p>
-                </div>
+                    <p className="font-medium text-gray-800">
+                      {vehicle.taxonomies?.condition?.[0] || "N/A"}
+                    </p>
+                  </div>
               </div>
             </div>
 
@@ -367,39 +390,7 @@ export default function VehicleDetailPage() {
             </a>
 
             {/* Compartir Publicación */}
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-3">Compartir Publicación</h3>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => window.open(whatsappShare, "_blank")}
-                  className="w-12 h-12 bg-green-500 hover:bg-green-600 rounded-lg flex items-center justify-center text-white transition-colors"
-                  title="Compartir en WhatsApp"
-                >
-                  <MessageCircle size={20} />
-                </button>
-                <button
-                  onClick={() => window.open(facebookShare, "_blank")}
-                  className="w-12 h-12 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center text-white transition-colors"
-                  title="Compartir en Facebook"
-                >
-                  <Share2 size={20} />
-                </button>
-                <button
-                  onClick={handleNativeShare}
-                  className="w-12 h-12 bg-gray-600 hover:bg-gray-700 rounded-lg flex items-center justify-center text-white transition-colors"
-                  title="Compartir"
-                >
-                  <Share2 size={20} />
-                </button>
-                <button
-                  onClick={() => window.open(twitterShare, "_blank")}
-                  className="w-12 h-12 bg-black hover:bg-gray-800 rounded-lg flex items-center justify-center text-white transition-colors"
-                  title="Compartir en X (Twitter)"
-                >
-                  <span className="text-white font-bold text-lg">X</span>
-                </button>
-              </div>
-            </div>
+              <VehicleShareButtons vehicleTitle={vehicle.title} />
           </div>
         </div>
 
@@ -487,8 +478,12 @@ export default function VehicleDetailPage() {
           {relatedVehicles && relatedVehicles.length > 0 ? (
             <RelatedVehiclesCarousel
               vehicles={relatedVehicles.map((relatedVehicle) => {
-                const relatedCurrency = relatedVehicle.price_usd && relatedVehicle.price_usd > 0 ? "USD" : "ARS";
-                const relatedPrice = relatedCurrency === "USD" ? relatedVehicle.price_usd! : relatedVehicle.price_ars!;
+                  const relatedCurrency =
+                    relatedVehicle.price_usd && relatedVehicle.price_usd > 0 ? "USD" : "ARS";
+                  const relatedPrice =
+                    relatedCurrency === "USD"
+                      ? relatedVehicle.price_usd!
+                      : relatedVehicle.price_ars!;
                 
                 return {
                   id: String(relatedVehicle.id),
@@ -497,11 +492,14 @@ export default function VehicleDetailPage() {
                   price_usd: relatedVehicle.price_usd,
                   price_ars: relatedVehicle.price_ars,
                   year: relatedVehicle.year || 0,
-                  condition: relatedVehicle.taxonomies?.condition?.[0] || "N/A",
+                    condition:
+                      relatedVehicle.taxonomies?.condition?.[0] || "N/A",
                   kilometers: relatedVehicle.kilometres,
-                  transmission: relatedVehicle.taxonomies?.transmission?.[0] || "N/A",
+                    transmission:
+                      relatedVehicle.taxonomies?.transmission?.[0] || "N/A",
                   fuel: relatedVehicle.taxonomies?.fuel_type?.[0] || "N/A",
-                  image: relatedVehicle.featured_image_path?.startsWith("/IMG/static/")
+                    image:
+                      relatedVehicle.featured_image_path?.startsWith("/IMG/static/")
                     ? relatedVehicle.featured_image_path
                     : relatedVehicle.featured_image_path
                     ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(relatedVehicle.featured_image_path)}`
@@ -512,78 +510,13 @@ export default function VehicleDetailPage() {
               })}
             />
           ) : (
-            <p className="text-gray-600">No hay vehículos relacionados disponibles.</p>
+              <p className="text-gray-600">
+                No hay vehículos relacionados disponibles.
+              </p>
           )}
+          </div>
         </div>
       </div>
-
-      {/* Modal de Pantalla Completa */}
-      <AnimatePresence>
-        {isFullscreen && (
-          <motion.div
-            className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsFullscreen(false)}
-          >
-            {/* Contador */}
-            <div className="absolute top-4 left-4 text-white text-lg font-medium">
-              {activeImageIndex + 1}/{images.length}
-            </div>
-
-            {/* Botón cerrar */}
-            <button
-              onClick={() => setIsFullscreen(false)}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 p-2 transition-colors"
-            >
-              <X size={24} />
-            </button>
-
-            {/* Imagen */}
-            <div className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={activeImageIndex}
-                  src={activeImageUrl}
-                  alt={vehicle.title}
-                  className="max-w-full max-h-[90vh] object-contain"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
-                  }}
-                />
-              </AnimatePresence>
-
-              {/* Navegación */}
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={handlePreviousImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 transition-colors"
-                  >
-                    <ChevronLeft size={24} />
-                  </button>
-                  <button
-                    onClick={handleNextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 transition-colors"
-                  >
-                    <ChevronRight size={24} />
-                  </button>
-                </>
-              )}
-
-              {/* Título de la imagen */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded text-sm max-w-[80%] text-center">
-                {vehicle.title}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+    </>
   );
 }
