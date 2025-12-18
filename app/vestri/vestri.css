@@ -1,0 +1,406 @@
+/* Estilos específicos para Vestri - Pixel Perfect */
+
+/* Variables de color basadas en el CSS original */
+:root {
+  --vestri-blue: #192BC2;
+  --vestri-white: #FFFFFF;
+  --vestri-text-dark: #000000;
+  --vestri-gray-light: rgba(214, 214, 214, 0.26);
+  --vestri-orange: #FF6B35;
+}
+
+/* Fuente Montserrat */
+.vestri-container {
+  font-family: var(--font-montserrat), "Montserrat", sans-serif;
+}
+
+/* Hero Section - Inicio */
+.vestri-hero {
+  background-color: var(--vestri-blue);
+  background-image: url('https://caradvice.com.ar/vestri/wp-content/uploads/2025/03/autozone-img018.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 50px;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+@media (min-width: 640px) {
+  .vestri-hero {
+    padding-top: 50px;
+    padding-bottom: 60px;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vestri-hero {
+    padding-top: 60px;
+    padding-bottom: 70px;
+  }
+}
+
+.vestri-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--vestri-blue);
+  opacity: 0.95;
+}
+
+.vestri-hero-content {
+  position: relative;
+  z-index: 10;
+  color: var(--vestri-white);
+}
+
+/* Estilos para el carousel en el hero */
+.vestri-hero .swiper-pagination {
+  bottom: 20px !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  position: absolute !important;
+  width: 100% !important;
+}
+
+.vestri-hero .swiper-pagination-bullet {
+  background: var(--vestri-white) !important;
+  opacity: 0.4 !important;
+  width: 12px !important;
+  height: 12px !important;
+  margin: 0 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+.vestri-hero .swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  background: var(--vestri-white) !important;
+  transform: scale(1.2) !important;
+}
+
+/* Asegurar que solo una imagen sea visible a la vez con fade */
+.hero-carousel .swiper-slide {
+  opacity: 0 !important;
+  transition: opacity 0.8s ease-in-out !important;
+}
+
+.hero-carousel .swiper-slide-active {
+  opacity: 1 !important;
+}
+
+/* Forzar que las slides inactivas estén ocultas */
+.hero-carousel .swiper-slide:not(.swiper-slide-active) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.vestri-hero-text-1 {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2em;
+  color: var(--vestri-white);
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+}
+
+@media (min-width: 640px) {
+  .vestri-hero-text-1 {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .vestri-hero-text-1 {
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vestri-hero-text-1 {
+    font-size: 45px;
+  }
+}
+
+.vestri-hero-text-1 strong {
+  font-weight: 700;
+}
+
+.vestri-hero-text-2 {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2em;
+  color: var(--vestri-white);
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+}
+
+@media (min-width: 640px) {
+  .vestri-hero-text-2 {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 768px) {
+  .vestri-hero-text-2 {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vestri-hero-text-2 {
+    font-size: 38px;
+  }
+}
+
+.vestri-hero-text-3 {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.3em;
+  color: var(--vestri-white);
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+}
+
+@media (min-width: 640px) {
+  .vestri-hero-text-3 {
+    font-size: 22px;
+    line-height: 1.2em;
+  }
+}
+
+@media (min-width: 768px) {
+  .vestri-hero-text-3 {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vestri-hero-text-3 {
+    font-size: 32px;
+  }
+}
+
+.vestri-hero-subtitle {
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.1em;
+  letter-spacing: -0.8px;
+  color: var(--vestri-white);
+  text-align: left;
+}
+
+.vestri-button {
+  background-color: var(--vestri-white);
+  color: var(--vestri-blue);
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.1em;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: 2px solid var(--vestri-blue);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+@media (min-width: 640px) {
+  .vestri-button {
+    font-size: 18px;
+    padding: 14px 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vestri-button {
+    font-size: 20px;
+  }
+}
+
+.vestri-button:hover {
+  background-color: var(--vestri-blue);
+  color: var(--vestri-white);
+}
+
+/* Carousel Section */
+.vestri-carousel-container {
+  background-color: var(--vestri-gray-light);
+  padding: 130px 0 150px 0;
+  margin: 0 -50px 0 -90px;
+}
+
+@media (max-width: 1024px) {
+  .vestri-carousel-container {
+    margin: 100px 0 100px 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .vestri-carousel-container {
+    margin: 50px 0 50px 0;
+    padding: 0;
+  }
+}
+
+/* Sección de Pasos */
+.vestri-step-card {
+  background-color: var(--vestri-white);
+  border-radius: 25px;
+  box-shadow: 0px 10px 25px 10px rgba(0, 0, 0, 0.05);
+  padding: 80px 50px 50px 50px;
+  margin-top: -80px;
+}
+
+.vestri-step-number {
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.1em;
+  letter-spacing: -0.8px;
+  color: var(--vestri-blue);
+  opacity: 0.75;
+}
+
+.vestri-step-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1em;
+  letter-spacing: -0.8px;
+  color: var(--vestri-text-dark);
+}
+
+.vestri-step-description {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.1em;
+  color: var(--vestri-text-dark);
+}
+
+/* Formulario de Contacto */
+.vestri-form-container {
+  background-color: var(--vestri-white);
+  border-radius: 25px;
+  padding: 20px;
+  border: 2px solid var(--vestri-blue);
+}
+
+.vestri-form-label {
+  font-family: var(--font-montserrat), "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2em;
+  color: var(--vestri-text-dark);
+  letter-spacing: 0.5px;
+}
+
+.vestri-form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  font-family: var(--font-montserrat), "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  background-color: #F9FAFB;
+}
+
+.vestri-form-input:focus {
+  outline: none;
+  border-color: var(--vestri-blue);
+  background-color: var(--vestri-white);
+  box-shadow: 0 0 0 3px rgba(25, 43, 194, 0.1);
+}
+
+.vestri-form-input::placeholder {
+  color: #9CA3AF;
+}
+
+.vestri-form-button {
+  background-color: var(--vestri-blue);
+  color: var(--vestri-white);
+  font-family: var(--font-montserrat), "Montserrat", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2em;
+  padding: 16px 32px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(25, 43, 194, 0.2);
+}
+
+.vestri-form-button:hover {
+  background-color: #1525a0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(25, 43, 194, 0.3);
+}
+
+.vestri-form-button:active {
+  transform: translateY(0);
+}
+
+/* Ajustes adicionales para tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .vestri-hero .swiper {
+    margin-top: 20px;
+  }
+}
+
+/* Mejoras de accesibilidad y touch */
+@media (hover: none) and (pointer: coarse) {
+  .vestri-button,
+  .vestri-form-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Prevenir overflow horizontal */
+.vestri-container {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Asegurar que las imágenes no se desborden */
+.vestri-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para mapas de Google Maps */
+.vestri-maps-container iframe {
+  border-radius: 8px;
+}
+
+/* Ajustes responsive para mapas */
+@media (max-width: 639px) {
+  .vestri-maps-container iframe,
+  iframe[src*="google.com/maps"] {
+    height: 250px !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .vestri-maps-container iframe,
+  iframe[src*="google.com/maps"] {
+    height: 280px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vestri-maps-container iframe,
+  iframe[src*="google.com/maps"] {
+    height: 300px !important;
+  }
+}
+
