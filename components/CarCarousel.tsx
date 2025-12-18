@@ -10,6 +10,32 @@ interface CarCarouselProps {
   currency: "ARS" | "USD";
 }
 
+// Función helper para convertir Car a el formato que espera CarCard
+const mapCarToCarCard = (car: Car, currency: "ARS" | "USD") => {
+  const price = currency === "USD" 
+    ? (car.price_usd ?? 0) 
+    : (car.price_ars ?? car.price_usd ?? 0);
+  
+  const condition = car.taxonomies?.condition?.[0] || "";
+  const transmission = car.taxonomies?.transmission?.[0] || "";
+  const fuel = car.taxonomies?.fuel_type?.[0] || "";
+  const image = car.featured_image_path 
+    ? `/api/image?path=${encodeURIComponent(car.featured_image_path)}`
+    : car.featured_image_url || undefined;
+
+  return {
+    id: String(car.id),
+    title: car.title,
+    price,
+    year: car.year ?? 0,
+    condition,
+    kilometers: car.kilometres ?? 0,
+    transmission,
+    fuel,
+    image,
+  };
+};
+
 export default function CarCarousel({ cars, currency }: CarCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsToShow, setCardsToShow] = useState(3);
@@ -42,7 +68,7 @@ export default function CarCarousel({ cars, currency }: CarCarouselProps) {
 
   const getVisibleCars = () => {
     const start = currentIndex * cardsToShow;
-    return cars.slice(start, start + cardsToShow);
+    return cars.slice(start, start + cardsToShow).map(car => mapCarToCarCard(car, currency));
   };
 
   const visibleCars = getVisibleCars();
