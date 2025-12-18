@@ -40,7 +40,7 @@ export default function Home() {
                     href="/autos"
                     className="font-antenna inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
                   >
-                    Ver autos disponibles
+                    Ver todos los vehiculos
                   </Link>
                 </div>
               </>
@@ -68,7 +68,7 @@ export default function Home() {
                     href="/autos"
                     className="font-antenna inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
                   >
-                    Ver autos disponibles
+                    Ver todos los vehiculos
                   </Link>
                 </div>
               </>

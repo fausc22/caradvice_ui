@@ -12,8 +12,8 @@ export default function Header() {
 
   const menuItems = [
     { href: "/", label: "Inicio" },
-    { href: "/autos", label: "Autos disponibles" },
-    { href: "/nosotros", label: "¿Quienes somos?" },
+    { href: "/autos", label: "Vehiculos" },
+    { href: "/nosotros", label: "Nosotros" },
     { href: "/contacto", label: "Contacto" },
     { href: "/vestri", label: "Vestri" },
   ];

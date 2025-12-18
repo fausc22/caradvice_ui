@@ -14,6 +14,7 @@ interface ServiceCard {
 
 export default function HeroVideo() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [lastButtonClicked, setLastButtonClicked] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<any>(null);
 
@@ -43,6 +44,19 @@ export default function HeroVideo() {
         const player = new window.YT.Player(iframeRef.current.id || 'youtube-hero-video', {
           events: {
             onStateChange: (event: any) => {
+              const player = event.target;
+              // Estado 0 = terminado, reiniciar desde 0:38
+              if (event.data === 0) {
+                // Cuando el video termina, volver al segundo 38 y reproducir
+                setTimeout(() => {
+                  if (player && typeof player.seekTo === 'function') {
+                    player.seekTo(38, true);
+                    if (typeof player.playVideo === 'function') {
+                      player.playVideo();
+                    }
+                  }
+                }, 100);
+              }
               // Estado 2 = pausado, Estado 1 = reproduciendo
               if (event.data === 2) {
                 // Reanudar inmediatamente si se pausa
@@ -55,9 +69,14 @@ export default function HeroVideo() {
             },
             onReady: (event: any) => {
               playerRef.current = event.target;
+              const player = event.target;
+              // Ir al segundo 38 y comenzar reproducción
+              if (player && typeof player.seekTo === 'function') {
+                player.seekTo(38, true);
+              }
               // Asegurar que esté reproduciéndose
-              if (event.target && typeof event.target.playVideo === 'function') {
-                event.target.playVideo();
+              if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
               }
             },
           },
@@ -73,8 +92,25 @@ export default function HeroVideo() {
       if (playerRef.current && playerRef.current.getPlayerState) {
         try {
           const state = playerRef.current.getPlayerState();
+          const currentTime = playerRef.current.getCurrentTime ? playerRef.current.getCurrentTime() : 0;
+          
+          // Estado 0 = terminado, volver al segundo 38
+          if (state === 0) {
+            if (playerRef.current.seekTo) {
+              playerRef.current.seekTo(38, true);
+            }
+            if (playerRef.current.playVideo) {
+              playerRef.current.playVideo();
+            }
+          }
+          // Si el video está antes del segundo 38, saltar a 38
+          else if (currentTime > 0 && currentTime < 38 && state === 1) {
+            if (playerRef.current.seekTo) {
+              playerRef.current.seekTo(38, true);
+            }
+          }
           // Estado 2 = pausado, Estado 5 = cued (listo pero no reproduciendo)
-          if (state === 2 || state === 5) {
+          else if (state === 2 || state === 5) {
             if (playerRef.current.playVideo) {
               playerRef.current.playVideo();
             }
@@ -112,13 +148,13 @@ export default function HeroVideo() {
   const services: ServiceCard[] = [
     {
       icon: <Wallet className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" />,
-      title: "Compramos TU USADO",
+      title: "Vendé tu auto",
       subtitle: "¡Quiero vender mi auto!",
       href: "/vender",
     },
     {
       icon: <Car className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" />,
-      title: "Vendemos tu auto por vos",
+      title: "Consigná tu auto",
       subtitle: "¡Quiero que vendan mi auto!",
       href: "/consignacion",
     },
@@ -129,9 +165,9 @@ export default function HeroVideo() {
           <DollarSign className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
         </div>
       ),
-      title: "Financiamos TU AUTO",
-      subtitle: "Simular",
-      href: "/financiacion",
+      title: "Comprá un auto",
+      subtitle: "Ver vehiculos",
+      href: "/autos",
     },
   ];
 
@@ -143,7 +179,7 @@ export default function HeroVideo() {
           <iframe
             id="youtube-hero-video"
             ref={iframeRef}
-            src="https://www.youtube.com/embed/IJERLFby8so?autoplay=1&mute=1&loop=1&playlist=IJERLFby8so&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=0"
+            src="https://www.youtube.com/embed/IJERLFby8so?autoplay=1&mute=1&loop=1&playlist=IJERLFby8so&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=38"
             allow="autoplay; encrypted-media"
             allowFullScreen
             style={{
@@ -165,13 +201,23 @@ export default function HeroVideo() {
       {/* Cards Section - Siempre visible debajo del video */}
       <div className="w-full bg-black">
         <div className="grid grid-cols-1 md:grid-cols-3 w-full divide-y md:divide-y-0 md:divide-x divide-white/20">
-          {services.map((service, index) => (
+          {services.map((service, index) => {
+            // Para el último botón, cambiar el texto si fue clickeado
+            const isLastButton = index === 2;
+            const displayTitle = isLastButton && lastButtonClicked ? "Ver vehículos" : service.title;
+            
+            return (
             <Link
               key={index}
               href={service.href}
               className="relative group overflow-hidden border-r border-white/20 last:border-r-0"
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}
+              onClick={() => {
+                if (isLastButton) {
+                  setLastButtonClicked(true);
+                }
+              }}
             >
               <motion.div
                 className="h-[120px] sm:h-[140px] md:h-[160px] flex flex-col items-center justify-center p-3 sm:p-4 cursor-pointer relative"
@@ -209,7 +255,7 @@ export default function HeroVideo() {
                         transition={{ duration: 0.3 }}
                       >
                         <h2 className="font-antenna text-white text-sm sm:text-base md:text-lg font-bold text-center px-2 sm:px-3">
-                          {service.title}
+                          {displayTitle}
                         </h2>
                       </motion.div>
 
@@ -232,7 +278,8 @@ export default function HeroVideo() {
                     </div>
               </motion.div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

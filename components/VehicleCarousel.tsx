@@ -18,15 +18,18 @@ export default function VehicleCarousel({ vehicles, currency }: VehicleCarouselP
   // Detectar tamaño de pantalla y ajustar cards por vista
   useEffect(() => {
     const updateCardsPerView = () => {
-      if (window.innerWidth >= 1024) {
-        // lg: 4 cards
-        setCardsPerView(4);
+      if (window.innerWidth >= 1280) {
+        // xl: 3 cards (más anchas para ver mejor los vehículos)
+        setCardsPerView(3);
+      } else if (window.innerWidth >= 1024) {
+        // lg: 3 cards
+        setCardsPerView(3);
       } else if (window.innerWidth >= 640) {
         // sm: 2 cards (tablet)
         setCardsPerView(2);
       } else {
-        // mobile: 2 cards
-        setCardsPerView(2);
+        // mobile: 1 card
+        setCardsPerView(1);
       }
     };
 
@@ -75,7 +78,7 @@ export default function VehicleCarousel({ vehicles, currency }: VehicleCarouselP
       {/* Contenedor del carrusel */}
       <div className="overflow-hidden px-4 sm:px-12">
         <motion.div
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
           animate={{
             x: 0,
           }}

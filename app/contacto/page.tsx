@@ -10,6 +10,7 @@ const sucursales = [
     name: "CAR ADVICE | Casa Central",
     address: "Octavio Pinto 3024, Córdoba",
     map: `https://www.google.com/maps?q=${encodeURIComponent("Octavio Pinto 3024, Córdoba, Argentina")}&output=embed`,
+    googleMapsUrl: "https://share.google/Z4OqenVjQoIF7wPGP",
     icon: "🏢",
     image: "/IMG/contacto/octavio_pinto.jpeg",
   },
@@ -17,6 +18,7 @@ const sucursales = [
     name: "CAR ADVICE | Suc. Granaderos",
     address: "Bv. Los Granaderos 3110, X5009 Córdoba",
     map: `https://www.google.com/maps?q=${encodeURIComponent("Bv. Los Granaderos 3110, X5009 Córdoba, Argentina")}&output=embed`,
+    googleMapsUrl: "https://share.google/QsggnorrlPRRIB1VR",
     icon: "🚗",
     image: "/IMG/contacto/granaderos.jpeg",
   },
@@ -24,6 +26,7 @@ const sucursales = [
     name: "CAR ADVICE | Suc. Caraffa",
     address: "Av. Emilio Caraffa 2883, X5009 Córdoba",
     map: `https://www.google.com/maps?q=${encodeURIComponent("Av. Emilio Caraffa 2883, X5009 Córdoba, Argentina")}&output=embed`,
+    googleMapsUrl: "https://share.google/Nxz0ZmIWATXnwfxhP",
     icon: "🏪",
     image: "/IMG/contacto/caraffa.jpeg",
   },
@@ -31,6 +34,7 @@ const sucursales = [
     name: "CAR ADVICE | Alistaje y Postventa",
     address: "Octavio Pinto 3169, X5009 Córdoba",
     map: `https://www.google.com/maps?q=${encodeURIComponent("Octavio Pinto 3169, X5009 Córdoba, Argentina")}&output=embed`,
+    googleMapsUrl: "https://share.google/HU1SMP4DvBeiwqd9Q",
     icon: "🔧",
     image: "/IMG/contacto/posventa.jpeg",
   },
@@ -199,7 +203,7 @@ export default function Contacto() {
                     </div>
                   </div>
                   <motion.a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sucursal.address)}`}
+                    href={sucursal.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 sm:py-3 px-5 sm:px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg whitespace-nowrap text-sm sm:text-base"
