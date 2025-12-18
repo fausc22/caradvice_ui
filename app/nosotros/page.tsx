@@ -305,7 +305,7 @@ export default function QuienesSomos() {
               Nuestro Equipo
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 italic px-4">
-              "Trabajamos para que la experiencia de nuestro cliente sea única."
+              &ldquo;Trabajamos para que la experiencia de nuestro cliente sea única.&rdquo;
             </p>
           </motion.div>
 

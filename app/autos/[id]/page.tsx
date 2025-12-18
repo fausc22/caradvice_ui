@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CarCard from "@/components/CarCard";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 
 export default function VehicleDetailPage() {
   // La fuente se aplica globalmente desde el layout
@@ -256,6 +257,7 @@ export default function VehicleDetailPage() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={thumbUrl}
                         alt={`${vehicle.title} - Imagen ${index + 1}`}

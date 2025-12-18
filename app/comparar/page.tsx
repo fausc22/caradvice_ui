@@ -4,6 +4,7 @@ import { useComparisonStore } from "@/store/useComparisonStore";
 import { useVehicles } from "@/hooks/useVehicles";
 import { Loader2, X, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ComparePage() {
   const { getSelectedVehicles, removeVehicle, clearSelection, getSelectedCount } = useComparisonStore();
@@ -150,6 +151,7 @@ export default function ComparePage() {
                       
                       {/* Imagen */}
                       <div className="relative w-full aspect-video bg-gray-100 rounded-lg overflow-hidden mb-2 sm:mb-3">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={getImageUrl(vehicle)}
                           alt={vehicle.title}

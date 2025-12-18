@@ -33,7 +33,7 @@ export default function MantenimientoPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]);
 
   const formatNumber = (num: number) => {
     return num.toString().padStart(2, "0");
