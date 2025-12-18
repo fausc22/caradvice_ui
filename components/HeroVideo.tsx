@@ -21,15 +21,15 @@ export default function HeroVideo() {
   useEffect(() => {
     // Cargar YouTube IFrame API
     const loadYouTubeAPI = () => {
-      if (window.YT && window.YT.Player) {
+      if (typeof window !== 'undefined' && window.YT && window.YT.Player) {
         initializePlayer();
-      } else {
+      } else if (typeof window !== 'undefined') {
         const tag = document.createElement("script");
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName("script")[0];
         firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
         
-        (window as any).onYouTubeIframeAPIReady = () => {
+        window.onYouTubeIframeAPIReady = () => {
           initializePlayer();
         };
       }
@@ -39,7 +39,8 @@ export default function HeroVideo() {
       if (!iframeRef.current) return;
 
       try {
-        const player = new (window as any).YT.Player(iframeRef.current.id || 'youtube-hero-video', {
+        if (!window.YT) return;
+        const player = new window.YT.Player(iframeRef.current.id || 'youtube-hero-video', {
           events: {
             onStateChange: (event: any) => {
               // Estado 2 = pausado, Estado 1 = reproduciendo
