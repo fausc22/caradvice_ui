@@ -130,8 +130,8 @@ export default function AutosPage() {
             <ViewControls
               viewMode={viewMode}
               onViewModeChange={setViewMode}
-              sortBy={filters.sortBy}
-              sortOrder={filters.sortOrder}
+              sortBy={filters.sortBy ?? "created_at"}
+              sortOrder={filters.sortOrder ?? "DESC"}
               onSortChange={handleSortChange}
             />
           </div>
