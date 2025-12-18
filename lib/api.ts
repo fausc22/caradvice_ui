@@ -29,12 +29,37 @@ export const api = {
         } as T;
       }
 
-      if (endpoint.startsWith('/api/vehicles/') && endpoint !== '/api/vehicles/filters/options') {
+      if (endpoint.startsWith('/api/vehicles/') && endpoint !== '/api/vehicles/filters/options' && !endpoint.includes('/related')) {
         const id = endpoint.split('/').pop();
-        const vehicle = staticData.vehicles.find((v) => v.id.toString() === id || v.asofix_id === id);
+        if (!id) {
+          throw new Error('Invalid vehicle ID');
+        }
+        
+        // Debug en desarrollo
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(`[API] Buscando vehículo con ID: ${id}, Total vehículos: ${staticData.vehicles.length}`);
+        }
+        
+        // Buscar por id numérico o string, y también por asofix_id
+        const vehicle = staticData.vehicles.find((v) => {
+          const vehicleIdStr = v.id.toString();
+          const vehicleAsofixId = v.asofix_id?.toString();
+          const matches = vehicleIdStr === id || vehicleAsofixId === id || v.id === Number(id);
+          
+          if (process.env.NODE_ENV !== 'production' && matches) {
+            console.log(`[API] Vehículo encontrado: ${v.title} (ID: ${v.id}, Asofix: ${v.asofix_id})`);
+          }
+          
+          return matches;
+        });
         
         if (!vehicle) {
-          throw new Error('Vehicle not found');
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn(`[API] Vehículo no encontrado. IDs disponibles (primeros 5):`, 
+              staticData.vehicles.slice(0, 5).map(v => ({ id: v.id, asofix_id: v.asofix_id }))
+            );
+          }
+          throw new Error(`Vehicle not found: ${id}`);
         }
 
         return {

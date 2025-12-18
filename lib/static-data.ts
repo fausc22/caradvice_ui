@@ -23,39 +23,78 @@ export async function loadStaticData(): Promise<StaticData | null> {
 
   try {
     // En el cliente, cargar desde /static-data/vehicles.json
-    // En el servidor (build time), cargar desde el sistema de archivos
     if (typeof window !== 'undefined') {
-      // Usar fetch con caché del navegador
       const response = await fetch('/static-data/vehicles.json', {
-        cache: 'force-cache', // Usar caché del navegador
-        next: { revalidate: false }, // No revalidar en modo estático
+        cache: 'force-cache',
+        next: { revalidate: false },
       });
       
       if (!response.ok) {
-        console.warn('No se pudo cargar vehicles.json');
+        console.warn('No se pudo cargar vehicles.json desde el cliente');
         return null;
       }
       
       cachedStaticData = await response.json();
       return cachedStaticData;
     } else {
-      // Server-side: leer del sistema de archivos
+      // Servidor: leer del sistema de archivos
+      // En Next.js, durante build/runtime, podemos leer desde public/
       const fs = require('fs');
       const path = require('path');
+      
+      // Ruta estándar en Next.js: public/ está en la raíz del proyecto
       const filePath = path.join(process.cwd(), 'public', 'static-data', 'vehicles.json');
       
-      if (fs.existsSync(filePath)) {
-        const fileContent = fs.readFileSync(filePath, 'utf-8');
-        cachedStaticData = JSON.parse(fileContent);
-        return cachedStaticData;
+      try {
+        if (fs.existsSync(filePath)) {
+          const fileContent = fs.readFileSync(filePath, 'utf-8');
+          cachedStaticData = JSON.parse(fileContent);
+          
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(`[loadStaticData] Archivo cargado desde: ${filePath}`);
+            console.log(`[loadStaticData] Total vehículos: ${cachedStaticData.vehicles.length}`);
+          }
+          
+          return cachedStaticData;
+        } else {
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn(`[loadStaticData] Archivo no encontrado en: ${filePath}`);
+            console.warn(`[loadStaticData] process.cwd(): ${process.cwd()}`);
+          }
+          
+          // Intentar rutas alternativas
+          const altPaths = [
+            path.join(process.cwd(), 'static-data', 'vehicles.json'),
+          ];
+          
+          for (const altPath of altPaths) {
+            if (fs.existsSync(altPath)) {
+              const fileContent = fs.readFileSync(altPath, 'utf-8');
+              cachedStaticData = JSON.parse(fileContent);
+              
+              if (process.env.NODE_ENV !== 'production') {
+                console.log(`[loadStaticData] Archivo cargado desde ruta alternativa: ${altPath}`);
+              }
+              
+              return cachedStaticData;
+            }
+          }
+          
+          console.error('[loadStaticData] No se pudo encontrar vehicles.json en ninguna ruta esperada');
+          if (process.env.NODE_ENV !== 'production') {
+            console.error(`[loadStaticData] Rutas intentadas: ${[filePath, ...altPaths].join(', ')}`);
+          }
+          return null;
+        }
+      } catch (readError) {
+        console.error('Error al leer vehicles.json:', readError);
+        return null;
       }
     }
   } catch (error) {
     console.error('Error loading static data:', error);
     return null;
   }
-
-  return null;
 }
 
 /**

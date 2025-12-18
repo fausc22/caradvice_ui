@@ -7,18 +7,37 @@ import { api } from "./api";
  */
 export async function getVehicle(id: string | number): Promise<Car | null> {
   try {
+    // Normalizar el ID a string para la búsqueda
+    const vehicleId = String(id);
+    
+    // Debug: verificar modo estático
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[getVehicle] Buscando vehículo con ID: ${vehicleId}, Modo estático: ${api.isStaticMode}`);
+    }
+    
     const response = await api.get<{
       success: boolean;
       data: Car;
-    }>(`/api/vehicles/${id}`);
+    }>(`/api/vehicles/${vehicleId}`);
 
-    if (!response.success || !response.data) {
+    if (!response || !response.success || !response.data) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(`[getVehicle] Vehículo no encontrado: ${vehicleId}`);
+      }
       return null;
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[getVehicle] Vehículo encontrado: ${response.data.title}`);
     }
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching vehicle:", error);
+    console.error(`[getVehicle] Error al obtener vehículo ${id}:`, error);
+    // En producción, no mostrar detalles del error
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('Error details:', error);
+    }
     return null;
   }
 }
