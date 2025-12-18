@@ -19,9 +19,25 @@ const mapCarToCarCard = (car: Car, currency: "ARS" | "USD") => {
   const condition = car.taxonomies?.condition?.[0] || "";
   const transmission = car.taxonomies?.transmission?.[0] || "";
   const fuel = car.taxonomies?.fuel_type?.[0] || "";
-  const image = car.featured_image_path 
-    ? `/api/image?path=${encodeURIComponent(car.featured_image_path)}`
-    : car.featured_image_url || undefined;
+  
+  // Manejar imágenes: si es ruta local estática, usarla directamente; si es ruta de uploads, usar API
+  let image: string | undefined;
+  if (car.featured_image_path) {
+    if (car.featured_image_path.startsWith('/IMG/static/')) {
+      // Ruta local estática - usar directamente
+      image = car.featured_image_path;
+    } else {
+      // Ruta de uploads - usar API
+      image = `/api/image?path=${encodeURIComponent(car.featured_image_path)}`;
+    }
+  } else if (car.featured_image_url) {
+    // URL externa o local
+    if (car.featured_image_url.startsWith('/IMG/static/')) {
+      image = car.featured_image_url;
+    } else {
+      image = car.featured_image_url;
+    }
+  }
 
   return {
     id: String(car.id),

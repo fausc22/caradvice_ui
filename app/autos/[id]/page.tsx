@@ -73,8 +73,13 @@ export default function VehicleDetailPage() {
   }
 
   const activeImage = images[activeImageIndex] || images[0];
-  const activeImageUrl = activeImage?.file_path
+  // Construir URL de imagen activa: si es ruta estática, usarla directamente; si es uploads, usar API
+  const activeImageUrl = activeImage?.file_path?.startsWith("/IMG/static/")
+    ? activeImage.file_path
+    : activeImage?.file_path
     ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(activeImage.file_path)}`
+    : activeImage?.image_url?.startsWith("/IMG/static/")
+    ? activeImage.image_url
     : activeImage?.image_url || "/IMG/logo_transparente.png";
 
   const formatPrice = (price: number, currency: "ARS" | "USD") => {
@@ -241,9 +246,17 @@ export default function VehicleDetailPage() {
             {images.length > 1 && (
               <div className="grid grid-cols-5 gap-2">
                 {images.slice(0, 5).map((image, index) => {
-                  const thumbUrl = image.file_path
-                    ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(image.file_path)}`
-                    : image.image_url || "/IMG/logo_transparente.png";
+                  // Si es ruta estática, usarla directamente; si es uploads, usar API; si no, usar URL
+                  let thumbUrl: string;
+                  if (image.file_path?.startsWith("/IMG/static/")) {
+                    thumbUrl = image.file_path;
+                  } else if (image.file_path) {
+                    thumbUrl = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(image.file_path)}`;
+                  } else if (image.image_url?.startsWith("/IMG/static/")) {
+                    thumbUrl = image.image_url;
+                  } else {
+                    thumbUrl = image.image_url || "/IMG/logo_transparente.png";
+                  }
                   
                   return (
                     <motion.button
@@ -488,8 +501,12 @@ export default function VehicleDetailPage() {
                   kilometers: relatedVehicle.kilometres,
                   transmission: relatedVehicle.taxonomies?.transmission?.[0] || "N/A",
                   fuel: relatedVehicle.taxonomies?.fuel_type?.[0] || "N/A",
-                  image: relatedVehicle.featured_image_path
+                  image: relatedVehicle.featured_image_path?.startsWith("/IMG/static/")
+                    ? relatedVehicle.featured_image_path
+                    : relatedVehicle.featured_image_path
                     ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(relatedVehicle.featured_image_path)}`
+                    : relatedVehicle.featured_image_url?.startsWith("/IMG/static/")
+                    ? relatedVehicle.featured_image_url
                     : relatedVehicle.featured_image_url,
                 };
               })}

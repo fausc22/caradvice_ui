@@ -1,0 +1,2747 @@
+{
+  "vehicles": [
+    {
+      "id": 457,
+      "asofix_id": "cb523679-e3e1-4ab2-8d4f-6e7aeb1776bc",
+      "title": "FORD ECO SPORT 1.5 TDCI SE L18",
+      "content": "",
+      "year": 2018,
+      "kilometres": 74000,
+      "license_plate": "AD288XS",
+      "price_usd": null,
+      "price_ars": "22500000.00",
+      "created_at": "2025-12-18T13:15:01.000Z",
+      "updated_at": "2025-12-18T14:33:45.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "4b6c196a-a0df-4dbf-a409-9f1b8c8c0bc1",
+            "name": "Blanco",
+            "color": "#333"
+          }
+        ],
+        "version": "1.5 TDCI SE L18",
+        "brand_id": "cb8d56ee-2cb3-4d14-bd9a-3889d0a49951",
+        "model_id": "79015b95-b196-4ea4-bf1b-f0bd3b93f3a9",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Dakota Cars Rio Cuarto",
+            "branch_office_name": "Dakota Cars"
+          }
+        ],
+        "original_price": {
+          "list_price": 22500000,
+          "sale_price": 22500000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 22500000
+        }
+      },
+      "featured_image_path": "/IMG/static/457/img-1.jpg",
+      "featured_image_url": "/IMG/static/457/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/457/img-1.jpg",
+          "file_path": "/IMG/static/457/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/457/img-2.jpg",
+          "file_path": "/IMG/static/457/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/457/img-3.jpg",
+          "file_path": "/IMG/static/457/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/457/img-4.jpg",
+          "file_path": "/IMG/static/457/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/457/img-5.jpg",
+          "file_path": "/IMG/static/457/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/457/img-6.jpg",
+          "file_path": "/IMG/static/457/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/457/img-7.jpg",
+          "file_path": "/IMG/static/457/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/457/img-8.jpg",
+          "file_path": "/IMG/static/457/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/457/img-9.jpg",
+          "file_path": "/IMG/static/457/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/457/img-10.jpg",
+          "file_path": "/IMG/static/457/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/457/img-11.jpg",
+          "file_path": "/IMG/static/457/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/457/img-12.jpg",
+          "file_path": "/IMG/static/457/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "FORD"
+        ],
+        "color": [
+          "Blanco"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "DIESEL"
+        ],
+        "model": [
+          "ECO SPORT"
+        ],
+        "segment": [
+          "SUV"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 456,
+      "asofix_id": "a5487687-defc-4e6b-8202-2b5a05e806c1",
+      "title": "HONDA HRV 1.8 EXL CVT L19",
+      "content": "",
+      "year": 2019,
+      "kilometres": 55000,
+      "license_plate": "AD363CK",
+      "price_usd": "27500.00",
+      "price_ars": null,
+      "created_at": "2025-12-18T13:15:00.000Z",
+      "updated_at": "2025-12-18T14:33:40.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "f484bff6-9ade-4cfc-ac9a-5a6cde06d61d",
+            "name": "Bordo",
+            "color": "#333"
+          }
+        ],
+        "version": "1.8 EXL CVT L19",
+        "brand_id": "db0d082a-2999-4098-9007-c99abd5fd3b0",
+        "model_id": "75b78f6d-1aba-4af9-bc2a-9c3b1dc12099",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Dakota Cars Rio Cuarto",
+            "branch_office_name": "Dakota Cars"
+          }
+        ],
+        "original_price": {
+          "list_price": 27500,
+          "sale_price": 27500,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Dolar",
+          "exchange_rate": 1,
+          "currency_iso_code": null,
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 27500
+        }
+      },
+      "featured_image_path": "/IMG/static/456/img-1.jpg",
+      "featured_image_url": "/IMG/static/456/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/456/img-1.jpg",
+          "file_path": "/IMG/static/456/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/456/img-2.jpg",
+          "file_path": "/IMG/static/456/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/456/img-3.jpg",
+          "file_path": "/IMG/static/456/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/456/img-4.jpg",
+          "file_path": "/IMG/static/456/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/456/img-5.jpg",
+          "file_path": "/IMG/static/456/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/456/img-6.jpg",
+          "file_path": "/IMG/static/456/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/456/img-7.jpg",
+          "file_path": "/IMG/static/456/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/456/img-8.jpg",
+          "file_path": "/IMG/static/456/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/456/img-9.jpg",
+          "file_path": "/IMG/static/456/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/456/img-10.jpg",
+          "file_path": "/IMG/static/456/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/456/img-11.jpg",
+          "file_path": "/IMG/static/456/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/456/img-12.jpg",
+          "file_path": "/IMG/static/456/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/456/img-13.jpg",
+          "file_path": "/IMG/static/456/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/456/img-14.jpg",
+          "file_path": "/IMG/static/456/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/456/img-15.jpg",
+          "file_path": "/IMG/static/456/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/456/img-16.jpg",
+          "file_path": "/IMG/static/456/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/456/img-17.jpg",
+          "file_path": "/IMG/static/456/img-17.jpg",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/456/img-18.jpg",
+          "file_path": "/IMG/static/456/img-18.jpg",
+          "is_featured": false,
+          "sort_order": 17
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "HONDA"
+        ],
+        "color": [
+          "Bordo"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "HRV"
+        ],
+        "segment": [
+          "SUV"
+        ],
+        "transmission": [
+          "AUTOMATICO"
+        ]
+      }
+    },
+    {
+      "id": 455,
+      "asofix_id": "a3839d8f-e2c4-479b-9d0e-fd078b572c6a",
+      "title": "VOLKSWAGEN POLO 1.6 MSI TRENDLINE 5P L18",
+      "content": "",
+      "year": 2019,
+      "kilometres": 96000,
+      "license_plate": "AD401TQ",
+      "price_usd": null,
+      "price_ars": "20000000.00",
+      "created_at": "2025-12-18T13:15:00.000Z",
+      "updated_at": "2025-12-18T14:33:36.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "7dacdb1d-8c1f-43ad-8cfb-6e04b79593d6",
+            "name": "Gris",
+            "color": "#333"
+          }
+        ],
+        "version": "1.6 MSI TRENDLINE 5P L18",
+        "brand_id": "c84a08a7-c1fa-4e34-bd11-75316d69ce60",
+        "model_id": "0884c833-c159-47ab-a7a6-d1d5e30277a1",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Dakota Cars Rio Cuarto",
+            "branch_office_name": "Dakota Cars"
+          }
+        ],
+        "original_price": {
+          "list_price": 20000000,
+          "sale_price": 20000000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 20000000
+        }
+      },
+      "featured_image_path": "/IMG/static/455/img-1.jpg",
+      "featured_image_url": "/IMG/static/455/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/455/img-1.jpg",
+          "file_path": "/IMG/static/455/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/455/img-2.jpg",
+          "file_path": "/IMG/static/455/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/455/img-3.jpg",
+          "file_path": "/IMG/static/455/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/455/img-4.jpg",
+          "file_path": "/IMG/static/455/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/455/img-5.jpg",
+          "file_path": "/IMG/static/455/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/455/img-6.jpg",
+          "file_path": "/IMG/static/455/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/455/img-7.jpg",
+          "file_path": "/IMG/static/455/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/455/img-8.jpg",
+          "file_path": "/IMG/static/455/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/455/img-9.jpg",
+          "file_path": "/IMG/static/455/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/455/img-10.jpg",
+          "file_path": "/IMG/static/455/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/455/img-11.jpg",
+          "file_path": "/IMG/static/455/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/455/img-12.jpg",
+          "file_path": "/IMG/static/455/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "VOLKSWAGEN"
+        ],
+        "color": [
+          "GRIS"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "POLO"
+        ],
+        "segment": [
+          "Hatchback"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 454,
+      "asofix_id": "9fd15bde-7bce-4c03-93c4-41ffa5c0088c",
+      "title": "FORD FIESTA 1.6 S KD 5P L14",
+      "content": "",
+      "year": 2016,
+      "kilometres": 135000,
+      "license_plate": "PQG463",
+      "price_usd": null,
+      "price_ars": "16000000.00",
+      "created_at": "2025-12-18T13:14:59.000Z",
+      "updated_at": "2025-12-18T14:33:33.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "8198f3a2-b0be-49d0-9f35-1652beaa6731",
+            "name": "Gris",
+            "color": "#333"
+          }
+        ],
+        "version": "1.6 S KD 5P L14",
+        "brand_id": "cb8d56ee-2cb3-4d14-bd9a-3889d0a49951",
+        "model_id": "2c7da02d-cdca-4c22-9af9-6a5caea4e7fb",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Dakota Cars Rio Cuarto",
+            "branch_office_name": "Dakota Cars"
+          }
+        ],
+        "original_price": {
+          "list_price": 16000000,
+          "sale_price": 16000000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 16000000
+        }
+      },
+      "featured_image_path": "/IMG/static/454/img-1.jpg",
+      "featured_image_url": "/IMG/static/454/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/454/img-1.jpg",
+          "file_path": "/IMG/static/454/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/454/img-2.jpg",
+          "file_path": "/IMG/static/454/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/454/img-3.jpg",
+          "file_path": "/IMG/static/454/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/454/img-4.jpg",
+          "file_path": "/IMG/static/454/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/454/img-5.jpg",
+          "file_path": "/IMG/static/454/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/454/img-6.jpg",
+          "file_path": "/IMG/static/454/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/454/img-7.jpg",
+          "file_path": "/IMG/static/454/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/454/img-8.jpg",
+          "file_path": "/IMG/static/454/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/454/img-9.jpg",
+          "file_path": "/IMG/static/454/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/454/img-10.jpg",
+          "file_path": "/IMG/static/454/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/454/img-11.jpg",
+          "file_path": "/IMG/static/454/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/454/img-12.jpg",
+          "file_path": "/IMG/static/454/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/454/img-13.jpg",
+          "file_path": "/IMG/static/454/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "FORD"
+        ],
+        "color": [
+          "GRIS"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "FIESTA"
+        ],
+        "segment": [
+          "Hatchback"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 453,
+      "asofix_id": "4e4e6f32-c5ee-4493-813c-3375f995629a",
+      "title": "FORD ECO SPORT 1.6 TITANIUM L13",
+      "content": "",
+      "year": 2015,
+      "kilometres": 64500,
+      "license_plate": "PHO302",
+      "price_usd": null,
+      "price_ars": "18850000.00",
+      "created_at": "2025-12-18T13:14:58.000Z",
+      "updated_at": "2025-12-18T14:33:28.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "e7c72cf8-d127-42f3-ab1d-058102e96bfd",
+            "name": "Gris",
+            "color": "#333"
+          }
+        ],
+        "version": "1.6 TITANIUM L13",
+        "brand_id": "cb8d56ee-2cb3-4d14-bd9a-3889d0a49951",
+        "model_id": "79015b95-b196-4ea4-bf1b-f0bd3b93f3a9",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Dakota Cars Rio Cuarto",
+            "branch_office_name": "Dakota Cars"
+          }
+        ],
+        "original_price": {
+          "list_price": 18850000,
+          "sale_price": 18850000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 18850000
+        }
+      },
+      "featured_image_path": "/IMG/static/453/img-1.jpg",
+      "featured_image_url": "/IMG/static/453/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/453/img-1.jpg",
+          "file_path": "/IMG/static/453/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/453/img-2.jpg",
+          "file_path": "/IMG/static/453/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/453/img-3.jpg",
+          "file_path": "/IMG/static/453/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/453/img-4.jpg",
+          "file_path": "/IMG/static/453/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/453/img-5.jpg",
+          "file_path": "/IMG/static/453/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/453/img-6.jpg",
+          "file_path": "/IMG/static/453/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/453/img-7.jpg",
+          "file_path": "/IMG/static/453/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/453/img-8.jpg",
+          "file_path": "/IMG/static/453/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/453/img-9.jpg",
+          "file_path": "/IMG/static/453/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/453/img-10.jpg",
+          "file_path": "/IMG/static/453/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/453/img-11.jpg",
+          "file_path": "/IMG/static/453/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/453/img-12.jpg",
+          "file_path": "/IMG/static/453/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/453/img-13.jpg",
+          "file_path": "/IMG/static/453/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/453/img-14.jpg",
+          "file_path": "/IMG/static/453/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/453/img-15.jpg",
+          "file_path": "/IMG/static/453/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/453/img-16.jpg",
+          "file_path": "/IMG/static/453/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "FORD"
+        ],
+        "color": [
+          "GRIS"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "ECO SPORT"
+        ],
+        "segment": [
+          "SUV"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 452,
+      "asofix_id": "ff87d36c-0a2a-4929-840f-6052f63c0e70",
+      "title": "FORD ECO SPORT 1.5 SE",
+      "content": "",
+      "year": 2020,
+      "kilometres": 83000,
+      "license_plate": "AE162XS",
+      "price_usd": null,
+      "price_ars": "23400000.00",
+      "created_at": "2025-12-18T13:14:58.000Z",
+      "updated_at": "2025-12-18T14:33:24.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "0b9d1197-64af-4842-ac6d-20a07c4810e8",
+            "name": "GRIS",
+            "color": "#919191"
+          }
+        ],
+        "version": "1.5 SE",
+        "brand_id": "84ae302e-b093-4f89-8c5f-c145f0dd5872",
+        "model_id": "b2da4e79-4bb5-4298-9629-36440b8c22a2",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Virtual Pablo",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 23400000,
+          "sale_price": 23400000,
+          "accessory_1": 0,
+          "accessory_2": 0,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 23400000
+        }
+      },
+      "featured_image_path": "/IMG/static/452/img-1.JPG",
+      "featured_image_url": "/IMG/static/452/img-1.JPG",
+      "images": [
+        {
+          "image_url": "/IMG/static/452/img-1.JPG",
+          "file_path": "/IMG/static/452/img-1.JPG",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/452/img-2.JPG",
+          "file_path": "/IMG/static/452/img-2.JPG",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/452/img-3.JPG",
+          "file_path": "/IMG/static/452/img-3.JPG",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/452/img-4.JPG",
+          "file_path": "/IMG/static/452/img-4.JPG",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/452/img-5.JPG",
+          "file_path": "/IMG/static/452/img-5.JPG",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/452/img-6.JPG",
+          "file_path": "/IMG/static/452/img-6.JPG",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/452/img-7.JPG",
+          "file_path": "/IMG/static/452/img-7.JPG",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/452/img-8.JPG",
+          "file_path": "/IMG/static/452/img-8.JPG",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/452/img-9.JPG",
+          "file_path": "/IMG/static/452/img-9.JPG",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/452/img-10.JPG",
+          "file_path": "/IMG/static/452/img-10.JPG",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/452/img-11.JPG",
+          "file_path": "/IMG/static/452/img-11.JPG",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/452/img-12.JPG",
+          "file_path": "/IMG/static/452/img-12.JPG",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/452/img-13.JPG",
+          "file_path": "/IMG/static/452/img-13.JPG",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/452/img-14.JPG",
+          "file_path": "/IMG/static/452/img-14.JPG",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/452/img-15.JPG",
+          "file_path": "/IMG/static/452/img-15.JPG",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/452/img-16.JPG",
+          "file_path": "/IMG/static/452/img-16.JPG",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/452/img-17.JPG",
+          "file_path": "/IMG/static/452/img-17.JPG",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/452/img-18.JPG",
+          "file_path": "/IMG/static/452/img-18.JPG",
+          "is_featured": false,
+          "sort_order": 17
+        },
+        {
+          "image_url": "/IMG/static/452/img-19.JPG",
+          "file_path": "/IMG/static/452/img-19.JPG",
+          "is_featured": false,
+          "sort_order": 18
+        },
+        {
+          "image_url": "/IMG/static/452/img-20.JPG",
+          "file_path": "/IMG/static/452/img-20.JPG",
+          "is_featured": false,
+          "sort_order": 19
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "FORD"
+        ],
+        "color": [
+          "GRIS"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "ECO SPORT"
+        ],
+        "segment": [
+          "SUV"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 451,
+      "asofix_id": "ff330853-b395-4539-bbdd-b9025746065d",
+      "title": "FIAT ARGO 1.8 PRECISION L17",
+      "content": "",
+      "year": 2017,
+      "kilometres": 135000,
+      "license_plate": "AD336MZ",
+      "price_usd": null,
+      "price_ars": "19900000.00",
+      "created_at": "2025-12-18T13:14:57.000Z",
+      "updated_at": "2025-12-18T14:33:21.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "fbb87e63-cd8e-42cf-82a4-03a6615f560e",
+            "name": "Blanco",
+            "color": "#333"
+          }
+        ],
+        "version": "1.8 PRECISION L17",
+        "brand_id": "7192a9b9-df3b-4ed8-b43a-cb036a6ffc58",
+        "model_id": "e6408f0e-3e5c-44a6-9020-e36422cc55a1",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Virtual Pablo",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 19900000,
+          "sale_price": 19900000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 19900000
+        }
+      },
+      "featured_image_path": "/IMG/static/451/img-1.jpg",
+      "featured_image_url": "/IMG/static/451/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/451/img-1.jpg",
+          "file_path": "/IMG/static/451/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/451/img-2.jpg",
+          "file_path": "/IMG/static/451/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/451/img-3.jpg",
+          "file_path": "/IMG/static/451/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/451/img-4.jpg",
+          "file_path": "/IMG/static/451/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/451/img-5.jpg",
+          "file_path": "/IMG/static/451/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/451/img-6.jpg",
+          "file_path": "/IMG/static/451/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/451/img-7.jpg",
+          "file_path": "/IMG/static/451/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/451/img-8.jpg",
+          "file_path": "/IMG/static/451/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/451/img-9.jpg",
+          "file_path": "/IMG/static/451/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/451/img-10.jpg",
+          "file_path": "/IMG/static/451/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/451/img-11.jpg",
+          "file_path": "/IMG/static/451/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/451/img-12.jpg",
+          "file_path": "/IMG/static/451/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/451/img-13.jpg",
+          "file_path": "/IMG/static/451/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/451/img-14.jpg",
+          "file_path": "/IMG/static/451/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/451/img-15.jpg",
+          "file_path": "/IMG/static/451/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/451/img-16.jpg",
+          "file_path": "/IMG/static/451/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/451/img-17.jpg",
+          "file_path": "/IMG/static/451/img-17.jpg",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/451/img-18.jpg",
+          "file_path": "/IMG/static/451/img-18.jpg",
+          "is_featured": false,
+          "sort_order": 17
+        },
+        {
+          "image_url": "/IMG/static/451/img-19.jpg",
+          "file_path": "/IMG/static/451/img-19.jpg",
+          "is_featured": false,
+          "sort_order": 18
+        },
+        {
+          "image_url": "/IMG/static/451/img-20.jpg",
+          "file_path": "/IMG/static/451/img-20.jpg",
+          "is_featured": false,
+          "sort_order": 19
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "FIAT"
+        ],
+        "color": [
+          "Blanco"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "ARGO"
+        ],
+        "segment": [
+          "Hatchback"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 450,
+      "asofix_id": "fdc1b453-4247-4e05-b505-4adbf0a24f5c",
+      "title": "RENAULT DUSTER 1.6 4X2 DYNAMIQUE L11",
+      "content": "",
+      "year": 2011,
+      "kilometres": 183600,
+      "license_plate": "KPM108",
+      "price_usd": null,
+      "price_ars": "14750000.00",
+      "created_at": "2025-12-18T13:14:57.000Z",
+      "updated_at": "2025-12-18T14:33:18.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "b226260d-b9a5-4ddf-9efc-08db548a91eb",
+            "name": "Gris Acero",
+            "color": "#333"
+          }
+        ],
+        "version": "1.6 4X2 DYNAMIQUE L11",
+        "brand_id": "11b994bf-c6d8-4fd8-a936-a40b34283b4c",
+        "model_id": "0efd572a-e11f-4c9e-86b8-1f8e2a6262e2",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Virtual Ema Bravo",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 14750000,
+          "sale_price": 14750000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 14750000
+        }
+      },
+      "featured_image_path": "/IMG/static/450/img-1.jpg",
+      "featured_image_url": "/IMG/static/450/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/450/img-1.jpg",
+          "file_path": "/IMG/static/450/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/450/img-2.jpg",
+          "file_path": "/IMG/static/450/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/450/img-3.jpg",
+          "file_path": "/IMG/static/450/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/450/img-4.jpg",
+          "file_path": "/IMG/static/450/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/450/img-5.jpg",
+          "file_path": "/IMG/static/450/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/450/img-6.jpg",
+          "file_path": "/IMG/static/450/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/450/img-7.jpg",
+          "file_path": "/IMG/static/450/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/450/img-8.jpg",
+          "file_path": "/IMG/static/450/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/450/img-9.jpg",
+          "file_path": "/IMG/static/450/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/450/img-10.jpg",
+          "file_path": "/IMG/static/450/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/450/img-11.jpg",
+          "file_path": "/IMG/static/450/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/450/img-12.jpg",
+          "file_path": "/IMG/static/450/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/450/img-13.jpg",
+          "file_path": "/IMG/static/450/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/450/img-14.jpg",
+          "file_path": "/IMG/static/450/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/450/img-15.jpg",
+          "file_path": "/IMG/static/450/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/450/img-16.jpg",
+          "file_path": "/IMG/static/450/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/450/img-17.jpg",
+          "file_path": "/IMG/static/450/img-17.jpg",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/450/img-18.jpg",
+          "file_path": "/IMG/static/450/img-18.jpg",
+          "is_featured": false,
+          "sort_order": 17
+        },
+        {
+          "image_url": "/IMG/static/450/img-19.jpg",
+          "file_path": "/IMG/static/450/img-19.jpg",
+          "is_featured": false,
+          "sort_order": 18
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "RENAULT"
+        ],
+        "color": [
+          "Gris Acero"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "GNC"
+        ],
+        "model": [
+          "DUSTER"
+        ],
+        "segment": [
+          "SUV"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 449,
+      "asofix_id": "fc9a7f3f-8b42-4334-a41c-4e5dafb19a97",
+      "title": "NISSAN FRONTIER 2.3 4X4 DC XE L18",
+      "content": "",
+      "year": 2023,
+      "kilometres": 65500,
+      "license_plate": "AG169HQ",
+      "price_usd": null,
+      "price_ars": "41000000.00",
+      "created_at": "2025-12-18T13:14:56.000Z",
+      "updated_at": "2025-12-18T14:33:14.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "71ca6373-dfe3-4ecf-9bc1-3e2048dbb435",
+            "name": "GRIS",
+            "color": "#919191"
+          }
+        ],
+        "version": "2.3 4X4 DC XE L18",
+        "brand_id": "c82aa4ec-e70f-439c-9dc1-861f56e358b1",
+        "model_id": "bddfacad-49b9-44f0-8376-1ee0fec399b7",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Dakota",
+            "branch_office_name": "Rio Cuarto"
+          }
+        ],
+        "original_price": {
+          "list_price": 41000000,
+          "sale_price": 41000000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 41000000
+        }
+      },
+      "featured_image_path": "/IMG/static/449/img-1.JPG",
+      "featured_image_url": "/IMG/static/449/img-1.JPG",
+      "images": [
+        {
+          "image_url": "/IMG/static/449/img-1.JPG",
+          "file_path": "/IMG/static/449/img-1.JPG",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/449/img-2.JPG",
+          "file_path": "/IMG/static/449/img-2.JPG",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/449/img-3.JPG",
+          "file_path": "/IMG/static/449/img-3.JPG",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/449/img-4.JPG",
+          "file_path": "/IMG/static/449/img-4.JPG",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/449/img-5.JPG",
+          "file_path": "/IMG/static/449/img-5.JPG",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/449/img-6.JPG",
+          "file_path": "/IMG/static/449/img-6.JPG",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/449/img-7.JPG",
+          "file_path": "/IMG/static/449/img-7.JPG",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/449/img-8.JPG",
+          "file_path": "/IMG/static/449/img-8.JPG",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/449/img-9.JPG",
+          "file_path": "/IMG/static/449/img-9.JPG",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/449/img-10.JPG",
+          "file_path": "/IMG/static/449/img-10.JPG",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/449/img-11.JPG",
+          "file_path": "/IMG/static/449/img-11.JPG",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/449/img-12.JPG",
+          "file_path": "/IMG/static/449/img-12.JPG",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/449/img-13.JPG",
+          "file_path": "/IMG/static/449/img-13.JPG",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/449/img-14.JPG",
+          "file_path": "/IMG/static/449/img-14.JPG",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/449/img-15.JPG",
+          "file_path": "/IMG/static/449/img-15.JPG",
+          "is_featured": false,
+          "sort_order": 14
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "NISSAN"
+        ],
+        "color": [
+          "GRIS"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "DIESEL"
+        ],
+        "model": [
+          "FRONTIER"
+        ],
+        "segment": [
+          "Pick Up"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 448,
+      "asofix_id": "fb6cd3ce-d523-47a6-93b9-ed107a87e275",
+      "title": "TOYOTA YARIS 1.5 XS CVT 5P",
+      "content": "",
+      "year": 2025,
+      "kilometres": 805,
+      "license_plate": "AH577BR",
+      "price_usd": "22500.00",
+      "price_ars": null,
+      "created_at": "2025-12-18T13:14:55.000Z",
+      "updated_at": "2025-12-18T14:33:10.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "1f3428af-ab36-43c2-a0b9-a7a72def46ec",
+            "name": "Gris Intermedio",
+            "color": "#333"
+          }
+        ],
+        "version": "1.5 XS CVT 5P",
+        "brand_id": "b4fa631d-d46f-4933-a908-5ad46ae79b91",
+        "model_id": "a988f35d-e620-46ce-a2f2-3ef717b3bdc3",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Fisica Facu Ucar",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 22500,
+          "sale_price": 22500,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Dolar",
+          "exchange_rate": 1,
+          "currency_iso_code": null,
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 22500
+        }
+      },
+      "featured_image_path": "/IMG/static/448/img-1.jpg",
+      "featured_image_url": "/IMG/static/448/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/448/img-1.jpg",
+          "file_path": "/IMG/static/448/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/448/img-2.jpg",
+          "file_path": "/IMG/static/448/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/448/img-3.jpg",
+          "file_path": "/IMG/static/448/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/448/img-4.jpg",
+          "file_path": "/IMG/static/448/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/448/img-5.jpg",
+          "file_path": "/IMG/static/448/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/448/img-6.jpg",
+          "file_path": "/IMG/static/448/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/448/img-7.jpg",
+          "file_path": "/IMG/static/448/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/448/img-8.jpg",
+          "file_path": "/IMG/static/448/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/448/img-9.jpg",
+          "file_path": "/IMG/static/448/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/448/img-10.jpg",
+          "file_path": "/IMG/static/448/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/448/img-11.jpg",
+          "file_path": "/IMG/static/448/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/448/img-12.jpg",
+          "file_path": "/IMG/static/448/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/448/img-13.jpg",
+          "file_path": "/IMG/static/448/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/448/img-14.jpg",
+          "file_path": "/IMG/static/448/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/448/img-15.jpg",
+          "file_path": "/IMG/static/448/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/448/img-16.jpg",
+          "file_path": "/IMG/static/448/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/448/img-17.jpg",
+          "file_path": "/IMG/static/448/img-17.jpg",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/448/img-18.jpg",
+          "file_path": "/IMG/static/448/img-18.jpg",
+          "is_featured": false,
+          "sort_order": 17
+        },
+        {
+          "image_url": "/IMG/static/448/img-19.jpg",
+          "file_path": "/IMG/static/448/img-19.jpg",
+          "is_featured": false,
+          "sort_order": 18
+        },
+        {
+          "image_url": "/IMG/static/448/img-20.jpg",
+          "file_path": "/IMG/static/448/img-20.jpg",
+          "is_featured": false,
+          "sort_order": 19
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "TOYOTA"
+        ],
+        "color": [
+          "Gris Intermedio"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "YARIS"
+        ],
+        "segment": [
+          "Hatchback"
+        ],
+        "transmission": [
+          "AUTOMATICO"
+        ]
+      }
+    },
+    {
+      "id": 447,
+      "asofix_id": "fae10b1b-9a83-4907-ae03-c59666544d83",
+      "title": "VOLKSWAGEN GOL 1.6 TREND COMFORTLINE 5P L17",
+      "content": "",
+      "year": 2018,
+      "kilometres": 84000,
+      "license_plate": "AD155CF",
+      "price_usd": null,
+      "price_ars": "17900000.00",
+      "created_at": "2025-12-18T13:14:55.000Z",
+      "updated_at": "2025-12-18T14:33:06.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "2db228f4-6a6d-48f4-852a-a3aeb05c64d6",
+            "name": "Blanco",
+            "color": "#333"
+          }
+        ],
+        "version": "1.6 TREND COMFORTLINE 5P L17",
+        "brand_id": "c17385b1-6fcb-4057-857a-a578bb4476e5",
+        "model_id": "dc185b9a-365b-43ab-b858-44c9c4323082",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Fisica Joaco Formoseño",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 17900000,
+          "sale_price": 17900000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 17900000
+        }
+      },
+      "featured_image_path": "/IMG/static/447/img-1.jpg",
+      "featured_image_url": "/IMG/static/447/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/447/img-1.jpg",
+          "file_path": "/IMG/static/447/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/447/img-2.jpg",
+          "file_path": "/IMG/static/447/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/447/img-3.jpg",
+          "file_path": "/IMG/static/447/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/447/img-4.jpg",
+          "file_path": "/IMG/static/447/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/447/img-5.jpg",
+          "file_path": "/IMG/static/447/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/447/img-6.jpg",
+          "file_path": "/IMG/static/447/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/447/img-7.jpg",
+          "file_path": "/IMG/static/447/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/447/img-8.jpg",
+          "file_path": "/IMG/static/447/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/447/img-9.jpg",
+          "file_path": "/IMG/static/447/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/447/img-10.jpg",
+          "file_path": "/IMG/static/447/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/447/img-11.jpg",
+          "file_path": "/IMG/static/447/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/447/img-12.jpg",
+          "file_path": "/IMG/static/447/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/447/img-13.jpg",
+          "file_path": "/IMG/static/447/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/447/img-14.jpg",
+          "file_path": "/IMG/static/447/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/447/img-15.jpg",
+          "file_path": "/IMG/static/447/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/447/img-16.jpg",
+          "file_path": "/IMG/static/447/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/447/img-17.jpg",
+          "file_path": "/IMG/static/447/img-17.jpg",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/447/img-18.jpg",
+          "file_path": "/IMG/static/447/img-18.jpg",
+          "is_featured": false,
+          "sort_order": 17
+        },
+        {
+          "image_url": "/IMG/static/447/img-19.jpg",
+          "file_path": "/IMG/static/447/img-19.jpg",
+          "is_featured": false,
+          "sort_order": 18
+        },
+        {
+          "image_url": "/IMG/static/447/img-20.jpg",
+          "file_path": "/IMG/static/447/img-20.jpg",
+          "is_featured": false,
+          "sort_order": 19
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "VOLKSWAGEN"
+        ],
+        "color": [
+          "Blanco"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "GOL"
+        ],
+        "segment": [
+          "Hatchback"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 446,
+      "asofix_id": "fa308c8f-d239-47d3-baba-6b71d3f404f7",
+      "title": "VOLKSWAGEN SAVEIRO 1.6 CABEXT SAFETY P HIGHLINE L13",
+      "content": "",
+      "year": 2014,
+      "kilometres": 136000,
+      "license_plate": "OBT668",
+      "price_usd": null,
+      "price_ars": "18400000.00",
+      "created_at": "2025-12-18T13:14:55.000Z",
+      "updated_at": "2025-12-18T14:33:03.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "7f092e61-f2c9-4225-9902-f37b79223fe3",
+            "name": "Gris Plata",
+            "color": "#333"
+          }
+        ],
+        "version": "1.6 CABEXT SAFETY P HIGHLINE L13",
+        "brand_id": "c17385b1-6fcb-4057-857a-a578bb4476e5",
+        "model_id": "ea390e54-c088-41dc-bc79-3fa940c4866a",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Virtual Nahuel",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 18400000,
+          "sale_price": 18400000,
+          "accessory_1": 0,
+          "accessory_2": 0,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 18400000
+        }
+      },
+      "featured_image_path": "/IMG/static/446/img-1.jpg",
+      "featured_image_url": "/IMG/static/446/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/446/img-1.jpg",
+          "file_path": "/IMG/static/446/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/446/img-2.jpg",
+          "file_path": "/IMG/static/446/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/446/img-3.jpg",
+          "file_path": "/IMG/static/446/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/446/img-4.jpg",
+          "file_path": "/IMG/static/446/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/446/img-5.jpg",
+          "file_path": "/IMG/static/446/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/446/img-6.jpg",
+          "file_path": "/IMG/static/446/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/446/img-7.jpg",
+          "file_path": "/IMG/static/446/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/446/img-8.jpg",
+          "file_path": "/IMG/static/446/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/446/img-9.jpg",
+          "file_path": "/IMG/static/446/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/446/img-10.jpg",
+          "file_path": "/IMG/static/446/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/446/img-11.jpg",
+          "file_path": "/IMG/static/446/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/446/img-12.jpg",
+          "file_path": "/IMG/static/446/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/446/img-13.jpg",
+          "file_path": "/IMG/static/446/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/446/img-14.jpg",
+          "file_path": "/IMG/static/446/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/446/img-15.jpg",
+          "file_path": "/IMG/static/446/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/446/img-16.jpg",
+          "file_path": "/IMG/static/446/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/446/img-17.jpg",
+          "file_path": "/IMG/static/446/img-17.jpg",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/446/img-18.jpg",
+          "file_path": "/IMG/static/446/img-18.jpg",
+          "is_featured": false,
+          "sort_order": 17
+        },
+        {
+          "image_url": "/IMG/static/446/img-19.jpg",
+          "file_path": "/IMG/static/446/img-19.jpg",
+          "is_featured": false,
+          "sort_order": 18
+        },
+        {
+          "image_url": "/IMG/static/446/img-20.jpg",
+          "file_path": "/IMG/static/446/img-20.jpg",
+          "is_featured": false,
+          "sort_order": 19
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "VOLKSWAGEN"
+        ],
+        "color": [
+          "Gris Plata"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "SAVEIRO"
+        ],
+        "segment": [
+          "Pick Up Liviana"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 445,
+      "asofix_id": "f9d61a90-2b8b-4aca-a22f-f32cb16ad60a",
+      "title": "VOLKSWAGEN VIRTUS 1.6 MSI TRENDLINE AT L18",
+      "content": "",
+      "year": 2018,
+      "kilometres": 133000,
+      "license_plate": "AD030GB",
+      "price_usd": null,
+      "price_ars": "20300000.00",
+      "created_at": "2025-12-18T13:14:55.000Z",
+      "updated_at": "2025-12-18T14:33:00.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "bf2b6ecd-a62e-461b-881e-928b579cef59",
+            "name": "BLANCO",
+            "color": "#ffffff"
+          }
+        ],
+        "version": "1.6 MSI TRENDLINE AT L18",
+        "brand_id": "c17385b1-6fcb-4057-857a-a578bb4476e5",
+        "model_id": "f9add02b-cdde-451a-b689-bf4c8be6108c",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Fisica Raul",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 20300000,
+          "sale_price": 20300000,
+          "accessory_1": 0,
+          "accessory_2": 0,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 20300000
+        }
+      },
+      "featured_image_path": "/IMG/static/445/img-1.JPG",
+      "featured_image_url": "/IMG/static/445/img-1.JPG",
+      "images": [
+        {
+          "image_url": "/IMG/static/445/img-1.JPG",
+          "file_path": "/IMG/static/445/img-1.JPG",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/445/img-2.JPG",
+          "file_path": "/IMG/static/445/img-2.JPG",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/445/img-3.JPG",
+          "file_path": "/IMG/static/445/img-3.JPG",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/445/img-4.JPG",
+          "file_path": "/IMG/static/445/img-4.JPG",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/445/img-5.JPG",
+          "file_path": "/IMG/static/445/img-5.JPG",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/445/img-6.JPG",
+          "file_path": "/IMG/static/445/img-6.JPG",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/445/img-7.JPG",
+          "file_path": "/IMG/static/445/img-7.JPG",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/445/img-8.JPG",
+          "file_path": "/IMG/static/445/img-8.JPG",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/445/img-9.JPG",
+          "file_path": "/IMG/static/445/img-9.JPG",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/445/img-10.JPG",
+          "file_path": "/IMG/static/445/img-10.JPG",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/445/img-11.JPG",
+          "file_path": "/IMG/static/445/img-11.JPG",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/445/img-12.JPG",
+          "file_path": "/IMG/static/445/img-12.JPG",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/445/img-13.JPG",
+          "file_path": "/IMG/static/445/img-13.JPG",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/445/img-14.JPG",
+          "file_path": "/IMG/static/445/img-14.JPG",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/445/img-15.JPG",
+          "file_path": "/IMG/static/445/img-15.JPG",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/445/img-16.JPG",
+          "file_path": "/IMG/static/445/img-16.JPG",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/445/img-17.JPG",
+          "file_path": "/IMG/static/445/img-17.JPG",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/445/img-18.JPG",
+          "file_path": "/IMG/static/445/img-18.JPG",
+          "is_featured": false,
+          "sort_order": 17
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "VOLKSWAGEN"
+        ],
+        "color": [
+          "Blanco"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "VIRTUS"
+        ],
+        "segment": [
+          "Sedán"
+        ],
+        "transmission": [
+          "AUTOMATICO"
+        ]
+      }
+    },
+    {
+      "id": 444,
+      "asofix_id": "f9b4b7f7-ebb5-4694-89d1-e70fbcd97dd2",
+      "title": "RENAULT DUSTER 1.6 4X2 EXPRESSION L11",
+      "content": "",
+      "year": 2012,
+      "kilometres": 277300,
+      "license_plate": "LOE851",
+      "price_usd": null,
+      "price_ars": "14500000.00",
+      "created_at": "2025-12-18T13:14:54.000Z",
+      "updated_at": "2025-12-18T14:32:56.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "a561447b-0b8e-4d8b-a6ac-b36ec29f760d",
+            "name": "Blanco",
+            "color": "#333"
+          }
+        ],
+        "version": "1.6 4X2 EXPRESSION L11",
+        "brand_id": "11b994bf-c6d8-4fd8-a936-a40b34283b4c",
+        "model_id": "0efd572a-e11f-4c9e-86b8-1f8e2a6262e2",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Virtual Pancho",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 14500000,
+          "sale_price": 14500000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 14500000
+        }
+      },
+      "featured_image_path": "/IMG/static/444/img-1.jpg",
+      "featured_image_url": "/IMG/static/444/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/444/img-1.jpg",
+          "file_path": "/IMG/static/444/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/444/img-2.jpg",
+          "file_path": "/IMG/static/444/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/444/img-3.jpg",
+          "file_path": "/IMG/static/444/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/444/img-4.jpg",
+          "file_path": "/IMG/static/444/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/444/img-5.jpg",
+          "file_path": "/IMG/static/444/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/444/img-6.jpg",
+          "file_path": "/IMG/static/444/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/444/img-7.jpg",
+          "file_path": "/IMG/static/444/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/444/img-8.jpg",
+          "file_path": "/IMG/static/444/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/444/img-9.jpg",
+          "file_path": "/IMG/static/444/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/444/img-10.jpg",
+          "file_path": "/IMG/static/444/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/444/img-11.jpg",
+          "file_path": "/IMG/static/444/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/444/img-12.jpg",
+          "file_path": "/IMG/static/444/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/444/img-13.jpg",
+          "file_path": "/IMG/static/444/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/444/img-14.jpg",
+          "file_path": "/IMG/static/444/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/444/img-15.jpg",
+          "file_path": "/IMG/static/444/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/444/img-16.jpg",
+          "file_path": "/IMG/static/444/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/444/img-17.jpg",
+          "file_path": "/IMG/static/444/img-17.jpg",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/444/img-18.jpg",
+          "file_path": "/IMG/static/444/img-18.jpg",
+          "is_featured": false,
+          "sort_order": 17
+        },
+        {
+          "image_url": "/IMG/static/444/img-19.jpg",
+          "file_path": "/IMG/static/444/img-19.jpg",
+          "is_featured": false,
+          "sort_order": 18
+        },
+        {
+          "image_url": "/IMG/static/444/img-20.jpg",
+          "file_path": "/IMG/static/444/img-20.jpg",
+          "is_featured": false,
+          "sort_order": 19
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "RENAULT"
+        ],
+        "color": [
+          "Blanco"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "GNC"
+        ],
+        "model": [
+          "DUSTER"
+        ],
+        "segment": [
+          "SUV"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    },
+    {
+      "id": 443,
+      "asofix_id": "f891fffe-fb58-4799-a884-2a7ec5f04b5c",
+      "title": "PEUGEOT 2008 1.6 CROSSWAY L18",
+      "content": "",
+      "year": 2019,
+      "kilometres": 96200,
+      "license_plate": "AD373SQ",
+      "price_usd": null,
+      "price_ars": "20000000.00",
+      "created_at": "2025-12-18T13:14:54.000Z",
+      "updated_at": "2025-12-18T14:32:53.000Z",
+      "additional_data": {
+        "colors": [
+          {
+            "id": "8ce28620-e5b4-4381-8baa-e8edd6ed0739",
+            "name": "Bordo",
+            "color": "#333"
+          }
+        ],
+        "version": "1.6 CROSSWAY L18",
+        "brand_id": "ae4c685b-d7f4-49be-a5a4-faed296766e6",
+        "model_id": "1a4e1801-2935-47cf-843a-68dce001fb4d",
+        "stock_info": [
+          {
+            "status": "Activo",
+            "location_name": "Consigna Virtual Fer",
+            "branch_office_name": "Consigna"
+          }
+        ],
+        "original_price": {
+          "list_price": 20000000,
+          "sale_price": 20000000,
+          "accessory_1": null,
+          "accessory_2": null,
+          "currency_name": "Peso Argentino",
+          "exchange_rate": 1,
+          "currency_iso_code": "ARS",
+          "factory_bonification": 0,
+          "transfer_enlisment_cost": 0,
+          "local_currency_sale_price": 20000000
+        }
+      },
+      "featured_image_path": "/IMG/static/443/img-1.jpg",
+      "featured_image_url": "/IMG/static/443/img-1.jpg",
+      "images": [
+        {
+          "image_url": "/IMG/static/443/img-1.jpg",
+          "file_path": "/IMG/static/443/img-1.jpg",
+          "is_featured": false,
+          "sort_order": 0
+        },
+        {
+          "image_url": "/IMG/static/443/img-2.jpg",
+          "file_path": "/IMG/static/443/img-2.jpg",
+          "is_featured": false,
+          "sort_order": 1
+        },
+        {
+          "image_url": "/IMG/static/443/img-3.jpg",
+          "file_path": "/IMG/static/443/img-3.jpg",
+          "is_featured": false,
+          "sort_order": 2
+        },
+        {
+          "image_url": "/IMG/static/443/img-4.jpg",
+          "file_path": "/IMG/static/443/img-4.jpg",
+          "is_featured": false,
+          "sort_order": 3
+        },
+        {
+          "image_url": "/IMG/static/443/img-5.jpg",
+          "file_path": "/IMG/static/443/img-5.jpg",
+          "is_featured": false,
+          "sort_order": 4
+        },
+        {
+          "image_url": "/IMG/static/443/img-6.jpg",
+          "file_path": "/IMG/static/443/img-6.jpg",
+          "is_featured": false,
+          "sort_order": 5
+        },
+        {
+          "image_url": "/IMG/static/443/img-7.jpg",
+          "file_path": "/IMG/static/443/img-7.jpg",
+          "is_featured": false,
+          "sort_order": 6
+        },
+        {
+          "image_url": "/IMG/static/443/img-8.jpg",
+          "file_path": "/IMG/static/443/img-8.jpg",
+          "is_featured": false,
+          "sort_order": 7
+        },
+        {
+          "image_url": "/IMG/static/443/img-9.jpg",
+          "file_path": "/IMG/static/443/img-9.jpg",
+          "is_featured": false,
+          "sort_order": 8
+        },
+        {
+          "image_url": "/IMG/static/443/img-10.jpg",
+          "file_path": "/IMG/static/443/img-10.jpg",
+          "is_featured": false,
+          "sort_order": 9
+        },
+        {
+          "image_url": "/IMG/static/443/img-11.jpg",
+          "file_path": "/IMG/static/443/img-11.jpg",
+          "is_featured": false,
+          "sort_order": 10
+        },
+        {
+          "image_url": "/IMG/static/443/img-12.jpg",
+          "file_path": "/IMG/static/443/img-12.jpg",
+          "is_featured": false,
+          "sort_order": 11
+        },
+        {
+          "image_url": "/IMG/static/443/img-13.jpg",
+          "file_path": "/IMG/static/443/img-13.jpg",
+          "is_featured": false,
+          "sort_order": 12
+        },
+        {
+          "image_url": "/IMG/static/443/img-14.jpg",
+          "file_path": "/IMG/static/443/img-14.jpg",
+          "is_featured": false,
+          "sort_order": 13
+        },
+        {
+          "image_url": "/IMG/static/443/img-15.jpg",
+          "file_path": "/IMG/static/443/img-15.jpg",
+          "is_featured": false,
+          "sort_order": 14
+        },
+        {
+          "image_url": "/IMG/static/443/img-16.jpg",
+          "file_path": "/IMG/static/443/img-16.jpg",
+          "is_featured": false,
+          "sort_order": 15
+        },
+        {
+          "image_url": "/IMG/static/443/img-17.jpg",
+          "file_path": "/IMG/static/443/img-17.jpg",
+          "is_featured": false,
+          "sort_order": 16
+        },
+        {
+          "image_url": "/IMG/static/443/img-18.jpg",
+          "file_path": "/IMG/static/443/img-18.jpg",
+          "is_featured": false,
+          "sort_order": 17
+        },
+        {
+          "image_url": "/IMG/static/443/img-19.jpg",
+          "file_path": "/IMG/static/443/img-19.jpg",
+          "is_featured": false,
+          "sort_order": 18
+        }
+      ],
+      "taxonomies": {
+        "brand": [
+          "PEUGEOT"
+        ],
+        "color": [
+          "Bordo"
+        ],
+        "condition": [
+          "Usado"
+        ],
+        "fuel_type": [
+          "NAFTA"
+        ],
+        "model": [
+          "2008"
+        ],
+        "segment": [
+          "SUV"
+        ],
+        "transmission": [
+          "MANUAL"
+        ]
+      }
+    }
+  ],
+  "filterOptions": {
+    "conditions": [
+      {
+        "name": "Usado",
+        "count": 15
+      }
+    ],
+    "brands": [
+      {
+        "name": "FIAT",
+        "count": 1
+      },
+      {
+        "name": "FORD",
+        "count": 4
+      },
+      {
+        "name": "HONDA",
+        "count": 1
+      },
+      {
+        "name": "NISSAN",
+        "count": 1
+      },
+      {
+        "name": "PEUGEOT",
+        "count": 1
+      },
+      {
+        "name": "RENAULT",
+        "count": 2
+      },
+      {
+        "name": "TOYOTA",
+        "count": 1
+      },
+      {
+        "name": "VOLKSWAGEN",
+        "count": 4
+      }
+    ],
+    "models": [
+      {
+        "name": "2008",
+        "count": 1
+      },
+      {
+        "name": "ARGO",
+        "count": 1
+      },
+      {
+        "name": "DUSTER",
+        "count": 2
+      },
+      {
+        "name": "ECO SPORT",
+        "count": 3
+      },
+      {
+        "name": "FIESTA",
+        "count": 1
+      },
+      {
+        "name": "FRONTIER",
+        "count": 1
+      },
+      {
+        "name": "GOL",
+        "count": 1
+      },
+      {
+        "name": "HRV",
+        "count": 1
+      },
+      {
+        "name": "POLO",
+        "count": 1
+      },
+      {
+        "name": "SAVEIRO",
+        "count": 1
+      },
+      {
+        "name": "VIRTUS",
+        "count": 1
+      },
+      {
+        "name": "YARIS",
+        "count": 1
+      }
+    ],
+    "ranges": {
+      "min_price_usd": "22500.00",
+      "max_price_usd": "27500.00",
+      "min_price_ars": "14500000.00",
+      "max_price_ars": "41000000.00",
+      "min_year": 2011,
+      "max_year": 2025,
+      "min_kilometres": 805,
+      "max_kilometres": 277300
+    }
+  },
+  "metadata": {
+    "exportedAt": "2025-12-18T14:34:34.104Z",
+    "totalVehicles": 15
+  }
+}

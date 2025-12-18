@@ -82,8 +82,12 @@ export default function VehicleGrid({
               kilometers: vehicle.kilometres,
               transmission: vehicle.taxonomies?.transmission?.[0] || "N/A",
               fuel: vehicle.taxonomies?.fuel_type?.[0] || "N/A",
-              image: vehicle.featured_image_path
+              image: vehicle.featured_image_path?.startsWith("/IMG/static/")
+                ? vehicle.featured_image_path
+                : vehicle.featured_image_path
                 ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(vehicle.featured_image_path)}`
+                : vehicle.featured_image_url?.startsWith("/IMG/static/")
+                ? vehicle.featured_image_url
                 : vehicle.featured_image_url,
             }}
             currency={priceInfo.currency}

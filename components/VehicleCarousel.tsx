@@ -107,8 +107,12 @@ export default function VehicleCarousel({ vehicles, currency }: VehicleCarouselP
                     kilometers: vehicle.kilometres || 0,
                     transmission: vehicle.taxonomies?.transmission?.[0] || "N/A",
                     fuel: vehicle.taxonomies?.fuel_type?.[0] || "N/A",
-                    image: vehicle.featured_image_path
+                    image: vehicle.featured_image_path?.startsWith("/IMG/static/")
+                      ? vehicle.featured_image_path
+                      : vehicle.featured_image_path
                       ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(vehicle.featured_image_path)}`
+                      : vehicle.featured_image_url?.startsWith("/IMG/static/")
+                      ? vehicle.featured_image_url
                       : vehicle.featured_image_url,
                   }}
                   currency={currency}

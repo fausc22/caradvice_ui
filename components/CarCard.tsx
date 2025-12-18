@@ -49,7 +49,12 @@ export default function CarCard({
   };
 
   const imageUrl = car.image || "/IMG/logo_transparente.png";
-  const isLocalImage = car.image?.startsWith("/api/image") || car.image?.includes("uploads");
+  // Reconocer imágenes locales: API, uploads, o rutas estáticas
+  const isLocalImage = car.image?.startsWith("/api/image") || 
+                       car.image?.includes("uploads") || 
+                       car.image?.startsWith("/IMG/static/");
+  // Rutas estáticas pueden usar Image de Next.js directamente
+  const isStaticImage = car.image?.startsWith("/IMG/static/");
 
   const isActive = isHovered || isPressed;
 
@@ -87,7 +92,21 @@ export default function CarCard({
             ease: "easeOut",
           }}
         >
-          {isLocalImage ? (
+          {isStaticImage ? (
+            // Imágenes estáticas: usar img directamente (están en public/)
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={imageUrl}
+              alt={car.title}
+              className="w-full h-full object-cover"
+              style={{ objectPosition: "center" }}
+              loading="lazy"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
+              }}
+            />
+          ) : isLocalImage ? (
+            // Imágenes locales (API o uploads): usar img con fallback
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={imageUrl}
@@ -99,6 +118,7 @@ export default function CarCard({
               }}
             />
           ) : imageUrl.startsWith("http") ? (
+            // URLs externas: usar img con fallback
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={imageUrl}
@@ -110,6 +130,7 @@ export default function CarCard({
               }}
             />
           ) : (
+            // Otras rutas locales: usar Image de Next.js
             <Image
               src={imageUrl}
               alt={car.title}

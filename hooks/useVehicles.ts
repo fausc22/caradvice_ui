@@ -2,9 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { Car, CarFilters, FilterOptions } from "@/types/car";
 
+// Helper para obtener el estado del modo estático
+const getStaticMode = () => api.isStaticMode;
+
 export function useVehicles(filters: CarFilters) {
   return useQuery({
-    queryKey: ["vehicles", filters],
+    queryKey: ["vehicles", filters, getStaticMode()],
     queryFn: async () => {
       const response = await api.get<{
         success: boolean;
@@ -25,13 +28,13 @@ export function useVehicles(filters: CarFilters) {
       
       return response.data;
     },
-    staleTime: 1000 * 60 * 5, // 5 minutos
+    staleTime: getStaticMode() ? Infinity : 1000 * 60 * 5, // En modo estático, nunca expira
   });
 }
 
 export function useFilterOptions(filters?: Partial<CarFilters>) {
   return useQuery({
-    queryKey: ["filterOptions", filters],
+    queryKey: ["filterOptions", filters, getStaticMode()],
     queryFn: async () => {
       const response = await api.get<{
         success: boolean;
@@ -44,13 +47,13 @@ export function useFilterOptions(filters?: Partial<CarFilters>) {
       
       return response.data;
     },
-    staleTime: 1000 * 60 * 1, // 1 minuto (conteos dinámicos)
+    staleTime: api.isStaticMode ? Infinity : 1000 * 60 * 1, // En modo estático, nunca expira
   });
 }
 
 export function useVehicle(id: string | number) {
   return useQuery({
-    queryKey: ["vehicle", id],
+    queryKey: ["vehicle", id, getStaticMode()],
     queryFn: async () => {
       const response = await api.get<{
         success: boolean;
@@ -64,13 +67,13 @@ export function useVehicle(id: string | number) {
       return response.data;
     },
     enabled: !!id,
-    staleTime: 1000 * 60 * 5, // 5 minutos
+    staleTime: getStaticMode() ? Infinity : 1000 * 60 * 5, // En modo estático, nunca expira
   });
 }
 
 export function useRelatedVehicles(id: string | number, limit: number = 6) {
   return useQuery({
-    queryKey: ["relatedVehicles", id, limit],
+    queryKey: ["relatedVehicles", id, limit, getStaticMode()],
     queryFn: async () => {
       const response = await api.get<{
         success: boolean;
@@ -84,13 +87,13 @@ export function useRelatedVehicles(id: string | number, limit: number = 6) {
       return response.data;
     },
     enabled: !!id,
-    staleTime: 1000 * 60 * 5, // 5 minutos
+    staleTime: getStaticMode() ? Infinity : 1000 * 60 * 5, // En modo estático, nunca expira
   });
 }
 
 export function useTopPricedVehicles(currency: "ARS" | "USD", limit: number = 8) {
   return useQuery({
-    queryKey: ["topPricedVehicles", currency, limit],
+    queryKey: ["topPricedVehicles", currency, limit, getStaticMode()],
     queryFn: async () => {
       const filters: CarFilters = {
         page: 1,
@@ -119,6 +122,6 @@ export function useTopPricedVehicles(currency: "ARS" | "USD", limit: number = 8)
       
       return response.data.vehicles;
     },
-    staleTime: 1000 * 60 * 5, // 5 minutos
+    staleTime: getStaticMode() ? Infinity : 1000 * 60 * 5, // En modo estático, nunca expira
   });
 }

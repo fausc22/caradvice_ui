@@ -72,6 +72,10 @@ server/uploads/
 !public/**/*.webp
 !public/**/*.mp4
 
+# Datos estáticos (comentar estas líneas si quieres commitear el JSON)
+# public/static-data/vehicles.json
+# public/static-data/config.json
+
 # ============================================
 # IDEs y editores
 # ============================================
