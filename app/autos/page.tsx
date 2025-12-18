@@ -11,9 +11,9 @@ import HeroVideo from "@/components/HeroVideo";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CompareFloatButton from "@/components/CompareFloatButton";
 import { Loader2 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 
-export default function AutosPage() {
+function AutosPageContent() {
   const { filters, updateFilters, clearFilters, setFilters } = useVehicleFilters();
   const { viewMode, currency, setViewMode, setCurrency } = useVehicleStore();
   const hasInitialized = useRef(false);
@@ -176,5 +176,17 @@ export default function AutosPage() {
       {/* Botón flotante de Comparar */}
       <CompareFloatButton />
     </div>
+  );
+}
+
+export default function AutosPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loader2 className="animate-spin text-orange-500" size={40} />
+      </div>
+    }>
+      <AutosPageContent />
+    </Suspense>
   );
 }

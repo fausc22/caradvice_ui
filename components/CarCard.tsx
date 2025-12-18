@@ -88,6 +88,7 @@ export default function CarCard({
           }}
         >
           {isLocalImage ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={imageUrl}
               alt={car.title}
@@ -98,6 +99,7 @@ export default function CarCard({
               }}
             />
           ) : imageUrl.startsWith("http") ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={imageUrl}
               alt={car.title}

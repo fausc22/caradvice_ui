@@ -88,6 +88,14 @@ export function useVehicleFilters() {
     return undefined;
   };
 
+  // Función helper para validar currency
+  const validateCurrency = (value: string | null | undefined): 'ARS' | 'USD' | undefined => {
+    if (value === 'ARS' || value === 'USD') {
+      return value;
+    }
+    return undefined;
+  };
+
   // Convertir los filtros a CarFilters con validación y limpieza de valores inválidos
   const carFilters: CarFilters = {
     page: filters.page ?? 1,
@@ -108,7 +116,7 @@ export function useVehicleFilters() {
     search: filters.search || undefined,
     sortBy: filters.sortBy || "created_at",
     sortOrder: filters.sortOrder || "DESC",
-    currency: filters.currency || undefined,
+    currency: validateCurrency(filters.currency),
   };
 
   return {
