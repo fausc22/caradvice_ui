@@ -60,6 +60,10 @@ export interface FilterOptions {
   conditions: FilterOption[];
   brands: FilterOption[];
   models: FilterOption[];
+  segments?: FilterOption[];
+  transmissions?: FilterOption[];
+  fuelTypes?: FilterOption[];
+  colors?: FilterOption[];
   ranges: {
     min_price_usd?: number;
     max_price_usd?: number;

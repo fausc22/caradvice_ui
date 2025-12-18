@@ -96,8 +96,8 @@ export default function VehicleFilters({
           >
             <option value="">Todas</option>
             {filterOptions.conditions.map((condition) => (
-              <option key={condition} value={condition}>
-                {condition}
+              <option key={condition.name} value={condition.name}>
+                {condition.name}
               </option>
             ))}
           </select>
@@ -116,9 +116,9 @@ export default function VehicleFilters({
             className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
           >
             <option value="">Todos</option>
-            {filterOptions.segments.map((segment) => (
-              <option key={segment} value={segment}>
-                {segment}
+            {(filterOptions.segments || []).map((segment) => (
+              <option key={segment.name} value={segment.name}>
+                {segment.name}
               </option>
             ))}
           </select>
@@ -138,8 +138,8 @@ export default function VehicleFilters({
           >
             <option value="">Todas</option>
             {filterOptions.brands.map((brand) => (
-              <option key={brand} value={brand}>
-                {brand}
+              <option key={brand.name} value={brand.name}>
+                {brand.name}
               </option>
             ))}
           </select>
@@ -159,8 +159,8 @@ export default function VehicleFilters({
           >
             <option value="">Todos</option>
             {filterOptions.models.map((model) => (
-              <option key={model} value={model}>
-                {model}
+              <option key={model.name} value={model.name}>
+                {model.name}
               </option>
             ))}
           </select>
@@ -255,9 +255,9 @@ export default function VehicleFilters({
               className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
               <option value="">Todas</option>
-              {filterOptions.transmissions.map((transmission) => (
-                <option key={transmission} value={transmission}>
-                  {transmission}
+              {(filterOptions.transmissions || []).map((transmission) => (
+                <option key={transmission.name} value={transmission.name}>
+                  {transmission.name}
                 </option>
               ))}
             </select>
@@ -276,9 +276,9 @@ export default function VehicleFilters({
               className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
               <option value="">Todos</option>
-              {filterOptions.fuelTypes.map((fuelType) => (
-                <option key={fuelType} value={fuelType}>
-                  {fuelType}
+              {(filterOptions.fuelTypes || []).map((fuelType) => (
+                <option key={fuelType.name} value={fuelType.name}>
+                  {fuelType.name}
                 </option>
               ))}
             </select>
@@ -337,9 +337,9 @@ export default function VehicleFilters({
               className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
               <option value="">Todos</option>
-              {filterOptions.colors.map((color) => (
-                <option key={color} value={color}>
-                  {color}
+              {(filterOptions.colors || []).map((color) => (
+                <option key={color.name} value={color.name}>
+                  {color.name}
                 </option>
               ))}
             </select>
