@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import HeroVideo from "@/components/HeroVideo";
 import SearchBar from "@/components/SearchBar";
 import VehicleCarousels from "@/components/home/VehicleCarousels";
-import Link from "next/link";
 
 // Metadata específica de la Home
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "Autos Usados y 0km en Córdoba | CAR ADVICE – Concesionaria";
+  const title = "CAR ADVICE - Concesionaria de autos en Córdoba";
   const description =
     "Encontrá autos usados y 0km en Córdoba en CAR ADVICE. Financiación, compra de usados y atención personalizada. Conocé nuestro catálogo.";
 
@@ -150,86 +149,50 @@ export default function Home() {
       <div>
         <HeroVideo />
 
-        <section className="container mx-auto px-4 py-8">
-          {/* H1 visible y semántico */}
-          <div className="text-center mb-8 sm:mb-12 px-4 mt-8">
-            <h1 className="font-antenna text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 sm:mb-6 leading-tight">
-              Autos Usados y 0km en Córdoba
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* CONTENIDO SEO - OCULTO VISUALMENTE PERO PRESENTE EN HTML */}
+          <div className="sr-only" aria-hidden="false">
+            <h1>Autos Usados y 0km en Córdoba</h1>
+            <p>
               Encontrá tu próximo vehículo en CAR ADVICE. Concesionaria especializada en autos
               usados y 0km en Córdoba Capital. Financiación disponible y compra de tu usado.
             </p>
+            
+            <h2>Encontrá tu próximo auto</h2>
+            <p>
+              En <strong>CAR ADVICE</strong>, concesionaria de autos en <strong>Córdoba</strong>,
+              ofrecemos una amplia selección de <strong>autos usados y 0km</strong> para que
+              encuentres el vehículo perfecto. Nuestro equipo te ayuda en cada paso del proceso de
+              compra.
+            </p>
+            <p>
+              Además de la <strong>venta de autos</strong>, también <strong>compramos tu usado</strong>{" "}
+              y ofrecemos opciones de <strong>financiación</strong> para que puedas adquirir tu
+              vehículo de manera accesible. Con 4 sucursales en Córdoba Capital, estamos cerca de
+              vos.
+            </p>
+            
+            <h2>Por qué elegir CAR ADVICE</h2>
+            <h3>Financiación y compra de usados</h3>
+            <p>
+              Ofrecemos opciones de <strong>financiación</strong> flexibles para que puedas
+              adquirir tu auto en Córdoba. También <strong>compramos tu usado</strong> al mejor
+              precio del mercado.
+            </p>
+            <h3>Catálogo de vehículos disponibles</h3>
+            <p>
+              Contamos con un amplio catálogo de <strong>autos usados y 0km</strong> en Córdoba.
+              Todos nuestros vehículos pasan por una rigurosa inspección antes de la venta.
+            </p>
           </div>
 
-          {/* Barra de búsqueda */}
-          <SearchBar />
-
-          {/* Contenido SEO visible - Sección de servicios */}
-          <div className="mt-12 mb-8 sm:mb-12 px-4">
-            <h2 className="font-antenna text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
-              Encontrá tu próximo auto
-            </h2>
-            <div className="max-w-4xl mx-auto">
-              <p className="text-gray-700 text-base sm:text-lg leading-relaxed mb-4">
-                En <strong>CAR ADVICE</strong>, concesionaria de autos en <strong>Córdoba</strong>,
-                ofrecemos una amplia selección de <strong>autos usados y 0km</strong> para que
-                encuentres el vehículo perfecto. Nuestro equipo te ayuda en cada paso del proceso de
-                compra.
-              </p>
-              <p className="text-gray-700 text-base sm:text-lg leading-relaxed mb-4">
-                Además de la <strong>venta de autos</strong>, también <strong>compramos tu usado</strong>{" "}
-                y ofrecemos opciones de <strong>financiación</strong> para que puedas adquirir tu
-                vehículo de manera accesible. Con 4 sucursales en Córdoba Capital, estamos cerca de
-                vos.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-                <Link
-                  href="/autos"
-                  className="font-antenna inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-center"
-                >
-                  Ver catálogo completo
-                </Link>
-                <Link
-                  href="/contacto"
-                  className="font-antenna inline-block bg-gray-800 hover:bg-gray-900 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-center"
-                >
-                  Contactanos
-                </Link>
-              </div>
-            </div>
+          {/* Barra de búsqueda - Directamente después del HeroVideo */}
+          <div className="mt-8 sm:mt-12 md:mt-16 mb-12 sm:mb-16 md:mb-20">
+            <SearchBar />
           </div>
 
           {/* Carruseles de vehículos (Client Component) */}
           <VehicleCarousels />
-
-          {/* Sección adicional de contenido SEO */}
-          <div className="mt-16 mb-8 sm:mb-12 px-4">
-            <h2 className="font-antenna text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
-              Por qué elegir CAR ADVICE
-            </h2>
-            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="font-antenna text-xl font-bold text-gray-800 mb-3">
-                  Financiación y compra de usados
-                </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Ofrecemos opciones de <strong>financiación</strong> flexibles para que puedas
-                  adquirir tu auto en Córdoba. También <strong>compramos tu usado</strong> al mejor
-                  precio del mercado.
-                </p>
-              </div>
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="font-antenna text-xl font-bold text-gray-800 mb-3">
-                  Catálogo de vehículos disponibles
-                </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Contamos con un amplio catálogo de <strong>autos usados y 0km</strong> en Córdoba.
-                  Todos nuestros vehículos pasan por una rigurosa inspección antes de la venta.
-                </p>
-              </div>
-            </div>
-          </div>
         </section>
       </div>
     </>

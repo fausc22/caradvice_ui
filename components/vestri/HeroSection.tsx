@@ -74,7 +74,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              href="https://wa.me/5493515158842?text=Hola%E2%80%A6%20Visitando%20la%20landing%20page%20de%20Vestri,%20me%20surgieron%20algunas%20dudas%E2%80%A6"
+              href="https://wa.link/zovnj2"
               target="_blank"
               rel="noopener noreferrer"
               className="vestri-button self-start"

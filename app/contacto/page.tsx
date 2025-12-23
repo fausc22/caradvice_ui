@@ -461,7 +461,7 @@ export default function Contacto() {
                 Chateá con nosotros y te respondemos al instante
               </p>
               <AnimatedLink
-                href="https://wa.me/5493515158848"
+                href="https://wa.link/q5z6lg"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-white text-green-600 hover:bg-green-50 font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-lg transition-all duration-300 shadow-lg text-sm sm:text-base"

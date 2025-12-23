@@ -25,8 +25,13 @@ export default function ContactForm() {
 
     setFormStatus("sending");
 
-    // Simulación de envío (aquí conectarías con tu backend)
+    // Redirigir a WhatsApp con el mensaje
+    const mensaje = encodeURIComponent(
+      `Hola, mi nombre es ${formData.nombre}, mi teléfono es ${formData.telefono}, mi email es ${formData.email}. ${formData.mensaje}`
+    );
+    
     setTimeout(() => {
+      window.open(`https://wa.link/q5z6lg?text=${mensaje}`, "_blank");
       setFormStatus("success");
       setFormData({
         nombre: "",
@@ -39,7 +44,7 @@ export default function ContactForm() {
       setTimeout(() => {
         setFormStatus("idle");
       }, 3000);
-    }, 1500);
+    }, 500);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -125,7 +125,7 @@ export default function StepsSection() {
           className="text-center mt-16"
         >
           <a
-            href="https://wa.me/5493515158842?text=Hola%E2%80%A6%20Visitando%20la%20landing%20page%20de%20Vestri,%20me%20surgieron%20algunas%20dudas%E2%80%A6"
+            href="https://wa.link/zovnj2"
             target="_blank"
             rel="noopener noreferrer"
             className="vestri-button"

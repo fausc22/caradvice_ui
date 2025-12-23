@@ -19,8 +19,13 @@ export default function ContactSection() {
     e.preventDefault();
     setFormStatus("sending");
 
-    // Simulación de envío
+    // Redirigir a WhatsApp con el mensaje
+    const mensaje = encodeURIComponent(
+      `Hola, mi nombre es ${formData.nombre}, mi teléfono es ${formData.telefono}. ${formData.consulta}`
+    );
+    
     setTimeout(() => {
+      window.open(`https://wa.link/zovnj2?text=${mensaje}`, "_blank");
       setFormStatus("success");
       setFormData({
         nombre: "",
@@ -31,7 +36,7 @@ export default function ContactSection() {
       setTimeout(() => {
         setFormStatus("idle");
       }, 3000);
-    }, 1500);
+    }, 500);
   };
 
   const handleChange = (
@@ -197,7 +202,7 @@ export default function ContactSection() {
                   </h4>
                 </div>
                 <a
-                  href="https://wa.me/5493515158842"
+                  href="https://wa.link/zovnj2"
                   className="text-2xl md:text-3xl font-bold hover:text-green-100 transition-colors duration-300 block mb-3 font-[var(--font-montserrat)]"
                 >
                   351 515 8842
@@ -207,7 +212,7 @@ export default function ContactSection() {
                   las oportunidades disponibles.
                 </p>
                 <a
-                  href="https://wa.me/5493515158842"
+                  href="https://wa.link/zovnj2"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-white text-green-600 hover:bg-green-50 font-bold py-3 px-6 rounded-lg transition-all duration-300 font-[var(--font-montserrat)] hover:scale-105"

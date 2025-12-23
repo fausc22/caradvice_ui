@@ -127,7 +127,7 @@ export default function MantenimientoPage() {
               {/* Botones */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center md:justify-start items-stretch sm:items-center">
                 <a
-                  href="https://wa.me/543515158848"
+                  href="https://wa.link/q5z6lg"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 shadow-lg hover:shadow-xl text-sm sm:text-base md:text-lg w-full sm:w-auto sm:min-w-[140px] md:min-w-[160px]"
@@ -164,7 +164,7 @@ export default function MantenimientoPage() {
 
       {/* Botón flotante de WhatsApp */}
       <a
-        href="https://wa.me/543515158848"
+        href="https://wa.link/q5z6lg"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-3 sm:p-4 shadow-lg transition-all hover:scale-110 active:scale-95"

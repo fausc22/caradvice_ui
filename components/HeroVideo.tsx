@@ -150,13 +150,13 @@ export default function HeroVideo() {
       icon: <Wallet className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" />,
       title: "Vendé tu auto",
       subtitle: "¡Quiero vender mi auto!",
-      href: "/vender",
+      href: "https://wa.link/iictkp",
     },
     {
       icon: <Car className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" />,
       title: "Consigná tu auto",
       subtitle: "¡Quiero que vendan mi auto!",
-      href: "/consignacion",
+      href: "https://wa.link/rlctfq",
     },
     {
       icon: (
@@ -167,7 +167,7 @@ export default function HeroVideo() {
       ),
       title: "Comprá un auto",
       subtitle: "Ver vehiculos",
-      href: "/autos",
+      href: "https://wa.link/e0j1ga",
     },
   ];
 
@@ -210,6 +210,8 @@ export default function HeroVideo() {
             <Link
               key={index}
               href={service.href}
+              target={service.href.startsWith("http") ? "_blank" : undefined}
+              rel={service.href.startsWith("http") ? "noopener noreferrer" : undefined}
               className="relative group overflow-hidden border-r border-white/20 last:border-r-0"
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}

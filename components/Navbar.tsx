@@ -111,10 +111,11 @@ export default function Navbar() {
           >
             <div className="relative w-32 h-16 sm:w-36 sm:h-18 md:w-40 md:h-20 lg:w-44 lg:h-22 flex-shrink-0">
               <Image
-                src="/IMG/logo_transparente.png"
+                src="/logo_navbar.jpg"
                 alt="CAR ADVICE Logo"
                 fill
                 className="object-contain object-left group-hover:opacity-90 transition-opacity duration-300"
+                style={{ mixBlendMode: 'lighten' }}
                 priority
               />
             </div>

@@ -182,7 +182,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
   const whatsappMessage = encodeURIComponent(
     `Hola, estoy interesado en el vehículo: ${vehicle.title}`
   );
-  const whatsappLink = `https://wa.me/543515158848?text=${whatsappMessage}`;
+  const whatsappLink = `https://wa.link/e0j1ga?text=${whatsappMessage}`;
 
   // Structured Data (Schema.org) - Product
   const getImageUrl = (image?: { file_path?: string; image_url?: string }): string => {

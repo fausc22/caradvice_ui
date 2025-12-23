@@ -72,5 +72,31 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Clase para ocultamiento SEO-friendly - visible para screen readers, oculta visualmente */
+  .seo-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  /* Alternativa: sr-only de Tailwind (si no está disponible) */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 }
 
