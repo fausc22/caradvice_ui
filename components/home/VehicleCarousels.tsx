@@ -5,6 +5,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { useTopPricedVehicles } from "@/hooks/useVehicles";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function VehicleCarousels() {
   const { data: topArsVehicles, isLoading: loadingArs } = useTopPricedVehicles("ARS", 8);
@@ -12,11 +13,21 @@ export default function VehicleCarousels() {
 
   return (
     <>
-      {/* Título: TU PRÓXIMO AUTO ESTÁ CON NOSOTROS */}
+      {/* Título: TU PRÓXIMO DESTINO COMIENZA ACÁ */}
       <div className="text-center mb-8 sm:mb-12 px-4 mt-12">
-        <h2 className="font-antenna text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-8 sm:mb-10 leading-tight">
-          TU PRÓXIMO AUTO ESTÁ CON NOSOTROS
-        </h2>
+        <div className="flex flex-col items-center justify-center mb-8 sm:mb-10">
+          <Image
+            src="/04 Iso Negro.png"
+            alt="CAR ADVICE"
+            width={200}
+            height={100}
+            className="mb-6 object-contain"
+            priority
+          />
+          <h2 className="font-antenna text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 leading-tight">
+            TU PRÓXIMO DESTINO COMIENZA ACÁ
+          </h2>
+        </div>
 
         {/* Carrusel de autos más caros en ARS */}
         {loadingArs ? (

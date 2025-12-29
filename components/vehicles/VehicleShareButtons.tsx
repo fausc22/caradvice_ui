@@ -13,7 +13,6 @@ export default function VehicleShareButtons({ vehicleTitle }: VehicleShareButton
   const shareUrl = `${baseUrl}${pathname}`;
 
   const whatsappShare = `https://wa.me/?text=${encodeURIComponent(`${vehicleTitle} ${shareUrl}`)}`;
-  const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   const twitterShare = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(vehicleTitle)}`;
 
   const handleNativeShare = async () => {
@@ -40,40 +39,32 @@ export default function VehicleShareButtons({ vehicleTitle }: VehicleShareButton
   };
 
   return (
-    <div className="mb-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-3">Compartir Publicación</h3>
-      <div className="flex gap-3">
+    <div className="mb-4 sm:mb-6">
+      <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">Compartir Publicación</h3>
+      <div className="flex gap-2 sm:gap-3">
         <button
           onClick={() => window.open(whatsappShare, "_blank")}
-          className="w-12 h-12 bg-green-500 hover:bg-green-600 rounded-lg flex items-center justify-center text-white transition-colors"
+          className="w-11 h-11 sm:w-12 sm:h-12 bg-green-500 hover:bg-green-600 rounded-lg flex items-center justify-center text-white transition-colors"
           title="Compartir en WhatsApp"
           aria-label="Compartir en WhatsApp"
         >
-          <MessageCircle size={20} />
-        </button>
-        <button
-          onClick={() => window.open(facebookShare, "_blank")}
-          className="w-12 h-12 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center text-white transition-colors"
-          title="Compartir en Facebook"
-          aria-label="Compartir en Facebook"
-        >
-          <Share2 size={20} />
+          <MessageCircle size={18} className="sm:w-5 sm:h-5" />
         </button>
         <button
           onClick={handleNativeShare}
-          className="w-12 h-12 bg-gray-600 hover:bg-gray-700 rounded-lg flex items-center justify-center text-white transition-colors"
+          className="w-11 h-11 sm:w-12 sm:h-12 bg-gray-600 hover:bg-gray-700 rounded-lg flex items-center justify-center text-white transition-colors"
           title="Compartir"
           aria-label="Compartir"
         >
-          <Share2 size={20} />
+          <Share2 size={18} className="sm:w-5 sm:h-5" />
         </button>
         <button
           onClick={() => window.open(twitterShare, "_blank")}
-          className="w-12 h-12 bg-black hover:bg-gray-800 rounded-lg flex items-center justify-center text-white transition-colors"
+          className="w-11 h-11 sm:w-12 sm:h-12 bg-black hover:bg-gray-800 rounded-lg flex items-center justify-center text-white transition-colors"
           title="Compartir en X (Twitter)"
           aria-label="Compartir en X (Twitter)"
         >
-          <span className="text-white font-bold text-lg">X</span>
+          <span className="text-white font-bold text-base sm:text-lg">X</span>
         </button>
       </div>
     </div>

@@ -85,7 +85,7 @@ export default function CarCard({
         <motion.div
           className="w-full h-full"
           animate={{
-            scale: isActive ? 1.03 : 1,
+            scale: isActive ? 1.01 : 1,
           }}
           transition={{
             duration: 0.3,
@@ -99,7 +99,7 @@ export default function CarCard({
               src={imageUrl}
               alt={car.title}
               className="w-full h-full object-cover"
-              style={{ objectPosition: "center 55%" }}
+              style={{ objectPosition: "center center" }}
               loading="lazy"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
@@ -112,7 +112,7 @@ export default function CarCard({
               src={imageUrl}
               alt={car.title}
               className="w-full h-full object-cover"
-              style={{ objectPosition: "center 55%" }}
+              style={{ objectPosition: "center center" }}
               onError={(e) => {
                 (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
               }}
@@ -124,7 +124,7 @@ export default function CarCard({
               src={imageUrl}
               alt={car.title}
               className="w-full h-full object-cover"
-              style={{ objectPosition: "center 55%" }}
+              style={{ objectPosition: "center center" }}
               onError={(e) => {
                 (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
               }}
@@ -136,7 +136,7 @@ export default function CarCard({
               alt={car.title}
               fill
               className="object-cover"
-              style={{ objectPosition: "center 60%" }}
+              style={{ objectPosition: "center center" }}
               onError={() => {
                 // Fallback handled by Next.js Image
               }}

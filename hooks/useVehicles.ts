@@ -20,7 +20,7 @@ export function useVehicles(filters: CarFilters) {
             totalPages: number;
           };
         };
-      }>("/api/vehicles", filters);
+      }>("/autos", filters);
       
       if (!response.success) {
         throw new Error("Failed to fetch vehicles");
@@ -39,7 +39,7 @@ export function useFilterOptions(filters?: Partial<CarFilters>) {
       const response = await api.get<{
         success: boolean;
         data: FilterOptions;
-      }>("/api/vehicles/filters/options", filters || {});
+      }>("/autos/filters/options", filters || {});
       
       if (!response.success) {
         throw new Error("Failed to fetch filter options");
@@ -58,7 +58,7 @@ export function useVehicle(id: string | number) {
       const response = await api.get<{
         success: boolean;
         data: Car;
-      }>(`/api/vehicles/${id}`);
+      }>(`/autos/${id}`);
       
       if (!response.success) {
         throw new Error("Failed to fetch vehicle");
@@ -78,7 +78,7 @@ export function useRelatedVehicles(id: string | number, limit: number = 6) {
       const response = await api.get<{
         success: boolean;
         data: Car[];
-      }>(`/api/vehicles/${id}/related`, { limit });
+      }>(`/autos/${id}/related`, { limit });
       
       if (!response.success) {
         throw new Error("Failed to fetch related vehicles");
@@ -114,7 +114,7 @@ export function useTopPricedVehicles(currency: "ARS" | "USD", limit: number = 8)
             totalPages: number;
           };
         };
-      }>("/api/vehicles", filters);
+      }>("/autos", filters);
       
       if (!response.success) {
         throw new Error("Failed to fetch top priced vehicles");

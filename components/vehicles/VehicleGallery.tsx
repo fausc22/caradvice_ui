@@ -20,7 +20,7 @@ export default function VehicleGallery({ images, vehicleTitle }: VehicleGalleryP
       return image.file_path;
     }
     if (image.file_path) {
-      return `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(image.file_path)}`;
+      return `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/image?path=${encodeURIComponent(image.file_path)}`;
     }
     if (image.image_url?.startsWith("/IMG/static/")) {
       return image.image_url;

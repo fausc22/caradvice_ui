@@ -78,7 +78,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const vehiclePrice = vehicleCurrency === "USD" ? vehicle.price_usd! : vehicle.price_ars!;
   
   const formatPrice = (price: number, currency: "ARS" | "USD") => {
-    const formatted = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    // Redondear el precio y quitar decimales .00
+    const roundedPrice = Math.round(price);
+    const formatted = roundedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     return currency === "USD" ? `U$${formatted}` : `$${formatted}`;
   };
 
@@ -167,7 +169,9 @@ export default async function VehicleDetailPage({ params }: PageProps) {
   const relatedVehicles = await getRelatedVehicles(id, 8);
 
   const formatPrice = (price: number, currency: "ARS" | "USD") => {
-    const formatted = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    // Redondear el precio y quitar decimales .00
+    const roundedPrice = Math.round(price);
+    const formatted = roundedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     return currency === "USD" ? `U$${formatted}` : `$${formatted}`;
   };
 
@@ -179,10 +183,11 @@ export default async function VehicleDetailPage({ params }: PageProps) {
   const model = vehicle.taxonomies?.model?.[0] || "";
 
   // WhatsApp link
+  const vehicleUrl = `https://caradvice.com.ar/autos/${id}`;
   const whatsappMessage = encodeURIComponent(
-    `Hola, estoy interesado en el vehículo: ${vehicle.title}`
+    `Hola, estoy interesado en el vehículo: ${vehicle.title}\n${vehicleUrl}`
   );
-  const whatsappLink = `https://wa.link/e0j1ga?text=${whatsappMessage}`;
+  const whatsappLink = `https://wa.me/5493515158848?text=${whatsappMessage}`;
 
   // Structured Data (Schema.org) - Product
   const getImageUrl = (image?: { file_path?: string; image_url?: string }): string => {
@@ -281,10 +286,10 @@ export default async function VehicleDetailPage({ params }: PageProps) {
       />
 
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
         {/* Breadcrumbs */}
-          <nav className="mb-6" aria-label="Breadcrumb">
-          <ol className="flex items-center space-x-2 text-sm text-gray-600">
+          <nav className="mb-4 sm:mb-6" aria-label="Breadcrumb">
+          <ol className="flex items-center flex-wrap gap-1 sm:gap-2 text-xs sm:text-sm text-gray-600">
             <li>
               <Link href="/" className="hover:text-orange-500">
                 Inicio
@@ -329,88 +334,121 @@ export default async function VehicleDetailPage({ params }: PageProps) {
           </ol>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
           {/* Galería de Imágenes */}
-          <div>
+          <div className="order-1 lg:order-1">
               <VehicleGallery
                 images={vehicle.images || []}
                 vehicleTitle={vehicle.title}
               />
 
-            {/* Descripción debajo de la galería */}
-            <div className="mt-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Descripción</h2>
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                {vehicle.content ? (
-                  <div
-                    className="text-gray-700 prose max-w-none"
-                    dangerouslySetInnerHTML={{ __html: vehicle.content }}
+            {/* Formulario de Contacto debajo de la galería */}
+            <div className="mt-6 lg:block hidden">
+              <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
+                <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Contacto</h3>
+                <form className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <input
+                      type="text"
+                      placeholder="Nombre"
+                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email*"
+                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
+                    />
+                    <input
+                      type="tel"
+                      placeholder="Teléfono"
+                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base sm:col-span-2 lg:col-span-1"
+                    />
+                  </div>
+                  <textarea
+                    placeholder="Mensaje*"
+                    rows={4}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
                   />
-                ) : (
-                    <p className="text-gray-600">
-                      No hay descripción disponible para este vehículo.
-                    </p>
-                )}
-                </div>
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="privacy"
+                      className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500 mt-1"
+                    />
+                    <label htmlFor="privacy" className="text-xs sm:text-sm text-gray-600">
+                      Acepto las{" "}
+                      <Link href="/politicas" className="text-orange-500 hover:text-orange-600">
+                        políticas de privacidad
+                      </Link>
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition-colors text-sm sm:text-base"
+                  >
+                    Enviar
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
 
           {/* Información del Vehículo */}
-          <div>
+          <div className="order-2 lg:order-2">
             {/* Título y Precio */}
-            <div className="mb-6">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+            <div className="mb-4 sm:mb-6">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 sm:mb-4 break-words">
                 {vehicle.title}
               </h1>
-              <div className="text-4xl md:text-5xl font-bold text-gray-800">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800">
                 {formatPrice(vehiclePrice, vehicleCurrency)}
               </div>
             </div>
 
             {/* Especificaciones Principales */}
-            <div className="bg-gray-100 rounded-lg p-6 mb-6">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="bg-gray-100 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <span className="text-sm text-gray-600">Marca:</span>
-                  <p className="font-medium text-gray-800">{brand || "N/A"}</p>
+                  <span className="text-xs sm:text-sm text-gray-600">Marca:</span>
+                  <p className="font-medium text-gray-800 text-sm sm:text-base">{brand || "N/A"}</p>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-600">Modelo:</span>
-                  <p className="font-medium text-gray-800">{model || "N/A"}</p>
+                  <span className="text-xs sm:text-sm text-gray-600">Modelo:</span>
+                  <p className="font-medium text-gray-800 text-sm sm:text-base">{model || "N/A"}</p>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-600">Año:</span>
-                  <p className="font-medium text-gray-800">{vehicle.year || "N/A"}</p>
+                  <span className="text-xs sm:text-sm text-gray-600">Año:</span>
+                  <p className="font-medium text-gray-800 text-sm sm:text-base">{vehicle.year || "N/A"}</p>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-600">Transmisión:</span>
-                    <p className="font-medium text-gray-800">
+                  <span className="text-xs sm:text-sm text-gray-600">Transmisión:</span>
+                    <p className="font-medium text-gray-800 text-sm sm:text-base">
                       {vehicle.taxonomies?.transmission?.[0] || "N/A"}
                     </p>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-600">Kilómetros:</span>
-                  <p className="font-medium text-gray-800">
+                  <span className="text-xs sm:text-sm text-gray-600">Kilómetros:</span>
+                  <p className="font-medium text-gray-800 text-sm sm:text-base">
                       {vehicle.kilometres
                         ? `${vehicle.kilometres.toLocaleString("es-AR")} Kms`
                         : "N/A"}
                   </p>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-600">Combustible:</span>
-                    <p className="font-medium text-gray-800">
+                  <span className="text-xs sm:text-sm text-gray-600">Combustible:</span>
+                    <p className="font-medium text-gray-800 text-sm sm:text-base">
                       {vehicle.taxonomies?.fuel_type?.[0] || "N/A"}
                     </p>
                 </div>
                 {vehicle.license_plate && (
                   <div>
-                    <span className="text-sm text-gray-600">Matrícula:</span>
-                    <p className="font-medium text-gray-800">{vehicle.license_plate}</p>
+                    <span className="text-xs sm:text-sm text-gray-600">Matrícula:</span>
+                    <p className="font-medium text-gray-800 text-sm sm:text-base">{vehicle.license_plate}</p>
                   </div>
                 )}
                 <div>
-                  <span className="text-sm text-gray-600">Condición:</span>
-                    <p className="font-medium text-gray-800">
+                  <span className="text-xs sm:text-sm text-gray-600">Condición:</span>
+                    <p className="font-medium text-gray-800 text-sm sm:text-base">
                       {vehicle.taxonomies?.condition?.[0] || "N/A"}
                     </p>
                   </div>
@@ -422,98 +460,70 @@ export default async function VehicleDetailPage({ params }: PageProps) {
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center gap-2 mb-4 transition-colors"
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center gap-2 mb-4 transition-colors text-sm sm:text-base"
             >
-              <MessageCircle size={20} />
-              Chat via WhatsApp
+              <MessageCircle size={18} className="sm:w-5 sm:h-5" />
+              <span>Chat via WhatsApp</span>
             </a>
 
             {/* Compartir Publicación */}
               <VehicleShareButtons vehicleTitle={vehicle.title} />
-          </div>
-        </div>
 
-        {/* Sección de Contacto y Admin */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Formulario de Contacto */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Contacto</h3>
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <input
-                  type="text"
-                  placeholder="Nombre"
-                  className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-                <input
-                  type="email"
-                  placeholder="Email*"
-                  className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-                <input
-                  type="tel"
-                  placeholder="Teléfono"
-                  className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
+            {/* Formulario de Contacto - Solo visible en móvil, después de los detalles */}
+            <div className="mt-6 lg:hidden">
+              <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
+                <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Contacto</h3>
+                <form className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      placeholder="Nombre"
+                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email*"
+                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
+                    />
+                    <input
+                      type="tel"
+                      placeholder="Teléfono"
+                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base sm:col-span-2"
+                    />
+                  </div>
+                  <textarea
+                    placeholder="Mensaje*"
+                    rows={4}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
+                  />
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="privacy-mobile"
+                      className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500 mt-1"
+                    />
+                    <label htmlFor="privacy-mobile" className="text-xs sm:text-sm text-gray-600">
+                      Acepto las{" "}
+                      <Link href="/politicas" className="text-orange-500 hover:text-orange-600">
+                        políticas de privacidad
+                      </Link>
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition-colors text-sm sm:text-base"
+                  >
+                    Enviar
+                  </button>
+                </form>
               </div>
-              <textarea
-                placeholder="Mensaje*"
-                rows={4}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="privacy"
-                  className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
-                />
-                <label htmlFor="privacy" className="text-sm text-gray-600">
-                  Acepto las{" "}
-                  <Link href="/politicas" className="text-orange-500 hover:text-orange-600">
-                    políticas de privacidad
-                  </Link>
-                </label>
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
-              >
-                Enviar
-              </button>
-            </form>
-          </div>
-
-          {/* Admin Info */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Admin</h3>
-            <div className="space-y-4">
-              <div>
-                <p className="text-orange-500 font-medium mb-2">administrator</p>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <span>📍</span>
-                  <span>Córdoba</span>
-                </div>
-              </div>
-              <button className="w-full border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
-                <span>✆</span>
-                <span>543 *** *** mostrar</span>
-              </button>
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
-              >
-                <MessageCircle size={20} />
-                Chat via WhatsApp
-              </a>
             </div>
           </div>
         </div>
 
         {/* Autos Relacionados */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Anuncios relacionados</h2>
+        <div className="mb-8 sm:mb-12">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Anuncios relacionados</h2>
           {relatedVehicles && relatedVehicles.length > 0 ? (
             <RelatedVehiclesCarousel
               vehicles={relatedVehicles.map((relatedVehicle) => {
@@ -541,7 +551,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
                       relatedVehicle.featured_image_path?.startsWith("/IMG/static/")
                     ? relatedVehicle.featured_image_path
                     : relatedVehicle.featured_image_path
-                    ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(relatedVehicle.featured_image_path)}`
+                    ? `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/image?path=${encodeURIComponent(relatedVehicle.featured_image_path)}`
                     : relatedVehicle.featured_image_url?.startsWith("/IMG/static/")
                     ? relatedVehicle.featured_image_url
                     : relatedVehicle.featured_image_url,

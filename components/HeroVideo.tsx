@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { Wallet, Car, Search, DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
@@ -15,135 +15,7 @@ interface ServiceCard {
 export default function HeroVideo() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [lastButtonClicked, setLastButtonClicked] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const playerRef = useRef<any>(null);
-
-  // Bloquear pausa del video de YouTube
-  useEffect(() => {
-    // Cargar YouTube IFrame API
-    const loadYouTubeAPI = () => {
-      if (typeof window !== 'undefined' && window.YT && window.YT.Player) {
-        initializePlayer();
-      } else if (typeof window !== 'undefined') {
-        const tag = document.createElement("script");
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-        
-        window.onYouTubeIframeAPIReady = () => {
-          initializePlayer();
-        };
-      }
-    };
-
-    const initializePlayer = () => {
-      if (!iframeRef.current) return;
-
-      try {
-        if (!window.YT) return;
-        const player = new window.YT.Player(iframeRef.current.id || 'youtube-hero-video', {
-          events: {
-            onStateChange: (event: any) => {
-              const player = event.target;
-              // Estado 0 = terminado, reiniciar desde 0:38
-              if (event.data === 0) {
-                // Cuando el video termina, volver al segundo 38 y reproducir
-                setTimeout(() => {
-                  if (player && typeof player.seekTo === 'function') {
-                    player.seekTo(38, true);
-                    if (typeof player.playVideo === 'function') {
-                      player.playVideo();
-                    }
-                  }
-                }, 100);
-              }
-              // Estado 2 = pausado, Estado 1 = reproduciendo
-              if (event.data === 2) {
-                // Reanudar inmediatamente si se pausa
-                setTimeout(() => {
-                  if (player && typeof player.playVideo === 'function') {
-                    player.playVideo();
-                  }
-                }, 100);
-              }
-            },
-            onReady: (event: any) => {
-              playerRef.current = event.target;
-              const player = event.target;
-              // Ir al segundo 38 y comenzar reproducción
-              if (player && typeof player.seekTo === 'function') {
-                player.seekTo(38, true);
-              }
-              // Asegurar que esté reproduciéndose
-              if (player && typeof player.playVideo === 'function') {
-                player.playVideo();
-              }
-            },
-          },
-        });
-        playerRef.current = player;
-      } catch (error) {
-        console.error("Error inicializando YouTube player:", error);
-      }
-    };
-
-    // Verificar periódicamente que esté reproduciéndose
-    const checkPlaying = setInterval(() => {
-      if (playerRef.current && playerRef.current.getPlayerState) {
-        try {
-          const state = playerRef.current.getPlayerState();
-          const currentTime = playerRef.current.getCurrentTime ? playerRef.current.getCurrentTime() : 0;
-          
-          // Estado 0 = terminado, volver al segundo 38
-          if (state === 0) {
-            if (playerRef.current.seekTo) {
-              playerRef.current.seekTo(38, true);
-            }
-            if (playerRef.current.playVideo) {
-              playerRef.current.playVideo();
-            }
-          }
-          // Si el video está antes del segundo 38, saltar a 38
-          else if (currentTime > 0 && currentTime < 38 && state === 1) {
-            if (playerRef.current.seekTo) {
-              playerRef.current.seekTo(38, true);
-            }
-          }
-          // Estado 2 = pausado, Estado 5 = cued (listo pero no reproduciendo)
-          else if (state === 2 || state === 5) {
-            if (playerRef.current.playVideo) {
-              playerRef.current.playVideo();
-            }
-          }
-        } catch (error) {
-          // Ignorar errores de acceso
-        }
-      }
-    }, 1000);
-
-    // Prevenir atajos de teclado que puedan pausar
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === "Space" || e.code === "KeyK" || e.code === "KeyP") {
-        // Si el iframe tiene el foco, prevenir la pausa
-        if (document.activeElement === iframeRef.current) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (playerRef.current && playerRef.current.playVideo) {
-            playerRef.current.playVideo();
-          }
-        }
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    loadYouTubeAPI();
-
-    return () => {
-      clearInterval(checkPlaying);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const services: ServiceCard[] = [
     {
@@ -166,7 +38,7 @@ export default function HeroVideo() {
         </div>
       ),
       title: "Comprá un auto",
-      subtitle: "Ver vehiculos",
+      subtitle: "¡Quiero comprar un auto!",
       href: "https://wa.link/e0j1ga",
     },
   ];
@@ -176,23 +48,18 @@ export default function HeroVideo() {
       {/* Video Section */}
       <div className="relative w-full h-[34vh] sm:h-[37vh] md:h-[40vh] min-h-[190px] sm:min-h-[230px] md:min-h-[290px] overflow-hidden bg-black">
         <div className="absolute inset-0 w-full h-full">
-          <iframe
-            id="youtube-hero-video"
-            ref={iframeRef}
-            src="https://www.youtube.com/embed/IJERLFby8so?autoplay=1&mute=1&loop=1&playlist=IJERLFby8so&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=38"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
+          <video
+            ref={videoRef}
+            src="videos/hero_video.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute top-1/2 left-1/2 w-full h-full object-cover"
             style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              width: "100vw",
-              height: "56.25vw",
-              minHeight: "100%",
-              minWidth: "177.77%",
               transform: "translate(-50%, -50%)",
-              border: "none",
-              pointerEvents: "none",
+              minWidth: "100%",
+              minHeight: "100%",
             }}
           />
         </div>

@@ -24,7 +24,7 @@ export default function VehicleFilters({
 }: VehicleFiltersProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   
-  // Sincronizar el estado del switch con el filtro de moneda
+  // Obtener el filtro de moneda activo
   const priceCurrencyFilter = filters.currency || null;
   
   // Estados locales para debounce de los inputs numéricos
@@ -306,11 +306,11 @@ export default function VehicleFilters({
         <div className="flex items-center bg-white rounded-lg border-2 border-gray-200 px-1.5 py-0.5 col-span-1">
           <button
             onClick={() => {
+              // Si ya está en ARS, no hacer nada (o cambiar a USD si quieres toggle)
+              // Si está en USD o undefined, cambiar a ARS
               const newCurrency = priceCurrencyFilter === "ARS" ? undefined : "ARS";
               onFiltersChange({ currency: newCurrency, page: 1 });
-              if (newCurrency) {
-                onCurrencyChange("ARS");
-              }
+              onCurrencyChange("ARS");
             }}
             className={cn(
               "px-2 py-1 text-xs font-medium rounded transition-colors",
@@ -324,11 +324,11 @@ export default function VehicleFilters({
           <span className="mx-0.5 text-gray-400 text-xs">/</span>
           <button
             onClick={() => {
+              // Si ya está en USD, no hacer nada (o cambiar a ARS si quieres toggle)
+              // Si está en ARS o undefined, cambiar a USD
               const newCurrency = priceCurrencyFilter === "USD" ? undefined : "USD";
               onFiltersChange({ currency: newCurrency, page: 1 });
-              if (newCurrency) {
-                onCurrencyChange("USD");
-              }
+              onCurrencyChange("USD");
             }}
             className={cn(
               "px-2 py-1 text-xs font-medium rounded transition-colors",

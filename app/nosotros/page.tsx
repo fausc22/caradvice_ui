@@ -17,11 +17,6 @@ const teamMembers = [
     image: "/IMG/about/ignacio1.jpg",
   },
   {
-    name: "Aldana Concetti",
-    role: "ASESOR COMPRAS",
-    email: "aconcetti@caradvice.com.ar",
-  },
-  {
     name: "Fernando Gallardo",
     role: "ASESOR VENTAS",
     email: "fgallardo@caradvice.com.ar",
@@ -80,11 +75,6 @@ const teamMembers = [
     role: "ASESOR VENTAS",
     email: "fescudero@caradvice.com.ar",
     image: "/IMG/about/IMG_2915.jpg",
-  },
-  {
-    name: "Juan Tapia",
-    role: "ASESOR VENTAS",
-    email: "juan.tapia@caradvice.com.ar",
   },
 ];
 

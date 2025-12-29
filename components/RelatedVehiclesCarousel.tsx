@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import CarCard from "./CarCard";
@@ -25,9 +25,32 @@ interface RelatedVehiclesCarouselProps {
 
 export default function RelatedVehiclesCarousel({ vehicles }: RelatedVehiclesCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const cardsPerView = 4;
+  const [cardsPerView, setCardsPerView] = useState(2); // Por defecto mobile (2 cards)
   
-  // Calcular el máximo índice posible (para mostrar siempre 4 cards)
+  // Detectar tamaño de pantalla y ajustar cards por vista (igual que el home)
+  useEffect(() => {
+    const updateCardsPerView = () => {
+      if (window.innerWidth >= 1280) {
+        // xl: 3 cards (más anchas para ver mejor los vehículos)
+        setCardsPerView(3);
+      } else if (window.innerWidth >= 1024) {
+        // lg: 3 cards
+        setCardsPerView(3);
+      } else if (window.innerWidth >= 640) {
+        // sm: 2 cards (tablet)
+        setCardsPerView(2);
+      } else {
+        // mobile: 1 card
+        setCardsPerView(1);
+      }
+    };
+
+    updateCardsPerView();
+    window.addEventListener("resize", updateCardsPerView);
+    return () => window.removeEventListener("resize", updateCardsPerView);
+  }, []);
+  
+  // Calcular el máximo índice posible
   const maxIndex = Math.max(0, vehicles.length - cardsPerView);
 
   const nextSlide = () => {
@@ -46,6 +69,13 @@ export default function RelatedVehiclesCarousel({ vehicles }: RelatedVehiclesCar
   const visibleVehicles = getVisibleVehicles();
   const canGoNext = currentIndex < maxIndex;
   const canGoPrev = currentIndex > 0;
+  
+  // Resetear índice si cambia el número de cards por vista
+  useEffect(() => {
+    if (currentIndex > maxIndex) {
+      setCurrentIndex(maxIndex);
+    }
+  }, [cardsPerView, maxIndex, currentIndex]);
 
   if (vehicles.length === 0) {
     return (
@@ -58,9 +88,9 @@ export default function RelatedVehiclesCarousel({ vehicles }: RelatedVehiclesCar
   return (
     <div className="relative">
       {/* Contenedor del carrusel */}
-      <div className="overflow-hidden px-12">
+      <div className="overflow-hidden px-4 sm:px-12">
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
           animate={{
             x: 0,
           }}
@@ -100,35 +130,35 @@ export default function RelatedVehiclesCarousel({ vehicles }: RelatedVehiclesCar
         </motion.div>
       </div>
 
-      {/* Controles de navegación */}
+      {/* Controles de navegación - Siempre visibles si hay más vehículos que cards por vista */}
       {vehicles.length > cardsPerView && (
         <>
           {/* Botón anterior */}
           <button
             onClick={prevSlide}
             disabled={!canGoPrev}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all hover:scale-110 active:scale-95 ${
+            className={`absolute left-0 sm:left-2 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 sm:p-2.5 shadow-lg transition-all hover:scale-110 active:scale-95 ${
               canGoPrev
                 ? "hover:bg-gray-100 cursor-pointer"
                 : "opacity-50 cursor-not-allowed"
             }`}
             aria-label="Anterior"
           >
-            <ChevronLeft size={24} className="text-gray-700" />
+            <ChevronLeft size={20} className="sm:w-6 sm:h-6 text-gray-700" />
           </button>
 
           {/* Botón siguiente */}
           <button
             onClick={nextSlide}
             disabled={!canGoNext}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all hover:scale-110 active:scale-95 ${
+            className={`absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 sm:p-2.5 shadow-lg transition-all hover:scale-110 active:scale-95 ${
               canGoNext
                 ? "hover:bg-gray-100 cursor-pointer"
                 : "opacity-50 cursor-not-allowed"
             }`}
             aria-label="Siguiente"
           >
-            <ChevronRight size={24} className="text-gray-700" />
+            <ChevronRight size={20} className="sm:w-6 sm:h-6 text-gray-700" />
           </button>
         </>
       )}

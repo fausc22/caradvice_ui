@@ -10,33 +10,45 @@ export async function getVehicle(id: string | number): Promise<Car | null> {
     // Normalizar el ID a string para la búsqueda
     const vehicleId = String(id);
     
-    // Debug: verificar modo estático
+    // Debug: verificar modo estático y URL del API
     if (process.env.NODE_ENV !== 'production') {
-      console.log(`[getVehicle] Buscando vehículo con ID: ${vehicleId}, Modo estático: ${api.isStaticMode}`);
+      console.log(`[getVehicle] Buscando vehículo con ID: ${vehicleId}`);
+      console.log(`[getVehicle] Modo estático: ${api.isStaticMode}`);
+      console.log(`[getVehicle] API URL: ${api.baseUrl}`);
     }
     
     const response = await api.get<{
       success: boolean;
       data: Car;
-    }>(`/api/vehicles/${vehicleId}`);
+    }>(`/autos/${vehicleId}`);
 
     if (!response || !response.success || !response.data) {
       if (process.env.NODE_ENV !== 'production') {
         console.warn(`[getVehicle] Vehículo no encontrado: ${vehicleId}`);
+        console.warn(`[getVehicle] Response:`, JSON.stringify(response, null, 2));
       }
       return null;
     }
 
     if (process.env.NODE_ENV !== 'production') {
-      console.log(`[getVehicle] Vehículo encontrado: ${response.data.title}`);
+      console.log(`[getVehicle] Vehículo encontrado: ${response.data.title} (ID: ${response.data.id}, Asofix: ${response.data.asofix_id})`);
     }
 
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error(`[getVehicle] Error al obtener vehículo ${id}:`, error);
+    
+    // Si es un error de conexión, dar más información
+    if (error.message?.includes('ECONNREFUSED') || error.message?.includes('fetch failed')) {
+      console.error(`[getVehicle] Error de conexión. Verifica que:`);
+      console.error(`  - El backend esté corriendo en ${api.baseUrl}`);
+      console.error(`  - NEXT_PUBLIC_API_URL esté configurado correctamente`);
+      console.error(`  - El backend esté accesible desde el servidor de Next.js`);
+    }
+    
     // En producción, no mostrar detalles del error
     if (process.env.NODE_ENV !== 'production') {
-      console.error('Error details:', error);
+      console.error('[getVehicle] Error details:', error);
     }
     return null;
   }
@@ -53,7 +65,7 @@ export async function getRelatedVehicles(
     const response = await api.get<{
       success: boolean;
       data: Car[];
-    }>(`/api/vehicles/${id}/related`, { limit });
+    }>(`/autos/${id}/related`, { limit });
 
     if (!response.success || !response.data) {
       return [];
@@ -110,7 +122,7 @@ export async function getVehicles(filters?: {
           totalPages: number;
         };
       };
-    }>("/api/vehicles", filters || {});
+    }>("/autos", filters || {});
 
     if (!response.success || !response.data) {
       return null;
@@ -177,7 +189,7 @@ export async function getFilterOptions(filters?: {
           max_kilometres?: number;
         };
       };
-    }>("/api/vehicles/filters/options", filters || {});
+    }>("/autos/filters/options", filters || {});
 
     if (!response.success || !response.data) {
       return null;

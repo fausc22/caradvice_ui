@@ -56,7 +56,7 @@ export default function ComparePage() {
 
   const getImageUrl = (vehicle: typeof vehicles[0]) => {
     if (vehicle.featured_image_path) {
-      return `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/image?path=${encodeURIComponent(vehicle.featured_image_path)}`;
+      return `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/image?path=${encodeURIComponent(vehicle.featured_image_path)}`;
     }
     return vehicle.featured_image_url || "/IMG/logo_transparente.png";
   };

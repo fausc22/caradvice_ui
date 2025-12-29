@@ -1,7 +1,11 @@
-const API_URL = 
-  typeof window !== "undefined" 
-    ? (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001")
-    : "http://localhost:3001";
+// Obtener la URL del API
+// En el cliente, usar NEXT_PUBLIC_API_URL
+// En el servidor, intentar usar NEXT_PUBLIC_API_URL primero, luego localhost
+// NOTA: En producción, NEXT_PUBLIC_API_URL debe apuntar a la URL pública del backend
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 
+  (typeof window === "undefined" 
+    ? "http://localhost:4000"  // Servidor: localhost por defecto
+    : "http://localhost:4000"); // Cliente: localhost por defecto
 
 // Verificar si el modo estático está activado
 const isStaticMode = process.env.NEXT_PUBLIC_STATIC_MODE === 'true';
@@ -21,7 +25,7 @@ export const api = {
       }
 
       // Manejar diferentes endpoints
-      if (endpoint === '/api/vehicles') {
+      if (endpoint === '/autos' || endpoint === '/api/vehicles') {
         const filtered = filterStaticVehicles(staticData.vehicles, params || {});
         return {
           success: true,
@@ -29,8 +33,8 @@ export const api = {
         } as T;
       }
 
-      if (endpoint.startsWith('/api/vehicles/') && endpoint !== '/api/vehicles/filters/options' && !endpoint.includes('/related')) {
-        const id = endpoint.split('/').pop();
+      if ((endpoint.startsWith('/autos/') || endpoint.startsWith('/api/vehicles/')) && endpoint !== '/autos/filters/options' && endpoint !== '/api/vehicles/filters/options' && !endpoint.includes('/related')) {
+        const id = endpoint.split('/').pop()?.split('?')[0]; // Remover query params si existen
         if (!id) {
           throw new Error('Invalid vehicle ID');
         }
@@ -68,7 +72,7 @@ export const api = {
         } as T;
       }
 
-      if (endpoint === '/api/vehicles/filters/options') {
+      if (endpoint === '/autos/filters/options' || endpoint === '/api/vehicles/filters/options') {
         return {
           success: true,
           data: staticData.filterOptions,
@@ -106,7 +110,27 @@ export const api = {
     }
 
     // Modo normal: llamar a la API
-    const url = new URL(`${API_URL}${endpoint}`);
+    // Mapear endpoints antiguos a nuevos
+    let apiEndpoint = endpoint;
+    if (endpoint === '/api/vehicles') {
+      apiEndpoint = '/autos';
+    } else if (endpoint.startsWith('/api/vehicles/')) {
+      // Reemplazar /api/vehicles/ por /autos/
+      // Manejar casos especiales primero
+      if (endpoint.includes('/filters/options')) {
+        apiEndpoint = '/autos/filters/options';
+      } else if (endpoint.includes('/related')) {
+        // Mantener la estructura /autos/:id/related
+        const id = endpoint.split('/')[2];
+        apiEndpoint = `/autos/${id}/related`;
+      } else {
+        apiEndpoint = endpoint.replace('/api/vehicles/', '/autos/');
+      }
+    } else if (endpoint === '/api/vehicles/filters/options') {
+      apiEndpoint = '/autos/filters/options';
+    }
+    
+    const url = new URL(`${API_URL}${apiEndpoint}`);
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         // Filtrar valores inválidos: undefined, null, "", NaN, Infinity
@@ -126,15 +150,34 @@ export const api = {
       });
     }
     
-    const response = await fetch(url.toString(), {
-      cache: "no-store",
-    });
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`API Error (${response.status}): ${errorText || response.statusText}`);
+    try {
+      // Crear un AbortController para timeout manual (AbortSignal.timeout puede no estar disponible en todos los entornos)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos
+      
+      const response = await fetch(url.toString(), {
+        cache: "no-store",
+        signal: controller.signal,
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`API Error (${response.status}): ${errorText || response.statusText}`);
+      }
+      
+      return response.json();
+    } catch (error: any) {
+      // Si es un error de conexión o timeout, loguear y relanzar con más contexto
+      if (error.name === 'AbortError' || error.code === 'ECONNREFUSED' || error.message?.includes('fetch failed')) {
+        const errorMsg = `No se pudo conectar al backend en ${API_URL}${apiEndpoint}. Verifica que el backend esté corriendo y que NEXT_PUBLIC_API_URL esté configurado correctamente.`;
+        console.error(`[API] ${errorMsg}`);
+        console.error(`[API] URL intentada: ${url.toString()}`);
+        console.error(`[API] Error original:`, error);
+        throw new Error(errorMsg);
+      }
+      throw error;
     }
-    
-    return response.json();
   },
 };
