@@ -37,31 +37,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Páginas dinámicas de vehículos (solo en modo estático)
-  let vehiclePages: MetadataRoute.Sitemap = [];
+  // Páginas dinámicas de vehículos - se generan bajo demanda
+  // No incluimos vehículos en el sitemap estático para evitar problemas de generación
+  // Los vehículos se indexan dinámicamente cuando se acceden
 
-  if (process.env.NEXT_PUBLIC_STATIC_MODE === "true") {
-    try {
-      const { loadStaticData } = await import("@/lib/static-data");
-      const staticData = await loadStaticData();
-
-      if (staticData && staticData.vehicles) {
-        vehiclePages = staticData.vehicles.map((vehicle) => ({
-          url: `${baseUrl}/autos/${vehicle.id}`,
-          lastModified: vehicle.updated_at
-            ? new Date(vehicle.updated_at)
-            : vehicle.created_at
-            ? new Date(vehicle.created_at)
-            : new Date(),
-          changeFrequency: "weekly" as const,
-          priority: 0.8,
-        }));
-      }
-    } catch (error) {
-      console.error("[sitemap] Error al cargar vehículos:", error);
-    }
-  }
-
-  return [...staticPages, ...vehiclePages];
+  return staticPages;
 }
 

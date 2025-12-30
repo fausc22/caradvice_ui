@@ -10,10 +10,9 @@ export async function getVehicle(id: string | number): Promise<Car | null> {
     // Normalizar el ID a string para la búsqueda
     const vehicleId = String(id);
     
-    // Debug: verificar modo estático y URL del API
+    // Debug: verificar URL del API
     if (process.env.NODE_ENV !== 'production') {
       console.log(`[getVehicle] Buscando vehículo con ID: ${vehicleId}`);
-      console.log(`[getVehicle] Modo estático: ${api.isStaticMode}`);
       console.log(`[getVehicle] API URL: ${api.baseUrl}`);
     }
     
