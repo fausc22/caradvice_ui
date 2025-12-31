@@ -10,7 +10,20 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost',
+        port: '4000',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
         port: '3001',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api-caradvice.duckdns.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.asofix.com',
       },
     ],
   },

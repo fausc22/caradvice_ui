@@ -56,7 +56,7 @@ export default function VehicleGrid({
           : "space-y-4"
       }
     >
-      {vehicles.map((vehicle) => {
+      {vehicles.map((vehicle, index) => {
         const priceInfo = formatPrice(vehicle);
         const vehicleSelected = isSelected(vehicle.id);
         
@@ -69,6 +69,9 @@ export default function VehicleGrid({
             alert("Ya has seleccionado el máximo de 5 vehículos para comparar. Quita uno para agregar otro.");
           }
         };
+        
+        // Priority solo para las primeras 4 imágenes (above the fold)
+        const imagePriority = index < 4;
         
         return (
           <CarCard
@@ -93,6 +96,7 @@ export default function VehicleGrid({
             currency={priceInfo.currency}
             onCompare={handleCompare}
             isComparing={vehicleSelected}
+            imagePriority={imagePriority}
           />
         );
       })}

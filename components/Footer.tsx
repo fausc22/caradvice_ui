@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Phone, MapPin, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import TrustindexWidget from "./TrustindexWidget";
 
 export default function Footer() {
   const locations = [
@@ -33,22 +34,29 @@ export default function Footer() {
   const [hoveredLocation, setHoveredLocation] = useState<number | null>(null);
 
   return (
-    <footer className="font-antenna bg-black text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <>
+      {/* Widget de reseñas Trustindex - Arriba del footer */}
+      <div className="font-antenna bg-white py-8 sm:py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <TrustindexWidget />
+        </div>
+      </div>
+
+      <footer className="font-antenna bg-black text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Sección principal */}
         <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 lg:gap-12 mb-8">
           {/* Columna izquierda: Logo grande */}
-          <div className="flex items-start">
+          <div className="flex items-start justify-start">
             <Link href="/" className="flex items-center group">
-              <div className="relative w-64 h-32 lg:w-80 lg:h-40 flex-shrink-0">
-                <Image
-                  src="/logo_navbar.jpg"
-                  alt="CAR ADVICE Logo"
-                  fill
-                  className="object-contain object-left group-hover:opacity-90 transition-opacity duration-300"
-                  priority
-                />
-              </div>
+              <Image
+                src="/logo-footer.png"
+                alt="CarAdvice"
+                width={180}
+                height={60}
+                className="object-contain object-left group-hover:opacity-90 transition-opacity duration-300"
+                priority
+              />
             </Link>
           </div>
 
@@ -61,33 +69,6 @@ export default function Footer() {
                 Somos una concesionaria de autos que combina la venta de vehículos con asesoría personalizada en cada etapa del proceso. Nos especializamos en la compra-venta de autos usados y 0Km, brindando una experiencia ágil, segura y transparente que incluye asesoramiento y gestión documental.
               </p>
 
-              {/* Widget de reseñas */}
-              <div className="bg-white rounded-lg p-4 max-w-xs">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className="w-5 h-5 text-yellow-400"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <span className="text-gray-900 font-bold text-lg">4.9</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="bg-green-500 rounded-full p-1">
-                    <Check size={12} className="text-white" />
-                  </div>
-                  <span className="text-gray-700 text-sm">Servicio mejor valorado</span>
-                </div>
-                <div className="mt-1">
-                  <span className="text-gray-500 text-xs">Trustindex</span>
-                </div>
-              </div>
             </div>
 
             {/* Sub-columna derecha: Teléfono y direcciones */}
@@ -235,5 +216,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }

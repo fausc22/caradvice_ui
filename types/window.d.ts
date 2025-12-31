@@ -13,15 +13,22 @@ interface YT {
   [key: string]: any;
 }
 
+interface TrustindexLoader {
+  load: () => void;
+  [key: string]: any;
+}
+
 interface Window {
   YT?: YT;
   onYouTubeIframeAPIReady?: () => void;
+  TrustindexLoader?: TrustindexLoader;
 }
 
 declare global {
   interface Window {
     YT?: YT;
     onYouTubeIframeAPIReady?: () => void;
+    TrustindexLoader?: TrustindexLoader;
   }
 }
 

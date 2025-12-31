@@ -6,6 +6,7 @@ import Image from "next/image";
 import { clsx } from "clsx";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface CarCardProps {
   car: {
@@ -22,6 +23,7 @@ interface CarCardProps {
   onCompare?: (car: any) => void;
   isComparing?: boolean;
   currency: "ARS" | "USD";
+  imagePriority?: boolean;
 }
 
 export default function CarCard({
@@ -29,9 +31,12 @@ export default function CarCard({
   onCompare,
   isComparing = false,
   currency,
+  imagePriority = false,
 }: CarCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const formatPrice = (price: number) => {
     // Convertir a entero para quitar decimales (.00)
@@ -59,7 +64,12 @@ export default function CarCard({
   const isActive = isHovered || isPressed;
 
   const handleClick = () => {
-    window.location.href = `/autos/${car.id}`;
+    // Preservar query params actuales al navegar al detalle
+    const currentParams = searchParams.toString();
+    const url = currentParams 
+      ? `/autos/${car.id}?return=${encodeURIComponent(`/autos?${currentParams}`)}`
+      : `/autos/${car.id}`;
+    router.push(url);
   };
 
   return (
@@ -93,41 +103,25 @@ export default function CarCard({
           }}
         >
           {isStaticImage ? (
-            // Imágenes estáticas: usar img directamente (están en public/)
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            // Imágenes estáticas: usar Image de Next.js con priority si aplica
+            <Image
               src={imageUrl}
               alt={car.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
               style={{ objectPosition: "center center" }}
-              loading="lazy"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
-              }}
+              priority={imagePriority}
             />
-          ) : isLocalImage ? (
-            // Imágenes locales (API o uploads): usar img con fallback
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+          ) : isLocalImage || imageUrl.startsWith("http") ? (
+            // Imágenes de API o URLs externas: usar Image de Next.js
+            <Image
               src={imageUrl}
               alt={car.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
               style={{ objectPosition: "center center" }}
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
-              }}
-            />
-          ) : imageUrl.startsWith("http") ? (
-            // URLs externas: usar img con fallback
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={imageUrl}
-              alt={car.title}
-              className="w-full h-full object-cover"
-              style={{ objectPosition: "center center" }}
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/IMG/logo_transparente.png";
-              }}
+              priority={imagePriority}
+              unoptimized={imageUrl.includes('/api/image')}
             />
           ) : (
             // Otras rutas locales: usar Image de Next.js
@@ -137,9 +131,7 @@ export default function CarCard({
               fill
               className="object-cover"
               style={{ objectPosition: "center center" }}
-              onError={() => {
-                // Fallback handled by Next.js Image
-              }}
+              priority={imagePriority}
             />
           )}
         </motion.div>

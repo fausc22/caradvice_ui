@@ -11,6 +11,7 @@ import Image from "next/image";
 
 interface PageProps {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ return?: string }>;
 }
 
 // Configuración para modo dinámico - siempre usar API
@@ -123,8 +124,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 // Componente principal como Server Component
-export default async function VehicleDetailPage({ params }: PageProps) {
+export default async function VehicleDetailPage({ params, searchParams }: PageProps) {
   const { id } = await params;
+  const { return: returnUrl } = await searchParams;
   const vehicle = await getVehicle(id);
 
   if (!vehicle) {
@@ -262,7 +264,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
             </li>
             <ChevronRight size={16} className="text-gray-400" />
             <li>
-              <Link href="/autos" className="hover:text-orange-500">
+              <Link href={returnUrl || "/autos"} className="hover:text-orange-500">
                 Inventario
               </Link>
             </li>
