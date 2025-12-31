@@ -98,5 +98,24 @@ body {
     white-space: nowrap;
     border-width: 0;
   }
+  
+  /* Mejoras de touch targets y UX mobile */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Asegurar que los botones y links tengan tamaño mínimo táctil */
+  button, a[role="button"], input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Mejorar scroll suave en mobile */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
 }
 

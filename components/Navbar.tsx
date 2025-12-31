@@ -138,7 +138,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+            className="lg:hidden text-white p-3 hover:bg-white/10 rounded-lg transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
@@ -167,7 +167,7 @@ export default function Navbar() {
                   >
                     <Link
                       href={item.href}
-                      className="block py-3 px-4 text-white hover:text-orange-500 hover:bg-white/5 rounded-lg transition-all duration-300 relative group"
+                      className="block py-4 px-4 text-white hover:text-orange-500 hover:bg-white/5 rounded-lg transition-all duration-300 relative group min-h-[44px] flex items-center touch-manipulation"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.imageSrc ? (

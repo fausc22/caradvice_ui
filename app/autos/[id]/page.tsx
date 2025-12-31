@@ -264,7 +264,10 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
             </li>
             <ChevronRight size={16} className="text-gray-400" />
             <li>
-              <Link href={returnUrl || "/autos"} className="hover:text-orange-500">
+              <Link 
+                href={returnUrl || "/autos"} 
+                className="hover:text-orange-500 transition-colors"
+              >
                 Inventario
               </Link>
             </li>
@@ -273,8 +276,8 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
                 <ChevronRight size={16} className="text-gray-400" />
                 <li>
                     <Link
-                      href={`/autos?brand=${encodeURIComponent(brand)}`}
-                      className="hover:text-orange-500"
+                      href={returnUrl || `/autos?brand=${encodeURIComponent(brand)}`}
+                      className="hover:text-orange-500 transition-colors"
                     >
                     {brand}
                   </Link>
@@ -286,8 +289,8 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
                 <ChevronRight size={16} className="text-gray-400" />
                 <li>
                     <Link
-                      href={`/autos?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(model)}`}
-                      className="hover:text-orange-500"
+                      href={returnUrl || `/autos?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(model)}`}
+                      className="hover:text-orange-500 transition-colors"
                     >
                     {model}
                   </Link>

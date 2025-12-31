@@ -43,51 +43,49 @@ export default function Footer() {
       </div>
 
       <footer className="font-antenna bg-black text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Sección principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 lg:gap-12 mb-8">
-          {/* Columna izquierda: Logo grande */}
-          <div className="flex items-start justify-start">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
+        {/* Sección principal - Alineada verticalmente */}
+        <div className="flex flex-col lg:flex-row lg:items-start gap-6 sm:gap-8 lg:gap-10 mb-6 lg:mb-8">
+          {/* Columna izquierda: Logo - Alineado con el contenido */}
+          <div className="flex items-center justify-center lg:justify-start lg:items-start lg:flex-shrink-0">
             <Link href="/" className="flex items-center group">
               <Image
                 src="/logo-footer.png"
                 alt="CarAdvice"
-                width={180}
-                height={60}
-                className="object-contain object-left group-hover:opacity-90 transition-opacity duration-300"
+                width={400}
+                height={133}
+                className="object-contain w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[280px] xl:max-w-[320px] h-auto group-hover:opacity-90 transition-opacity duration-300"
                 priority
               />
             </Link>
           </div>
 
-          {/* Columna derecha: Descripción, widget, teléfono y direcciones */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Sub-columna izquierda: Descripción y widget */}
-            <div className="space-y-6">
-              {/* Descripción de la empresa */}
-              <p className="text-white text-sm leading-relaxed max-w-2xl">
+          {/* Columna derecha: Descripción, teléfono y direcciones - Alineado con el logo */}
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 lg:items-start">
+            {/* Sub-columna izquierda: Descripción */}
+            <div className="flex flex-col justify-start">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 Somos una concesionaria de autos que combina la venta de vehículos con asesoría personalizada en cada etapa del proceso. Nos especializamos en la compra-venta de autos usados y 0Km, brindando una experiencia ágil, segura y transparente que incluye asesoramiento y gestión documental.
               </p>
-
             </div>
 
             {/* Sub-columna derecha: Teléfono y direcciones */}
-            <div className="space-y-6">
+            <div className="flex flex-col justify-start gap-4 sm:gap-5">
               {/* Teléfono grande */}
               <div className="flex items-center gap-3">
-                <Phone size={24} className="text-white" />
+                <Phone size={20} className="text-white flex-shrink-0" />
                 <a
                   href="https://wa.me/5493515158848"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white text-3xl md:text-4xl font-bold hover:text-orange-500 transition-colors"
+                  className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold hover:text-orange-500 transition-colors"
                 >
                   351 515 8848
                 </a>
               </div>
 
               {/* Direcciones */}
-              <div className="space-y-3">
+              <div className="space-y-2.5 sm:space-y-3">
                 {locations.map((location, index) => (
                   <motion.a
                     key={index}
@@ -136,7 +134,7 @@ export default function Footer() {
                       <div className={`font-medium transition-colors ${hoveredLocation === index ? 'text-orange-500' : 'text-white'}`}>
                         {location.name}
                       </div>
-                      <div className={`transition-colors ${hoveredLocation === index ? 'text-orange-300' : 'text-gray-300'}`}>
+                      <div className={`transition-colors text-xs sm:text-sm ${hoveredLocation === index ? 'text-orange-300' : 'text-gray-300'}`}>
                         {location.address}
                       </div>
                     </div>
@@ -148,10 +146,10 @@ export default function Footer() {
         </div>
 
         {/* Línea separadora gris */}
-        <div className="border-t border-gray-700 my-8"></div>
+        <div className="border-t border-gray-700 my-5 sm:my-6 lg:my-8"></div>
 
         {/* Sección inferior: Copyright y redes sociales */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
           {/* Copyright */}
           <div className="text-white text-sm">
             Copyright © 2025. All rights reserved.

@@ -360,7 +360,7 @@ export default function VehicleFilters({
                   }
                 }}
                 className={cn(
-                  "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+                  "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-base text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                   filters.minPrice 
                     ? "text-orange-500 font-bold" 
                     : "text-gray-500"
@@ -395,7 +395,7 @@ export default function VehicleFilters({
                   }
                 }}
                 className={cn(
-                  "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+                  "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-base text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                   filters.maxPrice 
                     ? "text-orange-500 font-bold" 
                     : "text-gray-500"
@@ -434,7 +434,7 @@ export default function VehicleFilters({
               }}
               maxLength={4}
               className={cn(
-                "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+                "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-base text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                 filters.minYear 
                   ? "text-orange-500 font-bold" 
                   : "text-gray-500"
@@ -468,7 +468,7 @@ export default function VehicleFilters({
               }}
               maxLength={4}
               className={cn(
-                "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+                "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-base text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                 filters.maxYear 
                   ? "text-orange-500 font-bold" 
                   : "text-gray-500"
@@ -511,7 +511,7 @@ export default function VehicleFilters({
                 }
               }}
               className={cn(
-                "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+                "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-base text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                 filters.minKilometres 
                   ? "text-orange-500 font-bold" 
                   : "text-gray-500"
@@ -546,7 +546,7 @@ export default function VehicleFilters({
                 }
               }}
               className={cn(
-                "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+                "w-full bg-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-base text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                 filters.maxKilometres 
                   ? "text-orange-500 font-bold" 
                   : "text-gray-500"
@@ -585,7 +585,7 @@ export default function VehicleFilters({
             placeholder="Inserte palabra clave"
             value={filters.search || ""}
             onChange={(e) => onFiltersChange({ search: e.target.value || undefined, page: 1 })}
-            className="w-full bg-white rounded-full pl-10 pr-10 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full bg-white rounded-full pl-10 pr-10 py-2.5 text-base text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
           {filters.search && (
             <button

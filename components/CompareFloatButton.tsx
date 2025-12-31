@@ -23,7 +23,7 @@ export default function CompareFloatButton() {
       >
         <Link
           href="/comparar"
-          className="flex items-center gap-2 sm:gap-3 bg-orange-500 hover:bg-orange-600 text-white font-medium px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
+          className="flex items-center gap-2 sm:gap-3 bg-orange-500 hover:bg-orange-600 text-white font-medium px-5 sm:px-6 py-3.5 sm:py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95 min-h-[44px] touch-manipulation"
         >
           <GitCompare size={18} className="sm:w-5 sm:h-5" />
           <span className="font-antenna text-sm sm:text-base lg:text-lg whitespace-nowrap">
