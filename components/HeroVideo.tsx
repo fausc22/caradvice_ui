@@ -56,7 +56,6 @@ export default function HeroVideo() {
             muted
             playsInline
             poster="/hero-poster.jpg"
-            loading="lazy"
             className="absolute top-1/2 left-1/2 w-full h-full object-cover"
             style={{
               transform: "translate(-50%, -50%)",
