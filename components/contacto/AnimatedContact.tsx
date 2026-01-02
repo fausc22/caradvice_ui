@@ -74,6 +74,11 @@ export function AnimatedLink({
   whileTap,
   target,
   rel,
+  initial,
+  whileInView,
+  viewport,
+  transition,
+  animate,
 }: {
   href: string;
   children: ReactNode;
@@ -82,6 +87,11 @@ export function AnimatedLink({
   whileTap?: any;
   target?: string;
   rel?: string;
+  initial?: any;
+  whileInView?: any;
+  viewport?: any;
+  transition?: any;
+  animate?: any;
 }) {
   return (
     <motion.a
@@ -91,6 +101,11 @@ export function AnimatedLink({
       whileTap={whileTap}
       target={target}
       rel={rel}
+      initial={initial}
+      whileInView={whileInView}
+      viewport={viewport}
+      transition={transition}
+      animate={animate}
     >
       {children}
     </motion.a>
