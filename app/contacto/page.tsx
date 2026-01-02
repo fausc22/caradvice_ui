@@ -333,13 +333,16 @@ export default function Contacto() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 sm:gap-6 mb-6 sm:mb-8">
                   {/* Teléfono */}
-                  <AnimatedContact
+                  <AnimatedLink
+                    href="https://wa.me/5493515158848"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                     whileHover={{ y: -5 }}
-                    className="bg-white rounded-xl shadow-md p-5 sm:p-6 text-center hover:shadow-xl transition-all duration-300"
+                    className="bg-white rounded-xl shadow-md p-5 sm:p-6 text-center hover:shadow-xl transition-all duration-300 cursor-pointer"
                   >
                     <AnimatedContact
                       className="w-14 h-14 sm:w-16 sm:h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -351,22 +354,20 @@ export default function Contacto() {
                     <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-2">
                       Teléfono
                     </h3>
-                    <a
-                      href="tel:+543515158848"
-                      className="text-orange-600 hover:text-orange-700 font-semibold text-base sm:text-lg transition-colors duration-300"
-                    >
+                    <p className="text-orange-600 hover:text-orange-700 font-semibold text-base sm:text-lg transition-colors duration-300">
                       351 515 8848
-                    </a>
-                  </AnimatedContact>
+                    </p>
+                  </AnimatedLink>
 
                   {/* Email */}
-                  <AnimatedContact
+                  <AnimatedLink
+                    href="mailto:consultas@caradvice.com.ar"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                     whileHover={{ y: -5 }}
-                    className="bg-white rounded-xl shadow-md p-5 sm:p-6 text-center hover:shadow-xl transition-all duration-300"
+                    className="bg-white rounded-xl shadow-md p-5 sm:p-6 text-center hover:shadow-xl transition-all duration-300 cursor-pointer"
                   >
                     <AnimatedContact
                       className="w-14 h-14 sm:w-16 sm:h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -378,13 +379,10 @@ export default function Contacto() {
                     <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-2">
                       Email
                     </h3>
-                    <a
-                      href="mailto:consultas@caradvice.com.ar"
-                      className="text-orange-600 hover:text-orange-700 font-semibold break-all text-sm sm:text-base transition-colors duration-300"
-                    >
+                    <p className="text-orange-600 hover:text-orange-700 font-semibold break-all text-sm sm:text-base transition-colors duration-300">
                       consultas@caradvice.com.ar
-                    </a>
-                  </AnimatedContact>
+                    </p>
+                  </AnimatedLink>
 
                   {/* Horarios */}
                   <AnimatedContact

@@ -4,6 +4,7 @@ import CarCard from "@/components/CarCard";
 import { Car } from "@/types/car";
 import { Loader2 } from "lucide-react";
 import { useComparisonStore } from "@/store/useComparisonStore";
+import { useState, useEffect } from "react";
 
 interface VehicleGridProps {
   vehicles: Car[];
@@ -19,6 +20,28 @@ export default function VehicleGrid({
   currency,
 }: VehicleGridProps) {
   const { toggleVehicle, isSelected } = useComparisonStore();
+  const [isMobile, setIsMobile] = useState(false);
+  const [displayedVehicles, setDisplayedVehicles] = useState<Car[]>(vehicles);
+
+  // Detectar si es móvil y limitar vehículos
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 640; // sm breakpoint
+      setIsMobile(mobile);
+      
+      // Limitar a 12 vehículos en móvil para reducir scroll
+      if (mobile) {
+        setDisplayedVehicles(vehicles.slice(0, 12));
+      } else {
+        setDisplayedVehicles(vehicles);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [vehicles]);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-20">
@@ -52,11 +75,11 @@ export default function VehicleGrid({
     <div
       className={
         viewMode === "grid"
-          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
+          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
           : "space-y-4"
       }
     >
-      {vehicles.map((vehicle, index) => {
+      {displayedVehicles.map((vehicle, index) => {
         const priceInfo = formatPrice(vehicle);
         const vehicleSelected = isSelected(vehicle.id);
         

@@ -49,9 +49,10 @@ export default function HeroVideo() {
       <div className="relative w-full h-[34vh] sm:h-[37vh] md:h-[40vh] min-h-[190px] sm:min-h-[230px] md:min-h-[290px] overflow-hidden bg-black">
         {/* Poster de fondo mientras carga el video */}
         <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 w-full h-full bg-contain sm:bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: "url(/hero-poster.jpg)",
+            backgroundPosition: "center center",
           }}
         />
         <div className="absolute inset-0 w-full h-full">
@@ -63,7 +64,7 @@ export default function HeroVideo() {
             muted
             playsInline
             poster="/hero-poster.jpg"
-            className="absolute top-1/2 left-1/2 w-full h-full object-cover object-center"
+            className="absolute top-1/2 left-1/2 w-full h-full object-contain sm:object-cover object-center"
             style={{
               transform: "translate(-50%, -50%)",
               minWidth: "100%",

@@ -13,7 +13,6 @@ export default function VehicleShareButtons({ vehicleTitle }: VehicleShareButton
   const shareUrl = `${baseUrl}${pathname}`;
 
   const whatsappShare = `https://wa.me/?text=${encodeURIComponent(`${vehicleTitle} ${shareUrl}`)}`;
-  const twitterShare = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(vehicleTitle)}`;
 
   const handleNativeShare = async () => {
     if (navigator.share) {
@@ -57,14 +56,6 @@ export default function VehicleShareButtons({ vehicleTitle }: VehicleShareButton
           aria-label="Compartir"
         >
           <Share2 size={18} className="sm:w-5 sm:h-5" />
-        </button>
-        <button
-          onClick={() => window.open(twitterShare, "_blank")}
-          className="w-11 h-11 sm:w-12 sm:h-12 bg-black hover:bg-gray-800 rounded-lg flex items-center justify-center text-white transition-colors"
-          title="Compartir en X (Twitter)"
-          aria-label="Compartir en X (Twitter)"
-        >
-          <span className="text-white font-bold text-base sm:text-lg">X</span>
         </button>
       </div>
     </div>

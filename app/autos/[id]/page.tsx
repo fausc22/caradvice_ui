@@ -493,7 +493,7 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
 
         {/* Autos Relacionados */}
         <div className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Anuncios relacionados</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Vehiculos relacionados</h2>
           {relatedVehicles && relatedVehicles.length > 0 ? (
             <RelatedVehiclesCarousel
               vehicles={relatedVehicles.map((relatedVehicle) => {
