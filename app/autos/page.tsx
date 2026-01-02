@@ -97,7 +97,7 @@ export default async function AutosPage({ searchParams }: PageProps) {
   // Convertir searchParams a CarFilters
   const filters: CarFilters = {
     page: params.page ? parseInt(params.page) : 1,
-    limit: 20,
+    limit: 18,
     brand: params.brand || undefined,
     model: params.model || undefined,
     condition: params.condition || undefined,
@@ -137,7 +137,7 @@ export default async function AutosPage({ searchParams }: PageProps) {
   const initialVehicles = vehiclesData?.vehicles || [];
   const initialPagination = vehiclesData?.pagination || {
     page: 1,
-    limit: 20,
+    limit: 18,
     total: 0,
     totalPages: 0,
   };

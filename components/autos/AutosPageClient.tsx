@@ -9,7 +9,7 @@ import ViewControls from "@/components/vehicles/ViewControls";
 import Pagination from "@/components/vehicles/Pagination";
 import CompareFloatButton from "@/components/CompareFloatButton";
 import { Loader2 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Car } from "@/types/car";
 
 interface AutosPageClientProps {
@@ -70,11 +70,37 @@ export default function AutosPageClient({
   const { filters, updateFilters, clearFilters, setFilters } = useVehicleFilters();
   const { viewMode, currency, setViewMode, setCurrency } = useVehicleStore();
   const hasInitialized = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detectar si es móvil y ajustar límite de paginación
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 640; // sm breakpoint
+      setIsMobile(mobile);
+      
+      // Ajustar límite según el tamaño de pantalla
+      const newLimit = mobile ? 12 : 18;
+      
+      // Solo actualizar si el límite actual es diferente y ya se inicializó
+      if (hasInitialized.current && filters.limit !== newLimit) {
+        updateFilters({ limit: newLimit, page: 1 });
+      }
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [filters.limit, updateFilters]);
 
   // Inicializar filtros desde props si hay filtros en la URL
   useEffect(() => {
     if (!hasInitialized.current && typeof window !== "undefined") {
       hasInitialized.current = true;
+
+      // Detectar si es móvil para establecer el límite correcto
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      const initialLimit = mobile ? 12 : 18;
 
       // Verificar si hay filtros en la URL (excluyendo page, limit, sortBy, sortOrder)
       const urlParams = new URLSearchParams(window.location.search);
@@ -86,7 +112,7 @@ export default function AutosPageClient({
       if (hasFiltersInUrl) {
         setFilters({
           page: initialFilters.page || 1,
-          limit: 20,
+          limit: initialLimit,
           sortBy: (initialFilters.sortBy as any) || "created_at",
           sortOrder: (initialFilters.sortOrder as any) || "DESC",
           brand: initialFilters.brand || null,
@@ -109,7 +135,7 @@ export default function AutosPageClient({
         // Si no hay filtros, usar valores por defecto
         const defaultFilters = {
           page: 1,
-          limit: 20,
+          limit: initialLimit,
           sortBy: "created_at" as const,
           sortOrder: "DESC" as const,
           brand: null,
