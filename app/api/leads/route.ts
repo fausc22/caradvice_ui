@@ -74,19 +74,32 @@ function createTransporter() {
   const pass = process.env.SMTP_PASS;
   const secure = process.env.SMTP_SECURE === 'true';
 
-  if (!host || !user || !pass) {
-    throw new Error('Configuración SMTP incompleta. Verifica las variables de entorno.');
+  // Verificar variables de entorno
+  const missingVars: string[] = [];
+  if (!host) missingVars.push('SMTP_HOST');
+  if (!user) missingVars.push('SMTP_USER');
+  if (!pass) missingVars.push('SMTP_PASS');
+
+  if (missingVars.length > 0) {
+    const errorMsg = `Configuración SMTP incompleta. Faltan las siguientes variables de entorno: ${missingVars.join(', ')}`;
+    console.error(errorMsg);
+    throw new Error(errorMsg);
   }
 
-  return nodemailer.createTransport({
-    host,
-    port,
-    secure,
-    auth: {
-      user,
-      pass,
-    },
-  });
+  try {
+    return nodemailer.createTransport({
+      host,
+      port,
+      secure,
+      auth: {
+        user,
+        pass,
+      },
+    });
+  } catch (error: any) {
+    console.error('Error al crear transporter de nodemailer:', error);
+    throw new Error(`Error al configurar el servicio de email: ${error.message}`);
+  }
 }
 
 // Formatear el email según el origen
@@ -222,6 +235,24 @@ export async function POST(request: NextRequest) {
 
     const data = validation.data!;
 
+    // Verificar variables de entorno antes de continuar
+    const missingVars: string[] = [];
+    if (!process.env.SMTP_HOST) missingVars.push('SMTP_HOST');
+    if (!process.env.SMTP_USER) missingVars.push('SMTP_USER');
+    if (!process.env.SMTP_PASS) missingVars.push('SMTP_PASS');
+
+    if (missingVars.length > 0) {
+      console.error(`Variables de entorno faltantes en Vercel: ${missingVars.join(', ')}`);
+      return NextResponse.json(
+        { 
+          error: 'Error de configuración del servidor',
+          message: 'El servicio de email no está configurado correctamente. Por favor, contacta al administrador.',
+          details: process.env.NODE_ENV === 'development' ? `Faltan: ${missingVars.join(', ')}` : undefined
+        },
+        { status: 500 }
+      );
+    }
+
     // Crear transporter
     const transporter = createTransporter();
 
@@ -249,16 +280,42 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: any) {
-    console.error('Error al enviar email:', error);
+    // Log completo del error para debugging
+    console.error('Error al enviar email:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+      responseCode: error.responseCode,
+      response: error.response,
+    });
 
-    // No exponer detalles del error en producción
-    const errorMessage = process.env.NODE_ENV === 'development' 
+    // Determinar el tipo de error
+    let errorMessage = 'Error al enviar la consulta. Por favor, intenta nuevamente más tarde.';
+    let statusCode = 500;
+
+    if (error.message?.includes('Configuración SMTP incompleta')) {
+      errorMessage = 'Error de configuración del servidor. Por favor, contacta al administrador.';
+      statusCode = 500;
+    } else if (error.code === 'EAUTH' || error.responseCode === 535) {
+      errorMessage = 'Error de autenticación. Verifica las credenciales SMTP.';
+      statusCode = 500;
+    } else if (error.code === 'ECONNECTION' || error.code === 'ETIMEDOUT') {
+      errorMessage = 'Error de conexión con el servidor de email. Por favor, intenta más tarde.';
+      statusCode = 503;
+    }
+
+    // En desarrollo, mostrar más detalles
+    const details = process.env.NODE_ENV === 'development' 
       ? error.message 
-      : 'Error al enviar la consulta. Por favor, intenta nuevamente más tarde.';
+      : undefined;
 
     return NextResponse.json(
-      { error: 'Error al enviar consulta', message: errorMessage },
-      { status: 500 }
+      { 
+        error: 'Error al enviar consulta', 
+        message: errorMessage,
+        details 
+      },
+      { status: statusCode }
     );
   }
 }

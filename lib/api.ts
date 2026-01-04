@@ -54,13 +54,17 @@ export const api = {
     }
     
     try {
-      // Crear un AbortController para timeout manual (AbortSignal.timeout puede no estar disponible en todos los entornos)
+      // Crear un AbortController para timeout manual
+      // Timeout más corto para evitar esperas largas en Vercel (5 segundos)
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos
       
       const response = await fetch(url.toString(), {
         cache: "no-store",
         signal: controller.signal,
+        headers: {
+          'Accept': 'application/json',
+        },
       });
       
       clearTimeout(timeoutId);
