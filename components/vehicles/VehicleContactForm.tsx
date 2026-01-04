@@ -38,8 +38,9 @@ export default function VehicleContactForm({
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    e.stopPropagation();
 
     if (!formData.aceptaPrivacidad) {
       setErrorMessage("Debes aceptar las políticas de privacidad para continuar");
