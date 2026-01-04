@@ -1,0 +1,61 @@
+<?php
+/**
+ * Plugin Name: Sincronizador ASOFIX
+ * Description: Sincroniza vehículos desde la API de Asofix al tema Vehica.
+ * Version: 117 
+ * Author: Lucas Ferreyra
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+// Constantes y carga de archivos (sin cambios)
+define( 'SAV_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'SAV_LOG_FILE', WP_CONTENT_DIR . '/sincro-asofix-vehica-log.txt' );
+require_once SAV_PLUGIN_DIR . 'includes/class-sincro-vehica-log.php';
+require_once SAV_PLUGIN_DIR . 'includes/class-sincro-vehica-api.php';
+require_once SAV_PLUGIN_DIR . 'includes/class-sincro-vehica-sync.php';
+require_once SAV_PLUGIN_DIR . 'includes/class-sincro-vehica-admin.php';
+
+// ===================================================================
+// ===      CAMBIO CLAVE v96.0: LÓGICA DE CRON                     ===
+// ===================================================================
+
+// Hook que se ejecuta cuando el plugin se activa
+function sav_activate_plugin() {
+    // Crear tabla (sin cambios)
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'sav_sync_dates';
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE $table_name (
+        post_id BIGINT(20) UNSIGNED NOT NULL,
+        last_update_ts INT(11) UNSIGNED NOT NULL,
+        PRIMARY KEY  (post_id)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    // Programar el evento Cron si no está ya programado
+    if ( ! wp_next_scheduled( 'sav_cron_sync_hook' ) ) {
+        wp_schedule_event( time(), 'hourly', 'sav_cron_sync_hook' );
+    }
+}
+register_activation_hook( __FILE__, 'sav_activate_plugin' );
+
+// Hook que se ejecuta cuando el plugin se desactiva
+function sav_deactivate_plugin() {
+    // Desprogramar el evento Cron para limpiar el sistema
+    $timestamp = wp_next_scheduled( 'sav_cron_sync_hook' );
+    wp_unschedule_event( $timestamp, 'sav_cron_sync_hook' );
+}
+register_deactivation_hook( __FILE__, 'sav_deactivate_plugin' );
+
+// Asociar nuestro hook personalizado con la función que debe ejecutar
+add_action( 'sav_cron_sync_hook', array( 'Sincro_Vehica_Sync', 'run_full_sync_cron' ) );
+
+
+// Inicialización del plugin (sin cambios)
+function sav_run_sincronizador() {
+    new Sincro_Vehica_Admin();
+}
+add_action( 'plugins_loaded', 'sav_run_sincronizador' );
+?>

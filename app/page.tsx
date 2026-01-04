@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import HeroVideo from "@/components/HeroVideo";
 import SearchBar from "@/components/SearchBar";
 import VehicleCarousels from "@/components/home/VehicleCarousels";
@@ -191,8 +192,16 @@ export default function Home() {
             <SearchBar />
           </div>
 
-          {/* Carruseles de vehículos (Client Component) */}
-          <VehicleCarousels />
+          {/* Carruseles de vehículos (Client Component) - Con Suspense para no bloquear render */}
+          <Suspense
+            fallback={
+              <div className="flex justify-center items-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+              </div>
+            }
+          >
+            <VehicleCarousels />
+          </Suspense>
         </section>
       </div>
     </>

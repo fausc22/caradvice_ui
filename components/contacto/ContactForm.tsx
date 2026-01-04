@@ -25,13 +25,28 @@ export default function ContactForm() {
 
     setFormStatus("sending");
 
-    // Redirigir a WhatsApp con el mensaje
-    const mensaje = encodeURIComponent(
-      `Hola, mi nombre es ${formData.nombre}, mi teléfono es ${formData.telefono}, mi email es ${formData.email}. ${formData.mensaje}`
-    );
-    
-    setTimeout(() => {
-      window.open(`https://wa.link/q5z6lg?text=${mensaje}`, "_blank");
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          source: "contact",
+          name: formData.nombre,
+          email: formData.email,
+          phone: formData.telefono,
+          message: formData.mensaje,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || "Error al enviar el formulario");
+      }
+
+      // Éxito
       setFormStatus("success");
       setFormData({
         nombre: "",
@@ -41,10 +56,15 @@ export default function ContactForm() {
         aceptaPrivacidad: false,
       });
 
+      // Resetear después de 5 segundos
       setTimeout(() => {
         setFormStatus("idle");
-      }, 3000);
-    }, 500);
+      }, 5000);
+    } catch (error: any) {
+      console.error("Error al enviar formulario:", error);
+      setFormStatus("error");
+      // El mensaje de error se mostrará en la UI
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -170,6 +190,16 @@ export default function ContactForm() {
           </>
         )}
       </motion.button>
+
+      {formStatus === "error" && (
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-4 text-red-600 text-center font-semibold"
+        >
+          Error al enviar el mensaje. Por favor, intenta nuevamente.
+        </motion.p>
+      )}
 
       {formStatus === "success" && (
         <motion.p

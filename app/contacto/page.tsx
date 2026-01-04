@@ -9,6 +9,7 @@ import {
   AnimatedImage,
   AnimatedLink,
 } from "@/components/contacto/AnimatedContact";
+import { WHATSAPP_LINK, WHATSAPP_PHONE_FORMATTED } from "@/lib/constants";
 
 const sucursales = [
   {
@@ -334,7 +335,7 @@ export default function Contacto() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 sm:gap-6 mb-6 sm:mb-8">
                   {/* Teléfono */}
                   <AnimatedLink
-                    href="https://wa.me/5493515158848"
+                    href={WHATSAPP_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 20 }}
@@ -355,7 +356,7 @@ export default function Contacto() {
                       Teléfono
                     </h3>
                     <p className="text-orange-600 hover:text-orange-700 font-semibold text-base sm:text-lg transition-colors duration-300">
-                      351 515 8848
+                      {WHATSAPP_PHONE_FORMATTED}
                     </p>
                   </AnimatedLink>
 
@@ -459,7 +460,7 @@ export default function Contacto() {
                 Chateá con nosotros y te respondemos al instante
               </p>
               <AnimatedLink
-                href="https://wa.link/q5z6lg"
+                href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-white text-green-600 hover:bg-green-50 font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-lg transition-all duration-300 shadow-lg text-sm sm:text-base"

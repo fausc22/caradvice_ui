@@ -279,12 +279,12 @@ export default function QuienesSomos() {
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Valores
                 </h2>
-                <ul className="text-gray-700 leading-relaxed space-y-1 text-sm sm:text-base md:text-lg">
-                  <li className="font-bold">Calidad,</li>
-                  <li className="font-bold">servicio al cliente,</li>
-                  <li className="font-bold">responsabilidad,</li>
-                  <li className="font-bold">trabajo en equipo,</li>
-                  <li className="font-bold">transparencia.</li>
+                <ul className="text-gray-700 leading-relaxed space-y-2 sm:space-y-3 text-sm sm:text-base md:text-lg">
+                  <li className="font-bold">Calidad</li>
+                  <li className="font-bold">Servicio Al Cliente</li>
+                  <li className="font-bold">Responsabilidad</li>
+                  <li className="font-bold">Trabajo En Equipo</li>
+                  <li className="font-bold">Transparencia</li>
                 </ul>
               </AnimatedSection>
             </div>

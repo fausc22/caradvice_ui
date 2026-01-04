@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Wallet, Car, Search, DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
@@ -15,7 +15,74 @@ interface ServiceCard {
 export default function HeroVideo() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [lastButtonClicked, setLastButtonClicked] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Forzar carga del video al montar el componente
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Función para cargar el video
+    const loadVideo = () => {
+      try {
+        video.load();
+        // Intentar reproducir (puede fallar por políticas del navegador)
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setVideoLoaded(true);
+              setVideoError(false);
+            })
+            .catch((error) => {
+              // Error silencioso - el video puede no reproducirse automáticamente
+              // pero el poster se mostrará
+              console.log("Video autoplay bloqueado:", error);
+              setVideoError(false); // No es un error crítico
+            });
+        }
+      } catch (error) {
+        console.error("Error al cargar video:", error);
+        setVideoError(true);
+      }
+    };
+
+    // Cargar inmediatamente
+    loadVideo();
+
+    // Reintentar si hay error de red
+    const handleError = () => {
+      setVideoError(true);
+      // Reintentar después de un delay
+      setTimeout(() => {
+        if (video) {
+          video.load();
+        }
+      }, 2000);
+    };
+
+    const handleLoadedData = () => {
+      setVideoLoaded(true);
+      setVideoError(false);
+    };
+
+    const handleCanPlay = () => {
+      setVideoLoaded(true);
+      setVideoError(false);
+    };
+
+    video.addEventListener("error", handleError);
+    video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("canplay", handleCanPlay);
+
+    return () => {
+      video.removeEventListener("error", handleError);
+      video.removeEventListener("loadeddata", handleLoadedData);
+      video.removeEventListener("canplay", handleCanPlay);
+    };
+  }, []);
 
   const services: ServiceCard[] = [
     {
@@ -58,13 +125,16 @@ export default function HeroVideo() {
         <div className="absolute inset-0 w-full h-full">
           <video
             ref={videoRef}
-            src="videos/hero_video.mp4"
+            src="/videos/hero_video.mp4"
             autoPlay
             loop
             muted
             playsInline
+            preload="auto"
             poster="/hero-poster.jpg"
-            className="absolute top-1/2 left-1/2 w-full h-full object-contain sm:object-cover object-center"
+            className={`absolute top-1/2 left-1/2 w-full h-full object-contain sm:object-cover object-center transition-opacity duration-500 ${
+              videoLoaded ? "opacity-100" : "opacity-0"
+            }`}
             style={{
               transform: "translate(-50%, -50%)",
               minWidth: "100%",
@@ -72,6 +142,9 @@ export default function HeroVideo() {
               width: "100%",
               height: "100%",
             }}
+            onLoadedData={() => setVideoLoaded(true)}
+            onCanPlay={() => setVideoLoaded(true)}
+            onError={() => setVideoError(true)}
           />
         </div>
       </div>

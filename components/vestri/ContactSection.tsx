@@ -19,13 +19,27 @@ export default function ContactSection() {
     e.preventDefault();
     setFormStatus("sending");
 
-    // Redirigir a WhatsApp con el mensaje
-    const mensaje = encodeURIComponent(
-      `Hola, mi nombre es ${formData.nombre}, mi teléfono es ${formData.telefono}. ${formData.consulta}`
-    );
-    
-    setTimeout(() => {
-      window.open(`https://wa.link/zovnj2?text=${mensaje}`, "_blank");
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          source: "vestri",
+          name: formData.nombre,
+          phone: formData.telefono,
+          message: formData.consulta,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || "Error al enviar el formulario");
+      }
+
+      // Éxito
       setFormStatus("success");
       setFormData({
         nombre: "",
@@ -33,10 +47,15 @@ export default function ContactSection() {
         consulta: "",
       });
 
+      // Resetear después de 5 segundos
       setTimeout(() => {
         setFormStatus("idle");
-      }, 3000);
-    }, 500);
+      }, 5000);
+    } catch (error: any) {
+      console.error("Error al enviar formulario:", error);
+      setFormStatus("error");
+      // El mensaje de error se mostrará en la UI
+    }
   };
 
   const handleChange = (
@@ -150,6 +169,16 @@ export default function ContactSection() {
                     </>
                   )}
                 </button>
+
+                {formStatus === "error" && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-600 text-center font-semibold text-sm md:text-base"
+                  >
+                    Error al enviar la consulta. Por favor, intenta nuevamente.
+                  </motion.p>
+                )}
 
                 {formStatus === "success" && (
                   <motion.p

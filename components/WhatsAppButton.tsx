@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { WHATSAPP_LINK } from "@/lib/constants";
 
 export default function WhatsAppButton() {
   return (
     <motion.a
-      href="https://wa.link/q5z6lg"
+      href={WHATSAPP_LINK}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full p-4 shadow-2xl transition-all duration-300 flex items-center justify-center group w-14 h-14 sm:w-16 sm:h-16"

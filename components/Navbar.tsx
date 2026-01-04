@@ -22,7 +22,7 @@ function NavLink({ href, label, imageSrc, logoHeightDesktop = "h-12", logoHeight
   return (
     <Link
       href={href}
-      className="relative py-2 px-1"
+      className="relative py-2 px-1 flex items-center h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -103,13 +103,13 @@ export default function Navbar() {
     >
       {/* Contenido del navbar */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between py-0.5 md:py-1">
-          {/* Logo - Ocupa toda la parte izquierda */}
+        <nav className="flex items-center justify-between py-2 md:py-3">
+          {/* Logo - Alineado verticalmente con el resto del contenido */}
           <Link
             href="/"
-            className="flex items-center group flex-shrink-0 flex-1 lg:flex-none"
+            className="flex items-center group flex-shrink-0 flex-1 lg:flex-none h-full"
           >
-            <div className="relative w-32 h-16 sm:w-36 sm:h-18 md:w-40 md:h-20 lg:w-44 lg:h-22 flex-shrink-0">
+            <div className="relative w-32 h-16 sm:w-36 sm:h-18 md:w-40 md:h-20 lg:w-44 lg:h-22 flex-shrink-0 flex items-center">
               <Image
                 src="/logo_navbar.jpg"
                 alt="CAR ADVICE Logo"
@@ -121,8 +121,8 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+          {/* Desktop Menu - Alineado verticalmente con el logo */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8 h-full">
             {menuItems.map((item) => (
               <NavLink
                 key={item.href}
@@ -136,9 +136,9 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Mejorado para touch targets */}
           <button
-            className="lg:hidden text-white p-3 hover:bg-white/10 rounded-lg transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
+            className="lg:hidden text-white p-3 hover:bg-white/10 rounded-lg transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center touch-manipulation active:bg-white/20"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
@@ -157,7 +157,7 @@ export default function Navbar() {
               transition={{ duration: 0.3 }}
               className="lg:hidden overflow-hidden"
             >
-              <div className="pt-4 pb-6 border-t border-white/20 space-y-1">
+              <div className="pt-4 pb-6 border-t border-white/20 space-y-2">
                 {menuItems.map((item, index) => (
                   <motion.div
                     key={item.href}
@@ -167,7 +167,7 @@ export default function Navbar() {
                   >
                     <Link
                       href={item.href}
-                      className="block py-4 px-4 text-white hover:text-orange-500 hover:bg-white/5 rounded-lg transition-all duration-300 relative group min-h-[44px] flex items-center touch-manipulation"
+                      className="block py-4 px-4 text-white hover:text-orange-500 hover:bg-white/5 rounded-lg transition-all duration-300 relative group min-h-[48px] flex items-center touch-manipulation active:bg-white/10"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.imageSrc ? (
