@@ -87,4 +87,43 @@ export const api = {
       throw error;
     }
   },
+
+  async post<T>(endpoint: string, body?: any): Promise<T> {
+    const url = `${API_URL}${endpoint}`;
+    
+    try {
+      // Timeout de 10 segundos para POST (más tiempo que GET)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: body ? JSON.stringify(body) : undefined,
+        signal: controller.signal,
+      });
+      
+      clearTimeout(timeoutId);
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || data.error || `API Error (${response.status}): ${response.statusText}`);
+      }
+      
+      return data;
+    } catch (error: any) {
+      // Si es un error de conexión o timeout, loguear y relanzar con más contexto
+      if (error.name === 'AbortError' || error.code === 'ECONNREFUSED' || error.message?.includes('fetch failed')) {
+        const errorMsg = `No se pudo conectar al backend en ${url}. Verifica que el backend esté corriendo y que NEXT_PUBLIC_API_URL esté configurado correctamente.`;
+        console.error(`[API] ${errorMsg}`);
+        console.error(`[API] Error original:`, error);
+        throw new Error(errorMsg);
+      }
+      throw error;
+    }
+  },
 };

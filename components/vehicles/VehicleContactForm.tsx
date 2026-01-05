@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { api } from "@/lib/api";
 
 interface VehicleContactFormProps {
   vehicleId: string;
@@ -52,30 +53,18 @@ export default function VehicleContactForm({
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const data = await api.post("/api/leads", {
+        source: "vehicle",
+        name: formData.nombre,
+        email: formData.email,
+        phone: formData.telefono,
+        message: formData.mensaje,
+        vehicle: {
+          id: vehicleId,
+          title: vehicleTitle,
+          url: vehicleUrl,
         },
-        body: JSON.stringify({
-          source: "vehicle",
-          name: formData.nombre,
-          email: formData.email,
-          phone: formData.telefono,
-          message: formData.mensaje,
-          vehicle: {
-            id: vehicleId,
-            title: vehicleTitle,
-            url: vehicleUrl,
-          },
-        }),
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || data.error || "Error al enviar el formulario");
-      }
 
       // Éxito
       setFormStatus("success");

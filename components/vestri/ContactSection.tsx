@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Send, CheckCircle2, Phone, Mail } from "lucide-react";
+import { api } from "@/lib/api";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -20,24 +21,12 @@ export default function ContactSection() {
     setFormStatus("sending");
 
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          source: "vestri",
-          name: formData.nombre,
-          phone: formData.telefono,
-          message: formData.consulta,
-        }),
+      const data = await api.post("/api/leads", {
+        source: "vestri",
+        name: formData.nombre,
+        phone: formData.telefono,
+        message: formData.consulta,
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || data.error || "Error al enviar el formulario");
-      }
 
       // Éxito
       setFormStatus("success");
