@@ -15,6 +15,7 @@ export default function ContactForm() {
   });
 
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +26,7 @@ export default function ContactForm() {
     }
 
     setFormStatus("sending");
+    setErrorMessage("");
 
     try {
       const data = await api.post("/api/leads", {
@@ -52,7 +54,7 @@ export default function ContactForm() {
     } catch (error: any) {
       console.error("Error al enviar formulario:", error);
       setFormStatus("error");
-      // El mensaje de error se mostrará en la UI
+      setErrorMessage(error.message || "Error al enviar el mensaje. Por favor, intenta nuevamente.");
     }
   };
 
@@ -180,13 +182,13 @@ export default function ContactForm() {
         )}
       </motion.button>
 
-      {formStatus === "error" && (
+      {formStatus === "error" && errorMessage && (
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-4 text-red-600 text-center font-semibold"
+          className="mt-4 text-red-600 text-center font-semibold text-sm"
         >
-          Error al enviar el mensaje. Por favor, intenta nuevamente.
+          {errorMessage}
         </motion.p>
       )}
 

@@ -111,7 +111,14 @@ export const api = {
       const data = await response.json();
       
       if (!response.ok) {
-        throw new Error(data.message || data.error || `API Error (${response.status}): ${response.statusText}`);
+        // Construir mensaje de error con detalles si están disponibles
+        let errorMessage = data.message || data.error || `API Error (${response.status}): ${response.statusText}`;
+        if (data.details && Array.isArray(data.details)) {
+          errorMessage += `: ${data.details.join(', ')}`;
+        } else if (data.details) {
+          errorMessage += `: ${data.details}`;
+        }
+        throw new Error(errorMessage);
       }
       
       return data;
