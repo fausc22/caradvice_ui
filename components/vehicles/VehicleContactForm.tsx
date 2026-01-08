@@ -8,12 +8,16 @@ interface VehicleContactFormProps {
   vehicleId: string;
   vehicleTitle: string;
   vehicleUrl: string;
+  vehiclePrice?: number;
+  vehiclePriceCurrency?: "ARS" | "USD";
 }
 
 export default function VehicleContactForm({
   vehicleId,
   vehicleTitle,
   vehicleUrl,
+  vehiclePrice,
+  vehiclePriceCurrency,
 }: VehicleContactFormProps) {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -63,6 +67,8 @@ export default function VehicleContactForm({
           id: vehicleId,
           title: vehicleTitle,
           url: vehicleUrl,
+          price: vehiclePrice,
+          priceCurrency: vehiclePriceCurrency,
         },
       });
 

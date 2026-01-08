@@ -315,52 +315,13 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
 
             {/* Formulario de Contacto debajo de la galería */}
             <div className="mt-6 lg:block hidden">
-              <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
-                <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Contacto</h3>
-                <form className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <input
-                      type="text"
-                      placeholder="Nombre"
-                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
-                    />
-                    <input
-                      type="email"
-                      placeholder="Email*"
-                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
-                    />
-                    <input
-                      type="tel"
-                      placeholder="Teléfono"
-                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base sm:col-span-2 lg:col-span-1"
-                    />
-                  </div>
-                  <textarea
-                    placeholder="Mensaje*"
-                    rows={4}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
-                  />
-                  <div className="flex items-start gap-2">
-                    <input
-                      type="checkbox"
-                      id="privacy"
-                      className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500 mt-1"
-                    />
-                    <label htmlFor="privacy" className="text-xs sm:text-sm text-gray-600">
-                      Acepto las{" "}
-                      <Link href="/politicas" className="text-orange-500 hover:text-orange-600">
-                        políticas de privacidad
-                      </Link>
-                    </label>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition-colors text-sm sm:text-base"
-                  >
-                    Enviar
-                  </button>
-                </form>
-              </div>
+              <VehicleContactForm
+                vehicleId={id}
+                vehicleTitle={vehicle.title}
+                vehicleUrl={vehicleUrl}
+                vehiclePrice={vehiclePrice}
+                vehiclePriceCurrency={vehicleCurrency}
+              />
             </div>
           </div>
 
@@ -446,6 +407,8 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
                 vehicleId={id}
                 vehicleTitle={vehicle.title}
                 vehicleUrl={vehicleUrl}
+                vehiclePrice={vehiclePrice}
+                vehiclePriceCurrency={vehicleCurrency}
               />
             </div>
           </div>
