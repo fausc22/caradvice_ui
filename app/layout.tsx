@@ -89,18 +89,28 @@ export const metadata: Metadata = {
   },
   
   icons: {
+    // Configuración optimizada para Google Search Results
+    // IMPORTANTE: Google prioriza PNG sobre ICO en los resultados de búsqueda.
+    // Por eso los PNG se declaran ANTES del ICO en el array.
+    // El orden importa: los navegadores y Google usan el primer formato compatible.
     icon: [
+      // PNG optimizados para Google (mínimo 48x48, recomendado 96x96)
+      // Estos se cargan primero y Google los usará en lugar del ICO
+      { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/favicon-192.png", sizes: "192x192", type: "image/png" },
+      // ICO mantenido al final para compatibilidad con navegadores antiguos
+      // pero Google preferirá los PNG declarados arriba
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon-32x32-1.png", sizes: "32x32", type: "image/png" },
-      { url: "/cropped-favicon-32x32-2-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
     shortcut: [
+      // Mantener ICO para compatibilidad con atajos de navegador
       { url: "/favicon.ico", sizes: "any" },
     ],
     apple: [
-      { url: "/favicon-32x32-1.png", sizes: "180x180", type: "image/png" },
+      // Apple Touch Icon: 180x180 es el tamaño estándar para iOS
+      // Usamos el 192x192 que es el más cercano y compatible
+      { url: "/favicon-192.png", sizes: "180x180", type: "image/png" },
     ],
   },
   

@@ -12,57 +12,92 @@ interface ServiceCard {
   href: string;
 }
 
+// URL del video externo - HARDCODEADA (no usar /public/videos)
+const VIDEO_URL = "https://api-caradvice.duckdns.org/media/videos/hero_video.mp4";
+
 export default function HeroVideo() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [lastButtonClicked, setLastButtonClicked] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(false);
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  // Forzar carga del video al montar el componente
+  // Lazy loading real con IntersectionObserver
+  // El video solo se carga cuando entra en viewport
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Crear observer solo una vez
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const isIntersecting = entry.isIntersecting;
+          setIsInViewport(isIntersecting);
+
+          // Controlar play/pause según viewport
+          const video = videoRef.current;
+          if (video && hasLoadedOnce) {
+            if (isIntersecting) {
+              // Entró en viewport: intentar reproducir
+              const playPromise = video.play();
+              if (playPromise !== undefined) {
+                playPromise.catch((error) => {
+                  // Autoplay bloqueado es normal, no es error
+                  console.log("Video autoplay bloqueado:", error);
+                });
+              }
+            } else {
+              // Salió del viewport: pausar para ahorrar recursos
+              video.pause();
+            }
+          }
+        });
+      },
+      {
+        rootMargin: "0px", // Cargar exactamente cuando entra en viewport
+        threshold: 0.1, // 10% visible
+      }
+    );
+
+    observerRef.current.observe(container);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [hasLoadedOnce]);
+
+  // Cargar video solo cuando entra en viewport
+  // Se ejecuta una sola vez por sesión (hasLoadedOnce)
+  useEffect(() => {
+    if (!isInViewport || hasLoadedOnce) return;
+
     const video = videoRef.current;
     if (!video) return;
 
-    // Función para cargar el video
+    // Marcar que ya se cargó para evitar re-cargas
+    setHasLoadedOnce(true);
+
+    // Cargar el video (preload="none" evita descarga hasta load())
     const loadVideo = () => {
       try {
         video.load();
-        // Intentar reproducir (puede fallar por políticas del navegador)
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              setVideoLoaded(true);
-              setVideoError(false);
-            })
-            .catch((error) => {
-              // Error silencioso - el video puede no reproducirse automáticamente
-              // pero el poster se mostrará
-              console.log("Video autoplay bloqueado:", error);
-              setVideoError(false); // No es un error crítico
-            });
-        }
       } catch (error) {
         console.error("Error al cargar video:", error);
         setVideoError(true);
       }
     };
 
-    // Cargar inmediatamente
-    loadVideo();
+    // Pequeño delay para no bloquear render inicial
+    const timeoutId = setTimeout(loadVideo, 100);
 
-    // Reintentar si hay error de red
-    const handleError = () => {
-      setVideoError(true);
-      // Reintentar después de un delay
-      setTimeout(() => {
-        if (video) {
-          video.load();
-        }
-      }, 2000);
-    };
-
+    // Event listeners para manejar estados del video
     const handleLoadedData = () => {
       setVideoLoaded(true);
       setVideoError(false);
@@ -71,16 +106,39 @@ export default function HeroVideo() {
     const handleCanPlay = () => {
       setVideoLoaded(true);
       setVideoError(false);
+      // Intentar reproducir cuando está listo
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          // Autoplay bloqueado es normal, no es error crítico
+          console.log("Video autoplay bloqueado:", error);
+        });
+      }
     };
 
-    video.addEventListener("error", handleError);
+    const handleError = () => {
+      setVideoError(true);
+      setVideoLoaded(false);
+    };
+
     video.addEventListener("loadeddata", handleLoadedData);
     video.addEventListener("canplay", handleCanPlay);
+    video.addEventListener("error", handleError);
 
     return () => {
-      video.removeEventListener("error", handleError);
+      clearTimeout(timeoutId);
       video.removeEventListener("loadeddata", handleLoadedData);
       video.removeEventListener("canplay", handleCanPlay);
+      video.removeEventListener("error", handleError);
+    };
+  }, [isInViewport, hasLoadedOnce]);
+
+  // Cleanup al desmontar
+  useEffect(() => {
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
     };
   }, []);
 
@@ -113,27 +171,34 @@ export default function HeroVideo() {
   return (
     <section className="relative w-full">
       {/* Video Section */}
-      <div className="relative w-full h-[34vh] sm:h-[37vh] md:h-[40vh] min-h-[190px] sm:min-h-[230px] md:min-h-[290px] overflow-hidden bg-black">
-        {/* Poster de fondo mientras carga el video */}
-        <div 
+      <div
+        ref={containerRef}
+        className="relative w-full h-[34vh] sm:h-[37vh] md:h-[40vh] min-h-[190px] sm:min-h-[230px] md:min-h-[290px] overflow-hidden bg-black"
+      >
+        {/* Poster de fondo - siempre visible, especialmente en mobile */}
+        {/* El poster se muestra mientras el video carga o si hay error */}
+        <div
           className="absolute inset-0 w-full h-full bg-contain sm:bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: "url(/hero-poster.jpg)",
             backgroundPosition: "center center",
           }}
         />
+
+        {/* Video - solo se renderiza cuando entra en viewport */}
+        {/* preload="none" garantiza que NO se descarga hasta que se llama load() */}
         <div className="absolute inset-0 w-full h-full">
           <video
             ref={videoRef}
-            src="/videos/hero_video.mp4"
+            src={VIDEO_URL}
             autoPlay
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             poster="/hero-poster.jpg"
             className={`absolute top-1/2 left-1/2 w-full h-full object-contain sm:object-cover object-center transition-opacity duration-500 ${
-              videoLoaded ? "opacity-100" : "opacity-0"
+              videoLoaded && isInViewport ? "opacity-100" : "opacity-0"
             }`}
             style={{
               transform: "translate(-50%, -50%)",
@@ -142,9 +207,6 @@ export default function HeroVideo() {
               width: "100%",
               height: "100%",
             }}
-            onLoadedData={() => setVideoLoaded(true)}
-            onCanPlay={() => setVideoLoaded(true)}
-            onError={() => setVideoError(true)}
           />
         </div>
       </div>
@@ -155,82 +217,89 @@ export default function HeroVideo() {
           {services.map((service, index) => {
             // Para el último botón, cambiar el texto si fue clickeado
             const isLastButton = index === 2;
-            const displayTitle = isLastButton && lastButtonClicked ? "Ver vehículos" : service.title;
-            
+            const displayTitle =
+              isLastButton && lastButtonClicked
+                ? "Ver vehículos"
+                : service.title;
+
             return (
-            <Link
-              key={index}
-              href={service.href}
-              target={service.href.startsWith("http") ? "_blank" : undefined}
-              rel={service.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="relative group overflow-hidden border-r border-white/20 last:border-r-0"
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
-              onClick={() => {
-                if (isLastButton) {
-                  setLastButtonClicked(true);
+              <Link
+                key={index}
+                href={service.href}
+                target={service.href.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  service.href.startsWith("http")
+                    ? "noopener noreferrer"
+                    : undefined
                 }
-              }}
-            >
-              <motion.div
-                className="h-[120px] sm:h-[140px] md:h-[160px] flex flex-col items-center justify-center p-3 sm:p-4 cursor-pointer relative"
-                initial={false}
-                animate={{
-                  backgroundColor:
-                    hoveredCard === index ? "#f97316" : "#000000",
+                className="relative group overflow-hidden border-r border-white/20 last:border-r-0"
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => {
+                  if (isLastButton) {
+                    setLastButtonClicked(true);
+                  }
                 }}
-                transition={{ duration: 0.3 }}
               >
-                {/* Separador vertical en desktop - solo entre cards, no al final */}
-                {index < services.length - 1 && (
-                  <div className="hidden md:block absolute right-0 top-0 bottom-0 w-px bg-white/20" />
-                )}
-                    {/* Icono */}
+                <motion.div
+                  className="h-[120px] sm:h-[140px] md:h-[160px] flex flex-col items-center justify-center p-3 sm:p-4 cursor-pointer relative"
+                  initial={false}
+                  animate={{
+                    backgroundColor:
+                      hoveredCard === index ? "#f97316" : "#000000",
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Separador vertical en desktop - solo entre cards, no al final */}
+                  {index < services.length - 1 && (
+                    <div className="hidden md:block absolute right-0 top-0 bottom-0 w-px bg-white/20" />
+                  )}
+                  {/* Icono */}
+                  <motion.div
+                    className="mb-2 sm:mb-2.5 text-white"
+                    animate={{
+                      scale: hoveredCard === index ? 1.1 : 1,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {service.icon}
+                  </motion.div>
+
+                  {/* Contenedor de texto debajo del icono */}
+                  <div className="relative h-12 sm:h-14 flex items-center justify-center w-full px-2">
+                    {/* Título - Se oculta cuando hay hover */}
                     <motion.div
-                      className="mb-2 sm:mb-2.5 text-white"
+                      className="absolute"
                       animate={{
-                        scale: hoveredCard === index ? 1.1 : 1,
+                        opacity: hoveredCard === index ? 0 : 1,
+                        y: hoveredCard === index ? -15 : 0,
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      {service.icon}
+                      <h2 className="font-antenna text-white text-sm sm:text-base md:text-lg font-bold text-center px-2 sm:px-3">
+                        {displayTitle}
+                      </h2>
                     </motion.div>
 
-                    {/* Contenedor de texto debajo del icono */}
-                    <div className="relative h-12 sm:h-14 flex items-center justify-center w-full px-2">
-                      {/* Título - Se oculta cuando hay hover */}
-                      <motion.div
-                        className="absolute"
-                        animate={{
-                          opacity: hoveredCard === index ? 0 : 1,
-                          y: hoveredCard === index ? -15 : 0,
-                        }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <h2 className="font-antenna text-white text-sm sm:text-base md:text-lg font-bold text-center px-2 sm:px-3">
-                          {displayTitle}
-                        </h2>
-                      </motion.div>
-
-                      {/* Subtítulo - Aparece cuando hay hover con contorno tipo botón */}
-                      <motion.div
-                        className="absolute"
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{
-                          opacity: hoveredCard === index ? 1 : 0,
-                          y: hoveredCard === index ? 0 : 15,
-                        }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div className="border-2 border-white rounded-lg px-2 sm:px-4 py-1 sm:py-1.5">
-                          <p className="font-antenna text-white text-xs sm:text-sm md:text-base font-semibold text-center whitespace-nowrap">
-                            {service.subtitle}
-                          </p>
-                        </div>
-                      </motion.div>
-                    </div>
-              </motion.div>
-            </Link>
+                    {/* Subtítulo - Aparece cuando hay hover con contorno tipo botón */}
+                    <motion.div
+                      className="absolute"
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{
+                        opacity: hoveredCard === index ? 1 : 0,
+                        y: hoveredCard === index ? 0 : 15,
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="border-2 border-white rounded-lg px-2 sm:px-4 py-1 sm:py-1.5">
+                        <p className="font-antenna text-white text-xs sm:text-sm md:text-base font-semibold text-center whitespace-nowrap">
+                          {service.subtitle}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </Link>
             );
           })}
         </div>
@@ -238,4 +307,3 @@ export default function HeroVideo() {
     </section>
   );
 }
-
