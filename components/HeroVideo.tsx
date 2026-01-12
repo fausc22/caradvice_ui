@@ -21,10 +21,11 @@ export default function HeroVideo() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [isInViewport, setIsInViewport] = useState(false);
-  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const hasLoadedOnceRef = useRef<boolean>(false);
+  const canPlayHandlerRef = useRef<(() => void) | null>(null);
 
   // Lazy loading real con IntersectionObserver
   // El video solo se carga cuando entra en viewport
@@ -39,28 +40,69 @@ export default function HeroVideo() {
           const isIntersecting = entry.isIntersecting;
           setIsInViewport(isIntersecting);
 
-          // Controlar play/pause según viewport
           const video = videoRef.current;
-          if (video && hasLoadedOnce) {
-            if (isIntersecting) {
-              // Entró en viewport: intentar reproducir
-              const playPromise = video.play();
-              if (playPromise !== undefined) {
-                playPromise.catch((error) => {
-                  // Autoplay bloqueado es normal, no es error
-                  console.log("Video autoplay bloqueado:", error);
-                });
+          if (!video) return;
+
+          if (isIntersecting) {
+            // Entró en viewport
+            if (!hasLoadedOnceRef.current) {
+              // Primera vez: setear src y cargar
+              hasLoadedOnceRef.current = true;
+              video.src = VIDEO_URL;
+              video.load();
+
+              // Limpiar handler anterior si existe
+              if (canPlayHandlerRef.current) {
+                video.removeEventListener("canplay", canPlayHandlerRef.current);
               }
+
+              // Handler para reproducir cuando el video esté listo
+              const handleCanPlay = () => {
+                video.play().catch(() => {});
+              };
+
+              canPlayHandlerRef.current = handleCanPlay;
+
+              // Verificar si el video ya está listo antes de agregar listener
+              if (video.readyState >= 3) {
+                video.play().catch(() => {});
+              } else {
+                video.addEventListener("canplay", handleCanPlay, { once: true });
+              }
+
+              // Manejar errores y estados
+              const handleError = () => {
+                setVideoError(true);
+                setVideoLoaded(false);
+              };
+
+              const handleLoadedData = () => {
+                setVideoLoaded(true);
+                setVideoError(false);
+              };
+
+              video.addEventListener("error", handleError, { once: true });
+              video.addEventListener("loadeddata", handleLoadedData, { once: true });
             } else {
-              // Salió del viewport: pausar para ahorrar recursos
-              video.pause();
+              // Ya se cargó antes: reproducir si está listo
+              if (video.readyState >= 3) {
+                video.play().catch(() => {});
+              } else {
+                const handleCanPlay = () => {
+                  video.play().catch(() => {});
+                };
+                video.addEventListener("canplay", handleCanPlay, { once: true });
+              }
             }
+          } else {
+            // Salió del viewport: pausar
+            video.pause();
           }
         });
       },
       {
-        rootMargin: "0px", // Cargar exactamente cuando entra en viewport
-        threshold: 0.1, // 10% visible
+        rootMargin: "0px",
+        threshold: 0.1,
       }
     );
 
@@ -70,74 +112,11 @@ export default function HeroVideo() {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
-    };
-  }, [hasLoadedOnce]);
-
-  // Cargar video solo cuando entra en viewport
-  // Se ejecuta una sola vez por sesión (hasLoadedOnce)
-  useEffect(() => {
-    if (!isInViewport || hasLoadedOnce) return;
-
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Marcar que ya se cargó para evitar re-cargas
-    setHasLoadedOnce(true);
-
-    // Cargar el video (preload="none" evita descarga hasta load())
-    const loadVideo = () => {
-      try {
-        video.load();
-      } catch (error) {
-        console.error("Error al cargar video:", error);
-        setVideoError(true);
-      }
-    };
-
-    // Pequeño delay para no bloquear render inicial
-    const timeoutId = setTimeout(loadVideo, 100);
-
-    // Event listeners para manejar estados del video
-    const handleLoadedData = () => {
-      setVideoLoaded(true);
-      setVideoError(false);
-    };
-
-    const handleCanPlay = () => {
-      setVideoLoaded(true);
-      setVideoError(false);
-      // Intentar reproducir cuando está listo
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          // Autoplay bloqueado es normal, no es error crítico
-          console.log("Video autoplay bloqueado:", error);
-        });
-      }
-    };
-
-    const handleError = () => {
-      setVideoError(true);
-      setVideoLoaded(false);
-    };
-
-    video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("canplay", handleCanPlay);
-    video.addEventListener("error", handleError);
-
-    return () => {
-      clearTimeout(timeoutId);
-      video.removeEventListener("loadeddata", handleLoadedData);
-      video.removeEventListener("canplay", handleCanPlay);
-      video.removeEventListener("error", handleError);
-    };
-  }, [isInViewport, hasLoadedOnce]);
-
-  // Cleanup al desmontar
-  useEffect(() => {
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
+      // Limpiar event listeners
+      const video = videoRef.current;
+      if (video && canPlayHandlerRef.current) {
+        video.removeEventListener("canplay", canPlayHandlerRef.current);
+        canPlayHandlerRef.current = null;
       }
     };
   }, []);
@@ -185,13 +164,12 @@ export default function HeroVideo() {
           }}
         />
 
-        {/* Video - solo se renderiza cuando entra en viewport */}
+        {/* Video - solo se carga cuando entra en viewport */}
         {/* preload="none" garantiza que NO se descarga hasta que se llama load() */}
+        {/* src se setea solo una vez cuando entra en viewport */}
         <div className="absolute inset-0 w-full h-full">
           <video
             ref={videoRef}
-            src={VIDEO_URL}
-            autoPlay
             loop
             muted
             playsInline
