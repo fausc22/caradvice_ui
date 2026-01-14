@@ -1,124 +1,150 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Script from "next/script";
+import { useEffect, useRef } from "react";
 
+/**
+ * Componente TrustindexWidget
+ * 
+ * El script de Trustindex se carga globalmente en layout.tsx.
+ * Este componente solo renderiza el div con data-widget-id.
+ * Trustindex busca automáticamente estos elementos y los renderiza.
+ * 
+ * IMPORTANTE: El widget solo funcionará si:
+ * 1. El dominio está verificado en Trustindex
+ * 2. El widget ID es correcto y está activo
+ * 3. El script se carga correctamente (en layout.tsx)
+ */
 export default function TrustindexWidget() {
+  const widgetId = "855b5c856aad24344896429404f";
   const widgetRef = useRef<HTMLDivElement>(null);
-  const [widgetRendered, setWidgetRendered] = useState(false);
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Verificar si el widget se ha renderizado en el DOM
+  // Verificar si el widget se renderizó
   const checkWidgetRendered = () => {
     if (!widgetRef.current) {
       return false;
     }
 
-    // Trustindex renderiza el contenido dentro del div con data-widget-id
-    // Verificamos si hay contenido renderizado (no solo el div vacío)
+    const element = widgetRef.current;
+    
+    // Verificar si Trustindex renderizó contenido
+    // Trustindex agrega contenido dentro del div con data-widget-id
     const hasContent = 
-      widgetRef.current.children.length > 0 || 
-      widgetRef.current.innerHTML.trim().length > 0 ||
-      widgetRef.current.querySelector('[class*="trustindex"]') !== null ||
-      widgetRef.current.querySelector('[class*="ti-widget"]') !== null;
+      element.children.length > 0 ||
+      element.innerHTML.trim().length > 0 ||
+      element.querySelector('[class*="ti-"]') !== null ||
+      element.querySelector('[class*="trustindex"]') !== null ||
+      element.querySelector('iframe') !== null ||
+      element.querySelector('[id*="ti-"]') !== null;
 
-    if (hasContent && !widgetRendered) {
-      setWidgetRendered(true);
-      console.log("✅ Trustindex widget renderizado correctamente en el DOM");
+    if (hasContent) {
+      console.log("✅ Trustindex widget renderizado correctamente");
+      if (checkIntervalRef.current) {
+        clearInterval(checkIntervalRef.current);
+        checkIntervalRef.current = null;
+      }
       return true;
     }
 
-    return hasContent;
+    return false;
   };
 
-  // Efecto para verificar periódicamente si el widget se renderizó
+  // Efecto para verificar el widget y forzar renderizado si es necesario
   useEffect(() => {
-    if (!scriptLoaded) {
-      return;
-    }
-
-    // Trustindex renderiza automáticamente, pero puede tardar un poco
-    // Verificamos periódicamente si el contenido apareció
-    let attempts = 0;
-    const maxAttempts = 30; // 15 segundos máximo (30 * 500ms)
-
-    const checkInterval = setInterval(() => {
-      attempts++;
-      
-      if (checkWidgetRendered()) {
-        clearInterval(checkInterval);
-      } else if (attempts >= maxAttempts) {
-        console.warn("⚠️ Trustindex widget no se ha renderizado después de 15 segundos");
-        console.warn("Posibles causas:");
-        console.warn("1. El dominio no está verificado en Trustindex");
-        console.warn("2. El widget ID es incorrecto o el widget no está activo");
-        console.warn("3. El widget está bloqueado por políticas de seguridad");
-        console.warn("Verifica el elemento en el DOM:", widgetRef.current);
-        clearInterval(checkInterval);
-      }
-    }, 500); // Verificar cada 500ms
-
-    // También intentar llamar a load() si TrustindexLoader está disponible
-    const tryLoad = () => {
+    const initializeWidget = () => {
+      // Si TrustindexLoader está disponible, intentar forzar carga
       if (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
         try {
           window.TrustindexLoader.load();
-          console.log("📞 Llamada a TrustindexLoader.load() ejecutada");
+          console.log("📞 TrustindexLoader.load() llamado desde widget");
         } catch (error) {
           console.warn("⚠️ Error al llamar TrustindexLoader.load():", error);
         }
       }
+
+      // Verificar si el widget se renderizó
+      if (checkWidgetRendered()) {
+        return;
+      }
+
+      // Si no se renderizó, verificar periódicamente
+      if (!checkIntervalRef.current) {
+        let attempts = 0;
+        const maxAttempts = 40; // 20 segundos (40 * 500ms)
+
+        checkIntervalRef.current = setInterval(() => {
+          attempts++;
+          
+          // Intentar forzar carga cada 5 segundos
+          if (attempts % 10 === 0 && window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
+            try {
+              window.TrustindexLoader.load();
+            } catch (error) {
+              // Ignorar errores en reintentos
+            }
+          }
+          
+          if (checkWidgetRendered()) {
+            return;
+          }
+
+          if (attempts >= maxAttempts) {
+            console.warn("⚠️ Trustindex widget no se renderizó después de 20 segundos");
+            console.warn("Verifica:");
+            console.warn("1. Dominio verificado en Trustindex");
+            console.warn("2. Widget ID correcto y activo:", widgetId);
+            console.warn("3. Elemento en DOM:", widgetRef.current);
+            
+            // Mostrar información del elemento
+            if (widgetRef.current) {
+              console.warn("Elemento HTML:", widgetRef.current.outerHTML.substring(0, 200));
+              console.warn("Script cargado:", !!document.getElementById("trustindex-loader"));
+              console.warn("TrustindexLoader disponible:", !!window.TrustindexLoader);
+            }
+            
+            if (checkIntervalRef.current) {
+              clearInterval(checkIntervalRef.current);
+              checkIntervalRef.current = null;
+            }
+          }
+        }, 500);
+      }
     };
 
-    // Intentar después de que el script cargue
-    setTimeout(tryLoad, 500);
-    setTimeout(tryLoad, 2000);
-    setTimeout(tryLoad, 5000);
+    // Verificar inmediatamente si el script ya está cargado
+    if (document.getElementById("trustindex-loader")) {
+      // Script ya cargado, esperar un momento y verificar
+      setTimeout(initializeWidget, 500);
+    } else {
+      // Script aún no cargado, esperar a que cargue
+      const checkScript = setInterval(() => {
+        if (document.getElementById("trustindex-loader")) {
+          clearInterval(checkScript);
+          setTimeout(initializeWidget, 500);
+        }
+      }, 100);
 
-    return () => clearInterval(checkInterval);
-  }, [scriptLoaded, widgetRendered]);
+      // Limpiar después de 10 segundos si el script no carga
+      setTimeout(() => {
+        clearInterval(checkScript);
+      }, 10000);
+    }
+
+    return () => {
+      if (checkIntervalRef.current) {
+        clearInterval(checkIntervalRef.current);
+        checkIntervalRef.current = null;
+      }
+    };
+  }, []);
 
   return (
-    <>
-      {/* Cargar el script de Trustindex usando next/script */}
-      <Script
-        id="trustindex-loader"
-        src="https://cdn.trustindex.io/loader.js"
-        strategy="afterInteractive"
-        onLoad={() => {
-          console.log("📦 Script de Trustindex cargado");
-          setScriptLoaded(true);
-          // Trustindex debería renderizar automáticamente elementos con data-widget-id
-          // Dar un momento para que procese
-          setTimeout(() => {
-            checkWidgetRendered();
-          }, 1000);
-        }}
-        onError={(e) => {
-          console.error("❌ Error al cargar el script de Trustindex:", e);
-        }}
-      />
-      
-      {/* Contenedor del widget */}
-      <div
-        ref={widgetRef}
-        className="trustindex-widget"
-        data-widget-id="855b5c856aad24344896429404f"
-        suppressHydrationWarning
-      />
-      
-      {/* Mensaje de debug solo en desarrollo */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="text-xs text-gray-500 mt-2 p-2 bg-gray-100 rounded">
-          <p>⚠️ Trustindex requiere dominio verificado</p>
-          <p>En localhost puede no funcionar. Verifica en producción (caradvice.com.ar)</p>
-          <p>Widget ID: 855b5c856aad24344896429404f</p>
-          <p className="mt-1">
-            Script: {scriptLoaded ? "✅ Cargado" : "⏳ Cargando..."} | 
-            Widget: {widgetRendered ? "✅ Renderizado" : "⏳ Esperando..."}
-          </p>
-        </div>
-      )}
-    </>
+    <div
+      ref={widgetRef}
+      id={`trustindex-widget-${widgetId}`}
+      className="trustindex-widget"
+      data-widget-id={widgetId}
+      suppressHydrationWarning
+    />
   );
 }
