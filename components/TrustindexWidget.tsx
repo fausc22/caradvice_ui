@@ -46,10 +46,6 @@ export default function TrustindexWidget() {
 
     if (hasContent) {
       console.log("✅ Trustindex widget renderizado correctamente");
-      if (checkIntervalRef.current) {
-        clearInterval(checkIntervalRef.current);
-        checkIntervalRef.current = null;
-      }
       return true;
     }
 
