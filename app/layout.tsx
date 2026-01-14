@@ -142,16 +142,16 @@ export default function RootLayout({
             console.log("📦 Script de Trustindex cargado globalmente");
             // Trustindex busca automáticamente elementos con data-widget-id
             // Si TrustindexLoader está disponible, llamar a load() para forzar renderizado
-            if (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
-              setTimeout(() => {
+            setTimeout(() => {
+              if (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
                 try {
                   window.TrustindexLoader.load();
                   console.log("📞 TrustindexLoader.load() ejecutado");
                 } catch (error) {
                   console.warn("⚠️ Error al ejecutar TrustindexLoader.load():", error);
                 }
-              }, 500);
-            }
+              }
+            }, 500);
           }}
           onError={(e) => {
             console.error("❌ Error al cargar script de Trustindex:", e);
