@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Componente TrustindexWidget
@@ -24,6 +24,7 @@ export default function TrustindexWidget() {
   const widgetId = "855b5c856aad24344896429404f";
   const widgetRef = useRef<HTMLDivElement>(null);
   const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [forceIframe, setForceIframe] = useState(false);
 
   // Verificar si el widget se renderizó
   const checkWidgetRendered = () => {
@@ -111,6 +112,8 @@ export default function TrustindexWidget() {
           console.warn("2. Widget ID correcto y activo:", widgetId);
           console.warn("3. Widget tiene reseñas para mostrar");
 
+          setForceIframe(true);
+
           if (checkIntervalRef.current) {
             clearInterval(checkIntervalRef.current);
             checkIntervalRef.current = null;
@@ -137,7 +140,16 @@ export default function TrustindexWidget() {
         data-widget-id={widgetId}
         data-lazyload="true"
         suppressHydrationWarning
-      />
+      >
+        {forceIframe ? (
+          <iframe
+            title="Reseñas Trustindex"
+            src={`https://cdn.trustindex.io/widget/${widgetId}/content.html`}
+            loading="lazy"
+            style={{ width: "100%", border: "none", minHeight: "200px" }}
+          />
+        ) : null}
+      </div>
     </>
   );
 }
