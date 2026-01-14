@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import Script from 'next/script'
 
 /**
@@ -7,6 +8,56 @@ import Script from 'next/script'
  * Se carga en layout.tsx para que esté disponible en toda la aplicación
  */
 export default function TrustindexScript() {
+  const injectedRef = useRef(false)
+
+  useEffect(() => {
+    if (injectedRef.current) {
+      return
+    }
+
+    injectedRef.current = true
+
+    const timer = window.setTimeout(() => {
+      const hasApi =
+        (window.renderTrustindexWidgets && typeof window.renderTrustindexWidgets === 'function') ||
+        (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function')
+
+      if (hasApi) {
+        return
+      }
+
+      const existingScript = document.querySelector(
+        'script[src*="cdn.trustindex.io/loader.js"]'
+      ) as HTMLScriptElement | null
+
+      if (existingScript && existingScript.getAttribute('data-trustindex-manual') === 'true') {
+        return
+      }
+
+      console.warn(
+        "⚠️ Trustindex API no está disponible, reintentando cargar loader manualmente..."
+      )
+
+      const script = document.createElement('script')
+      script.src = `https://cdn.trustindex.io/loader.js?v=${Date.now()}`
+      script.async = true
+      script.defer = true
+      script.setAttribute('data-trustindex-manual', 'true')
+      script.onload = () => {
+        console.log('✅ Loader manual de Trustindex cargado')
+      }
+      script.onerror = (error) => {
+        console.error('❌ Error al cargar loader manual de Trustindex:', error)
+      }
+
+      document.head.appendChild(script)
+    }, 1500)
+
+    return () => {
+      window.clearTimeout(timer)
+    }
+  }, [])
+
   return (
     <Script
       id="trustindex-loader"
