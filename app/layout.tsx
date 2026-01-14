@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import MetaPixel from "@/components/MetaPixel";
+import TrustindexScript from "@/components/TrustindexScript";
 
 // Viewport configuration
 export const viewport: Viewport = {
@@ -132,6 +133,7 @@ export default function RootLayout({
     <html lang="es-AR">
       <body className="font-antenna">
         <MetaPixel />
+        <TrustindexScript />
         <Providers>
           <ConditionalLayout>{children}</ConditionalLayout>
         </Providers>
