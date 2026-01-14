@@ -1,55 +1,70 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 
 export default function TrustindexWidget() {
   const widgetRef = useRef<HTMLDivElement>(null);
   const initializationAttemptedRef = useRef(false);
+  const [scriptReady, setScriptReady] = useState(false);
 
   // Función para inicializar el widget
   const initializeWidget = () => {
     if (initializationAttemptedRef.current) {
-      return;
+      return false;
     }
 
     if (!widgetRef.current) {
-      return;
+      return false;
     }
 
     // Verificar si TrustindexLoader está disponible
-    if (window.TrustindexLoader) {
+    if (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
       try {
         // Trustindex busca automáticamente elementos con data-widget-id
-        // pero también podemos llamar a load() explícitamente
+        // Llamamos a load() para forzar la inicialización
         window.TrustindexLoader.load();
         initializationAttemptedRef.current = true;
-        console.log("Trustindex widget inicializado correctamente");
+        console.log("✅ Trustindex widget inicializado correctamente");
+        return true;
       } catch (error) {
-        console.error("Error al inicializar Trustindex:", error);
+        console.error("❌ Error al inicializar Trustindex:", error);
+        return false;
       }
-    } else {
-      console.warn("TrustindexLoader no está disponible aún");
     }
+
+    return false;
   };
 
-  // Efecto para intentar inicializar cuando el componente se monta
-  // y el script ya está cargado
+  // Efecto para verificar periódicamente si TrustindexLoader está disponible
   useEffect(() => {
-    // Si el script ya está cargado, intentar inicializar inmediatamente
-    if (window.TrustindexLoader) {
-      initializeWidget();
+    if (!scriptReady || initializationAttemptedRef.current) {
+      return;
     }
 
-    // También intentar después de un pequeño delay para asegurar que el DOM esté listo
-    const timer = setTimeout(() => {
-      if (window.TrustindexLoader && !initializationAttemptedRef.current) {
-        initializeWidget();
-      }
-    }, 500);
+    // Intentar inicializar inmediatamente si ya está disponible
+    if (initializeWidget()) {
+      return;
+    }
 
-    return () => clearTimeout(timer);
-  }, []);
+    // Si no está disponible, verificar periódicamente
+    let attempts = 0;
+    const maxAttempts = 20; // 10 segundos máximo (20 * 500ms)
+
+    const checkInterval = setInterval(() => {
+      attempts++;
+      
+      if (initializeWidget()) {
+        clearInterval(checkInterval);
+      } else if (attempts >= maxAttempts) {
+        console.warn("⚠️ TrustindexLoader no está disponible después de varios intentos");
+        console.warn("El widget puede renderizarse automáticamente. Verifica en el DOM.");
+        clearInterval(checkInterval);
+      }
+    }, 500); // Verificar cada 500ms
+
+    return () => clearInterval(checkInterval);
+  }, [scriptReady]);
 
   return (
     <>
@@ -59,14 +74,14 @@ export default function TrustindexWidget() {
         src="https://cdn.trustindex.io/loader.js"
         strategy="afterInteractive"
         onLoad={() => {
-          console.log("Script de Trustindex cargado");
-          // Intentar inicializar después de que el script cargue
+          console.log("📦 Script de Trustindex cargado");
+          // Dar tiempo al script para que inicialice TrustindexLoader
           setTimeout(() => {
-            initializeWidget();
-          }, 100);
+            setScriptReady(true);
+          }, 200);
         }}
         onError={(e) => {
-          console.error("Error al cargar el script de Trustindex:", e);
+          console.error("❌ Error al cargar el script de Trustindex:", e);
         }}
       />
       
@@ -84,6 +99,10 @@ export default function TrustindexWidget() {
           <p>⚠️ Trustindex requiere dominio verificado</p>
           <p>En localhost puede no funcionar. Verifica en producción (caradvice.com.ar)</p>
           <p>Widget ID: 855b5c856aad24344896429404f</p>
+          <p className="mt-1">
+            Estado: {scriptReady ? "✅ Script listo" : "⏳ Cargando..."} | 
+            {initializationAttemptedRef.current ? " ✅ Inicializado" : " ⏳ Esperando TrustindexLoader"}
+          </p>
         </div>
       )}
     </>
