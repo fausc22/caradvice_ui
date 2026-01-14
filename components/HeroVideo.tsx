@@ -170,6 +170,7 @@ export default function HeroVideo() {
         <div className="absolute inset-0 w-full h-full">
           <video
             ref={videoRef}
+            autoPlay
             loop
             muted
             playsInline

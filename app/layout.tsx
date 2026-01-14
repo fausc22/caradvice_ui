@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/ConditionalLayout";
+import MetaPixel from "@/components/MetaPixel";
 
 // Viewport configuration
 export const viewport: Viewport = {
@@ -130,6 +131,7 @@ export default function RootLayout({
   return (
     <html lang="es-AR">
       <body className="font-antenna">
+        <MetaPixel />
         <Providers>
           <ConditionalLayout>{children}</ConditionalLayout>
         </Providers>
