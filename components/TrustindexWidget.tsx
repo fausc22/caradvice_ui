@@ -52,8 +52,15 @@ export default function TrustindexWidget() {
   // Efecto para verificar el widget y forzar renderizado si es necesario
   useEffect(() => {
     const initializeWidget = () => {
-      // Si TrustindexLoader está disponible, intentar forzar carga
-      if (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
+      // Intentar usar la API de Trustindex (nueva o antigua)
+      if (window.renderTrustindexWidgets && typeof window.renderTrustindexWidgets === 'function') {
+        try {
+          window.renderTrustindexWidgets();
+          console.log("📞 renderTrustindexWidgets() llamado desde widget");
+        } catch (error) {
+          console.warn("⚠️ Error al llamar renderTrustindexWidgets():", error);
+        }
+      } else if (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
         try {
           window.TrustindexLoader.load();
           console.log("📞 TrustindexLoader.load() llamado desde widget");
@@ -76,11 +83,19 @@ export default function TrustindexWidget() {
           attempts++;
           
           // Intentar forzar carga cada 5 segundos
-          if (attempts % 10 === 0 && window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
-            try {
-              window.TrustindexLoader.load();
-            } catch (error) {
-              // Ignorar errores en reintentos
+          if (attempts % 10 === 0) {
+            if (window.renderTrustindexWidgets && typeof window.renderTrustindexWidgets === 'function') {
+              try {
+                window.renderTrustindexWidgets();
+              } catch (error) {
+                // Ignorar errores en reintentos
+              }
+            } else if (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
+              try {
+                window.TrustindexLoader.load();
+              } catch (error) {
+                // Ignorar errores en reintentos
+              }
             }
           }
           

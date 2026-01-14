@@ -22,6 +22,16 @@ interface Window {
   YT?: YT;
   onYouTubeIframeAPIReady?: () => void;
   TrustindexLoader?: TrustindexLoader;
+  // API actual de Trustindex
+  renderTrustindexWidgets?: () => void;
+  Trustindex?: any;
+  TrustindexWidget?: any;
+  TrustindexReviewWidget?: any;
+  TrustindexSliderWidget?: any;
+  TrustindexMasonryWidget?: any;
+  TrustindexPopupWidget?: any;
+  TrustindexTopRatedWidget?: any;
+  TrustindexFomoWidget?: any;
 }
 
 declare global {
@@ -29,6 +39,16 @@ declare global {
     YT?: YT;
     onYouTubeIframeAPIReady?: () => void;
     TrustindexLoader?: TrustindexLoader;
+    // API actual de Trustindex
+    renderTrustindexWidgets?: () => void;
+    Trustindex?: any;
+    TrustindexWidget?: any;
+    TrustindexReviewWidget?: any;
+    TrustindexSliderWidget?: any;
+    TrustindexMasonryWidget?: any;
+    TrustindexPopupWidget?: any;
+    TrustindexTopRatedWidget?: any;
+    TrustindexFomoWidget?: any;
   }
 }
 

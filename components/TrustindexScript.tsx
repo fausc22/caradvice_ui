@@ -23,46 +23,59 @@ export default function TrustindexScript() {
           console.log("Script ejecutado:", scriptElement.textContent?.length > 0 || scriptElement.innerHTML?.length > 0);
         }
         
-        // Verificar TrustindexLoader en múltiples momentos
-        const checkTrustindexLoader = (attempt: number, maxAttempts: number = 10) => {
-          if (window.TrustindexLoader) {
+        // Verificar API de Trustindex en múltiples momentos
+        const checkTrustindexAPI = (attempt: number, maxAttempts: number = 10) => {
+          // Verificar si renderTrustindexWidgets está disponible (API nueva)
+          if (window.renderTrustindexWidgets && typeof window.renderTrustindexWidgets === 'function') {
+            console.log(`✅ renderTrustindexWidgets disponible después de ${attempt} intentos`);
+            try {
+              window.renderTrustindexWidgets();
+              console.log("📞 renderTrustindexWidgets() ejecutado");
+              return;
+            } catch (error) {
+              console.error("❌ Error al ejecutar renderTrustindexWidgets():", error);
+            }
+          }
+          
+          // Verificar si TrustindexLoader está disponible (API antigua)
+          if (window.TrustindexLoader && typeof window.TrustindexLoader.load === 'function') {
             console.log(`✅ TrustindexLoader disponible después de ${attempt} intentos`);
             try {
-              if (typeof window.TrustindexLoader.load === 'function') {
-                window.TrustindexLoader.load();
-                console.log("📞 TrustindexLoader.load() ejecutado");
-              } else {
-                console.warn("⚠️ TrustindexLoader existe pero no tiene método load()");
-                console.warn("TrustindexLoader:", window.TrustindexLoader);
-              }
+              window.TrustindexLoader.load();
+              console.log("📞 TrustindexLoader.load() ejecutado");
+              return;
             } catch (error) {
               console.error("❌ Error al ejecutar TrustindexLoader.load():", error);
             }
-            return;
           }
           
           if (attempt < maxAttempts) {
-            setTimeout(() => checkTrustindexLoader(attempt + 1, maxAttempts), 500);
+            setTimeout(() => checkTrustindexAPI(attempt + 1, maxAttempts), 500);
           } else {
-            console.error("❌ TrustindexLoader NO está disponible después de", maxAttempts, "intentos");
-            console.error("Posibles causas:");
-            console.error("1. El dominio no está verificado en Trustindex");
-            console.error("2. El script tiene un error que impide la inicialización");
-            console.error("3. Hay un problema de CORS o seguridad");
-            console.error("4. El widget ID no es válido o el widget no está activo");
+            // Verificar qué objetos de Trustindex están disponibles
+            const trustindexObjects = Object.keys(window).filter(key => 
+              key.toLowerCase().includes('trust') && key !== 'trustedTypes'
+            );
             
-            // Verificar si hay errores en la consola relacionados
-            console.error("Verifica la pestaña Network para ver si hay errores al cargar el script");
-            console.error("Verifica la pestaña Console para ver si hay errores de JavaScript");
-            
-            // Verificar el objeto window para ver qué se creó
-            console.log("Objetos en window relacionados con Trustindex:", 
-              Object.keys(window).filter(key => key.toLowerCase().includes('trust')));
+            if (trustindexObjects.length > 0) {
+              console.warn("⚠️ Trustindex API no está disponible, pero se encontraron estos objetos:", trustindexObjects);
+              console.warn("El widget puede renderizarse automáticamente sin necesidad de llamar a ninguna función");
+              console.warn("Trustindex busca automáticamente elementos con data-widget-id y los renderiza");
+            } else {
+              console.error("❌ No se encontraron objetos de Trustindex después de", maxAttempts, "intentos");
+              console.error("Posibles causas:");
+              console.error("1. El dominio no está verificado en Trustindex");
+              console.error("2. El script tiene un error que impide la inicialización");
+              console.error("3. Hay un problema de CORS o seguridad");
+              console.error("4. El widget ID no es válido o el widget no está activo");
+              console.error("Verifica la pestaña Network para ver si hay errores al cargar el script");
+              console.error("Verifica la pestaña Console para ver si hay errores de JavaScript");
+            }
           }
         };
         
         // Empezar a verificar después de un pequeño delay
-        setTimeout(() => checkTrustindexLoader(1), 500);
+        setTimeout(() => checkTrustindexAPI(1), 500);
       }}
       onError={(e) => {
         console.error("❌ Error al cargar script de Trustindex:", e);
