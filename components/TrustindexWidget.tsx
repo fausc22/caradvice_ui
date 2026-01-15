@@ -40,9 +40,6 @@ export default function TrustindexWidget() {
   }, [widgetId]);
 
   return (
-    <div 
-      ref={containerRef}
-      className="trustindex-widget-container w-full overflow-hidden"
-    />
+    <div ref={containerRef} />
   );
 }
