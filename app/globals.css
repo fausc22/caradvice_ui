@@ -68,6 +68,31 @@ body {
   font-family: 'Antenna', sans-serif;
 }
 
+/* Estilos para Trustindex Widget - Responsividad */
+.trustindex-widget-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Asegurar que el widget se adapte al contenedor */
+.trustindex-widget-container > div,
+.trustindex-widget-container [class*="ti-"],
+.trustindex-widget-container [class*="trustindex"] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Ajustar las reviews en mobile */
+@media (max-width: 640px) {
+  .trustindex-widget-container [class*="ti-review-item"],
+  .trustindex-widget-container [class*="ti-widget"] {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
