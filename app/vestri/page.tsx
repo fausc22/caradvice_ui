@@ -9,10 +9,12 @@ import { AnimatedVestri } from "@/components/vestri/AnimatedVestri";
 import "./vestri.css";
 
 // Metadata específica de la página Vestri
+// URL canónica en el subdominio para evitar contenido duplicado
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "Vestri | Reventa de Vehículos para Revendedores | CAR ADVICE";
+  const title = "Vestri | Reventa de Vehículos para Revendedores";
   const description =
     "Vestri es la nueva unidad de negocio de CAR ADVICE, orientada exclusivamente a revendedores. Optimizamos la compra y venta de vehículos para maximizar tu rentabilidad.";
+  const canonicalUrl = "https://vestri.caradvice.com.ar";
 
   return {
     title,
@@ -24,13 +26,13 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: "es_AR",
-      url: "https://caradvice.com.ar/vestri",
-      siteName: "CAR ADVICE",
+      url: canonicalUrl,
+      siteName: "Vestri",
       title,
       description,
       images: [
         {
-          url: "https://caradvice.com.ar/IMG/vestri/logo-advice.png",
+          url: "https://vestri.caradvice.com.ar/IMG/vestri/logo-advice.png",
           width: 1200,
           height: 630,
           alt: "Vestri - Reventa de Vehículos",
@@ -41,10 +43,10 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: ["https://caradvice.com.ar/IMG/vestri/logo-advice.png"],
+      images: ["https://vestri.caradvice.com.ar/IMG/vestri/logo-advice.png"],
     },
     alternates: {
-      canonical: "https://caradvice.com.ar/vestri",
+      canonical: canonicalUrl,
     },
   };
 }
@@ -54,8 +56,8 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "Brand",
   name: "Vestri",
-  url: "https://caradvice.com.ar/vestri",
-  logo: "https://caradvice.com.ar/IMG/vestri/logo-advice.png",
+  url: "https://vestri.caradvice.com.ar",
+  logo: "https://vestri.caradvice.com.ar/IMG/vestri/logo-advice.png",
   description:
     "Vestri es la nueva unidad de negocio de CAR ADVICE, orientada exclusivamente a revendedores. Optimizamos la compra y venta de vehículos para maximizar tu rentabilidad.",
   parentOrganization: {
