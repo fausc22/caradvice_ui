@@ -19,7 +19,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'api-caradvice.duckdns.org',
+        hostname: 'api.caradvice.com.ar',
       },
       {
         protocol: 'https',

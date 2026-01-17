@@ -13,7 +13,7 @@ interface ServiceCard {
 }
 
 // URL del video externo - HARDCODEADA (no usar /public/videos)
-const VIDEO_URL = "https://api-caradvice.duckdns.org/media/videos/hero_video.mp4";
+const VIDEO_URL = "https://api.caradvice.com.ar/media/videos/hero_video.mp4";
 
 export default function HeroVideo() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
