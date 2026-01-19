@@ -31,7 +31,5 @@ export default function VestriLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // El Meta Pixel se maneja en el componente MetaPixel.tsx del layout principal
-  // que detecta automáticamente si estamos en Vestri (por pathname o subdominio)
   return <>{children}</>;
 }
