@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import MetaPixelNoscript from "@/components/MetaPixelNoscript";
+import GoogleTagManager from "@/components/GoogleTagManager";
+import GoogleTagManagerNoscript from "@/components/GoogleTagManagerNoscript";
 
 // Viewport configuration
 export const viewport: Viewport = {
@@ -137,6 +139,10 @@ export default async function RootLayout({
   return (
     <html lang="es-AR">
       <body className="font-antenna">
+        {/* Google Tag Manager - Lo más arriba posible en el head */}
+        <GoogleTagManager gtmId="GTM-PSVQ79TP" />
+        {/* Google Tag Manager (noscript) - Justo después de la apertura del body */}
+        <GoogleTagManagerNoscript gtmId="GTM-PSVQ79TP" />
         {/* Meta Pixel Code - Car Advice (solo si NO es Vestri) */}
         {!isVestri && (
           <>
