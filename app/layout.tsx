@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { headers } from "next/headers";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/ConditionalLayout";
+import MetaPixelNoscript from "@/components/MetaPixelNoscript";
 
 // Viewport configuration
 export const viewport: Viewport = {
@@ -123,44 +125,42 @@ export const metadata: Metadata = {
   category: "Automotive",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const hostname = headersList.get("host") || "";
+  const isVestri = hostname.startsWith("vestri.");
+
   return (
     <html lang="es-AR">
-      <head>
-        {/* Meta Pixel Code - Detecta automáticamente el dominio */}
-        <Script
-          id="meta-pixel"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', window.location.hostname.startsWith('vestri.') ? '1601853571182218' : '1505816897053043');
-              fbq('track', 'PageView');
-            `,
-          }}
-        />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=1505816897053043&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
-      </head>
       <body className="font-antenna">
+        {/* Meta Pixel Code - Car Advice (solo si NO es Vestri) */}
+        {!isVestri && (
+          <>
+            <Script
+              id="meta-pixel-caradvice"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  !function(f,b,e,v,n,t,s)
+                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                  n.queue=[];t=b.createElement(e);t.async=!0;
+                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t,s)}(window, document,'script',
+                  'https://connect.facebook.net/en_US/fbevents.js');
+                  fbq('init', '1505816897053043');
+                  fbq('track', 'PageView');
+                `,
+              }}
+            />
+            <MetaPixelNoscript pixelId="1505816897053043" />
+          </>
+        )}
         <Providers>
           <ConditionalLayout>{children}</ConditionalLayout>
         </Providers>
