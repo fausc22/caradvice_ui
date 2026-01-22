@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import MetaPixelNoscript from "@/components/MetaPixelNoscript";
+import MetaPixelRouter from "@/components/MetaPixelRouter";
 import GoogleTagManager from "@/components/GoogleTagManager";
 import GoogleTagManagerNoscript from "@/components/GoogleTagManagerNoscript";
 
@@ -165,6 +166,8 @@ export default async function RootLayout({
               }}
             />
             <MetaPixelNoscript pixelId="1505816897053043" />
+            {/* Router listener para disparar PageView en navegaciones del lado del cliente */}
+            <MetaPixelRouter />
           </>
         )}
         <Providers>
