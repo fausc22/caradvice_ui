@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import MetaPixelNoscript from "@/components/MetaPixelNoscript";
+import MetaPixelScript from "@/components/MetaPixelScript";
 import MetaPixelRouter from "@/components/MetaPixelRouter";
 import GoogleTagManager from "@/components/GoogleTagManager";
 import GoogleTagManagerNoscript from "@/components/GoogleTagManagerNoscript";
@@ -145,31 +146,11 @@ export default async function RootLayout({
         {/* Google Tag Manager (noscript) - Justo después de la apertura del body */}
         <GoogleTagManagerNoscript gtmId="GTM-PSVQ79TP" />
         {/* Meta Pixel Code - Car Advice (solo si NO es Vestri) */}
-        {!isVestri && (
-          <>
-            <Script
-              id="meta-pixel-caradvice"
-              strategy="afterInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `
-                  !function(f,b,e,v,n,t,s)
-                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                  n.queue=[];t=b.createElement(e);t.async=!0;
-                  t.src=v;s=b.getElementsByTagName(e)[0];
-                  s.parentNode.insertBefore(t,s)}(window, document,'script',
-                  'https://connect.facebook.net/en_US/fbevents.js');
-                  fbq('init', '1505816897053043');
-                  fbq('track', 'PageView');
-                `,
-              }}
-            />
-            <MetaPixelNoscript pixelId="1505816897053043" />
-            {/* Router listener para disparar PageView en navegaciones del lado del cliente */}
-            <MetaPixelRouter />
-          </>
-        )}
+        {/* El componente MetaPixelScript verifica en el cliente que no sea Vestri */}
+        <MetaPixelScript pixelId="1505816897053043" />
+        <MetaPixelNoscript pixelId="1505816897053043" isVestri={isVestri} />
+        {/* Router listener para disparar PageView en navegaciones del lado del cliente */}
+        <MetaPixelRouter />
         <Providers>
           <ConditionalLayout>{children}</ConditionalLayout>
         </Providers>
