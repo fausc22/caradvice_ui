@@ -1,6 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
-import { headers } from "next/headers";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -134,10 +132,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headersList = await headers();
-  const hostname = headersList.get("host") || "";
-  const isVestri = hostname.startsWith("vestri.");
-
   return (
     <html lang="es-AR">
       <body className="font-antenna">
@@ -145,10 +139,9 @@ export default async function RootLayout({
         <GoogleTagManager gtmId="GTM-PSVQ79TP" />
         {/* Google Tag Manager (noscript) - Justo después de la apertura del body */}
         <GoogleTagManagerNoscript gtmId="GTM-PSVQ79TP" />
-        {/* Meta Pixel Code - Car Advice (solo si NO es Vestri) */}
-        {/* El componente MetaPixelScript verifica en el cliente que no sea Vestri */}
+        {/* Meta Pixel Code - Car Advice */}
         <MetaPixelScript pixelId="1505816897053043" />
-        <MetaPixelNoscript pixelId="1505816897053043" isVestri={isVestri} />
+        <MetaPixelNoscript pixelId="1505816897053043" />
         {/* Router listener para disparar PageView en navegaciones del lado del cliente */}
         <MetaPixelRouter />
         <Providers>

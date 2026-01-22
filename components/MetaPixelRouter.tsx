@@ -19,16 +19,6 @@ export default function MetaPixelRouter() {
   const previousPathnameRef = useRef<string | null>(null);
 
   useEffect(() => {
-    // Verificar que NO estemos en Vestri (por hostname o por ruta)
-    if (typeof window !== "undefined") {
-      const hostname = window.location.hostname;
-      const isVestri = hostname.startsWith("vestri.") || pathname.startsWith("/vestri");
-      
-      if (isVestri) {
-        return; // No ejecutar nada en Vestri
-      }
-    }
-
     // Verificar que fbq esté disponible
     if (typeof window === "undefined" || !window.fbq) {
       return;

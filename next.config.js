@@ -27,34 +27,6 @@ const nextConfig = {
       },
     ],
   },
-  
-  // Redirección de /vestri al subdominio (backup del middleware)
-  async redirects() {
-    return [
-      {
-        source: '/vestri',
-        has: [
-          {
-            type: 'host',
-            value: 'caradvice.com.ar',
-          },
-        ],
-        destination: 'https://vestri.caradvice.com.ar',
-        permanent: true, // 301
-      },
-      {
-        source: '/vestri',
-        has: [
-          {
-            type: 'host',
-            value: 'www.caradvice.com.ar',
-          },
-        ],
-        destination: 'https://vestri.caradvice.com.ar',
-        permanent: true, // 301
-      },
-    ];
-  },
 }
 
 module.exports = nextConfig

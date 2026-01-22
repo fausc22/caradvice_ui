@@ -15,7 +15,6 @@ export default function Header() {
     { href: "/autos", label: "Vehiculos" },
     { href: "/nosotros", label: "Nosotros" },
     { href: "/contacto", label: "Contacto" },
-    { href: "/vestri", label: "Vestri" },
   ];
 
   return (

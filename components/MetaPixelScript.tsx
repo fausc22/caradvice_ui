@@ -1,36 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Script from "next/script";
-import { usePathname } from "next/navigation";
 
 interface MetaPixelScriptProps {
   pixelId: string;
 }
 
 export default function MetaPixelScript({ pixelId }: MetaPixelScriptProps) {
-  const pathname = usePathname();
-  const [shouldLoad, setShouldLoad] = useState(false);
-
-  useEffect(() => {
-    // Verificar en el cliente que NO estemos en Vestri
-    if (typeof window !== "undefined") {
-      const hostname = window.location.hostname;
-      const isVestriSubdomain = hostname.startsWith("vestri.");
-      const isVestriRoute = pathname.startsWith("/vestri");
-      
-      // Solo cargar si NO es Vestri
-      if (!isVestriSubdomain && !isVestriRoute) {
-        setShouldLoad(true);
-      }
-    }
-  }, [pathname]);
-
-  // No renderizar nada si es Vestri
-  if (!shouldLoad) {
-    return null;
-  }
-
   return (
     <Script
       id="meta-pixel-caradvice"
