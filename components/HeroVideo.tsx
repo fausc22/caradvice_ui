@@ -126,7 +126,7 @@ export default function HeroVideo() {
       icon: <Wallet className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" />,
       title: "Vendé tu auto",
       subtitle: "¡Quiero vender mi auto!",
-      href: "https://wa.link/iictkp",
+      href: "https://wa.link/6ck5hf",
     },
     {
       icon: <Car className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" />,

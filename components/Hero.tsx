@@ -9,7 +9,7 @@ export default function Hero() {
       icon: <Car className="w-12 h-12" />,
       title: "Compramos TU USADO",
       description: "¡Quiero vender mi auto!",
-      href: "/vender",
+      href: "https://wa.link/6ck5hf",
       color: "bg-blue-600 hover:bg-blue-700",
     },
     {
