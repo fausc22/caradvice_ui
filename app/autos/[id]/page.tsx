@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, MessageCircle } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { getVehicle, getRelatedVehicles } from "@/lib/server-api";
 import { Car } from "@/types/car";
 import VehicleGallery from "@/components/vehicles/VehicleGallery";
 import VehicleShareButtons from "@/components/vehicles/VehicleShareButtons";
 import VehicleContactForm from "@/components/vehicles/VehicleContactForm";
+import WhatsAppLeadButton from "@/components/vehicles/WhatsAppLeadButton";
 import RelatedVehiclesCarousel from "@/components/RelatedVehiclesCarousel";
+import MetaPixelViewContent from "@/components/MetaPixelViewContent";
 import Image from "next/image";
 
 interface PageProps {
@@ -252,6 +254,8 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      {/* Meta Pixel: ViewContent con content_id para coincidencia de catálogo */}
+      <MetaPixelViewContent vehicleId={id} />
 
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
@@ -387,16 +391,12 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
               </div>
             </div>
 
-            {/* Botón WhatsApp */}
-            <a
+            {/* Botón WhatsApp (dispara Lead con content_id para Meta) */}
+            <WhatsAppLeadButton
               href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
+              vehicleId={id}
               className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center gap-2 mb-4 transition-colors text-sm sm:text-base"
-            >
-              <MessageCircle size={18} className="sm:w-5 sm:h-5" />
-              <span>Chat via WhatsApp</span>
-            </a>
+            />
 
             {/* Compartir Publicación */}
               <VehicleShareButtons vehicleTitle={vehicle.title} />

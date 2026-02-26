@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
+import { trackLead } from "@/lib/meta-pixel";
 
 interface VehicleContactFormProps {
   vehicleId: string;
@@ -72,7 +73,9 @@ export default function VehicleContactForm({
         },
       });
 
-      // Éxito
+      // Éxito: disparar Lead de Meta Pixel con content_id para coincidencia de catálogo
+      trackLead(vehicleId);
+
       setFormStatus("success");
       setFormData({
         nombre: "",

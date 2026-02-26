@@ -11,6 +11,7 @@ import CompareFloatButton from "@/components/CompareFloatButton";
 import { Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Car } from "@/types/car";
+import { trackSearch } from "@/lib/meta-pixel";
 
 interface AutosPageClientProps {
   initialVehicles: Car[];
@@ -70,7 +71,25 @@ export default function AutosPageClient({
   const { filters, updateFilters, clearFilters, setFilters } = useVehicleFilters();
   const { viewMode, currency, setViewMode, setCurrency } = useVehicleStore();
   const hasInitialized = useRef(false);
+  const searchTrackedRef = useRef<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+
+  /** Filtros que indican "búsqueda" (excluyendo paginación y orden) */
+  const hasSearchFilters =
+    !!filters.brand ||
+    !!filters.model ||
+    !!filters.condition ||
+    !!filters.transmission ||
+    !!filters.fuel_type ||
+    !!filters.color ||
+    !!filters.segment ||
+    filters.minPrice != null ||
+    filters.maxPrice != null ||
+    filters.minYear != null ||
+    filters.maxYear != null ||
+    filters.minKilometres != null ||
+    filters.maxKilometres != null ||
+    !!filters.search;
 
   // Detectar si es móvil y ajustar límite de paginación
   useEffect(() => {
@@ -172,6 +191,23 @@ export default function AutosPageClient({
     maxKilometres: filters.maxKilometres,
     currency: filters.currency,
   });
+
+  // Meta Pixel: evento Search con content_ids cuando hay búsqueda/filtros y resultados
+  const searchVehicles = vehiclesData?.vehicles ?? initialVehicles;
+  useEffect(() => {
+    if (!hasSearchFilters || !searchVehicles.length || typeof window === "undefined") return;
+    const searchKey = [
+      filters.brand,
+      filters.model,
+      filters.minYear,
+      filters.maxYear,
+      filters.page,
+    ].join("|");
+    if (searchTrackedRef.current === searchKey) return;
+    searchTrackedRef.current = searchKey;
+    const ids = searchVehicles.slice(0, 10).map((v) => v.id);
+    trackSearch(ids);
+  }, [hasSearchFilters, searchVehicles, filters.brand, filters.model, filters.minYear, filters.maxYear, filters.page]);
 
   // Scroll to top when page changes
   useEffect(() => {
