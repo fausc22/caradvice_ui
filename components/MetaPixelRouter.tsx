@@ -3,17 +3,6 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-// Extender el tipo Window para incluir fbq
-declare global {
-  interface Window {
-    fbq?: (
-      action: string,
-      event: string,
-      params?: Record<string, any>
-    ) => void;
-  }
-}
-
 export default function MetaPixelRouter() {
   const pathname = usePathname();
   const previousPathnameRef = useRef<string | null>(null);
