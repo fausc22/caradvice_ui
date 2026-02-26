@@ -26,11 +26,11 @@ function ensureArray(id: string | number): string[] {
 
 function trackWithContentIds(
   eventName: string,
-  contentIds: string[] | number[],
+  contentIds: (string | number)[],
   extraParams?: Record<string, unknown>
 ) {
   if (typeof window === "undefined" || !window.fbq) return;
-  const ids = contentIds.length ? contentIds.map((id) => String(id)) : [];
+  const ids = contentIds.map((id) => String(id));
   window.fbq("track", eventName, {
     content_type: CONTENT_TYPE,
     content_ids: ids,
