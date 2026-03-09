@@ -8,8 +8,8 @@ import VehicleGallery from "@/components/vehicles/VehicleGallery";
 import VehicleShareButtons from "@/components/vehicles/VehicleShareButtons";
 import VehicleContactForm from "@/components/vehicles/VehicleContactForm";
 import WhatsAppLeadButton from "@/components/vehicles/WhatsAppLeadButton";
-import RelatedVehiclesCarousel from "@/components/RelatedVehiclesCarousel";
 import MetaPixelViewContent from "@/components/MetaPixelViewContent";
+import RelatedVehiclesCarousel from "@/components/RelatedVehiclesCarousel";
 import Image from "next/image";
 
 interface PageProps {
@@ -256,7 +256,6 @@ export default async function VehicleDetailPage({ params, searchParams }: PagePr
       />
       {/* Meta Pixel: ViewContent con content_id para coincidencia de catálogo */}
       <MetaPixelViewContent vehicleId={id} />
-
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
         {/* Breadcrumbs */}

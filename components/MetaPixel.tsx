@@ -1,12 +1,13 @@
 "use client";
 
 import Script from "next/script";
+import { PIXEL_ID } from "@/lib/meta-pixel";
 
-interface MetaPixelScriptProps {
-  pixelId: string;
-}
-
-export default function MetaPixelScript({ pixelId }: MetaPixelScriptProps) {
+/**
+ * Meta Pixel: una sola carga en el documento principal.
+ * Init + PageView al cargar. No duplicar con tag de Meta en GTM.
+ */
+export default function MetaPixel() {
   return (
     <Script
       id="meta-pixel-caradvice"
@@ -21,7 +22,7 @@ export default function MetaPixelScript({ pixelId }: MetaPixelScriptProps) {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '${pixelId}');
+          fbq('init', '${PIXEL_ID}');
           fbq('track', 'PageView');
         `,
       }}

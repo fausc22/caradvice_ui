@@ -4,11 +4,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Providers } from "./providers";
 import ConditionalLayout from "@/components/ConditionalLayout";
-import MetaPixelNoscript from "@/components/MetaPixelNoscript";
-import MetaPixelScript from "@/components/MetaPixelScript";
-import MetaPixelRouter from "@/components/MetaPixelRouter";
 import GoogleTagManager from "@/components/GoogleTagManager";
 import GoogleTagManagerNoscript from "@/components/GoogleTagManagerNoscript";
+import MetaPixel from "@/components/MetaPixel";
 
 // Viewport configuration
 export const viewport: Viewport = {
@@ -139,11 +137,8 @@ export default async function RootLayout({
         <GoogleTagManager gtmId="GTM-PSVQ79TP" />
         {/* Google Tag Manager (noscript) - Justo después de la apertura del body */}
         <GoogleTagManagerNoscript gtmId="GTM-PSVQ79TP" />
-        {/* Meta Pixel Code - Car Advice */}
-        <MetaPixelScript pixelId="1505816897053043" />
-        <MetaPixelNoscript pixelId="1505816897053043" />
-        {/* Router listener para disparar PageView en navegaciones del lado del cliente */}
-        <MetaPixelRouter />
+        {/* Meta Pixel: una sola carga (no duplicar con tag de Meta en GTM) */}
+        <MetaPixel />
         <Providers>
           <ConditionalLayout>{children}</ConditionalLayout>
         </Providers>

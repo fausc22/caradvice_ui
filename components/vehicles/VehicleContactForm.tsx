@@ -73,10 +73,8 @@ export default function VehicleContactForm({
         },
       });
 
-      // Éxito: disparar Lead de Meta Pixel con content_id para coincidencia de catálogo
-      trackLead(vehicleId);
-
       setFormStatus("success");
+      trackLead(vehicleId);
       setFormData({
         nombre: "",
         email: "",

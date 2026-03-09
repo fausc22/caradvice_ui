@@ -21,6 +21,8 @@ interface TrustindexLoader {
 interface Window {
   YT?: YT;
   onYouTubeIframeAPIReady?: () => void;
+  fbq?: (...args: unknown[]) => void;
+  _fbq?: (...args: unknown[]) => void;
   TrustindexLoader?: TrustindexLoader;
   // API actual de Trustindex
   renderTrustindexWidgets?: () => void;
@@ -38,6 +40,8 @@ declare global {
   interface Window {
     YT?: YT;
     onYouTubeIframeAPIReady?: () => void;
+    fbq?: (...args: unknown[]) => void;
+    _fbq?: (...args: unknown[]) => void;
     TrustindexLoader?: TrustindexLoader;
     // API actual de Trustindex
     renderTrustindexWidgets?: () => void;

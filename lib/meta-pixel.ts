@@ -1,64 +1,34 @@
 /**
- * Utilidad para eventos del Meta Pixel con parámetros de inventario automotriz.
- * Requerido para que Meta calcule la "Proporción de coincidencias del catálogo".
- *
- * - content_ids: debe coincidir exactamente con el ID del producto/vehículo en el catálogo.
- * - content_type: siempre "vehicle" para Automotive Inventory Ads.
- * @see https://www.facebook.com/business/help/518588851979334
- * @see https://developers.facebook.com/docs/marketing-api/auto-ads/guides/events
+ * Helpers para el Meta Pixel (Facebook).
+ * El script base se carga una sola vez en layout via MetaPixel.tsx.
+ * Solo disparar eventos; no cargar el script aquí.
  */
 
-declare global {
-  interface Window {
-    fbq?: (
-      action: string,
-      event: string,
-      params?: Record<string, unknown>
-    ) => void;
-  }
-}
+const PIXEL_ID = "1505816897053043";
 
-const CONTENT_TYPE = "vehicle" as const;
-
-function ensureArray(id: string | number): string[] {
-  return [String(id)];
-}
-
-function trackWithContentIds(
-  eventName: string,
-  contentIds: (string | number)[],
-  extraParams?: Record<string, unknown>
-) {
+/**
+ * Dispara el evento Lead con content_ids para coincidencia con el catálogo de Meta.
+ * Llamar desde el documento principal (ej. onClick del botón WhatsApp) antes de navegar.
+ */
+export function trackLead(contentIds: string | string[]): void {
   if (typeof window === "undefined" || !window.fbq) return;
-  const ids = contentIds.map((id) => String(id));
-  window.fbq("track", eventName, {
-    content_type: CONTENT_TYPE,
+  const ids = Array.isArray(contentIds) ? contentIds : [contentIds];
+  window.fbq("track", "Lead", {
     content_ids: ids,
-    ...extraParams,
+    content_type: "product",
   });
 }
 
 /**
- * Dispara ViewContent cuando el usuario ve la ficha/detalle de un auto.
- * Llamar al cargar la página de detalle del vehículo.
+ * Dispara ViewContent al ver la ficha de un vehículo (coincidencia con catálogo).
  */
-export function trackViewContent(vehicleId: string | number) {
-  trackWithContentIds("ViewContent", ensureArray(vehicleId));
+export function trackViewContent(contentIds: string | string[]): void {
+  if (typeof window === "undefined" || !window.fbq) return;
+  const ids = Array.isArray(contentIds) ? contentIds : [contentIds];
+  window.fbq("track", "ViewContent", {
+    content_ids: ids,
+    content_type: "product",
+  });
 }
 
-/**
- * Dispara Lead cuando el usuario completa el formulario o consulta por un auto (ej. clic WhatsApp).
- * Incluir el ID del vehículo para que Meta matchee con el catálogo.
- */
-export function trackLead(vehicleId: string | number) {
-  trackWithContentIds("Lead", ensureArray(vehicleId));
-}
-
-/**
- * Dispara Search cuando el usuario usa el buscador/filtros.
- * Envía los IDs de los primeros vehículos en los resultados para mejorar el match.
- */
-export function trackSearch(vehicleIds: (string | number)[]) {
-  if (!vehicleIds.length) return;
-  trackWithContentIds("Search", vehicleIds);
-}
+export { PIXEL_ID };

@@ -10,19 +10,20 @@ interface WhatsAppLeadButtonProps {
   className?: string;
 }
 
-/**
- * Botón de WhatsApp que dispara el evento Lead del Meta Pixel con content_id
- * antes de abrir el enlace, para que Meta registre la consulta por el vehículo.
- */
+const LEAD_DELAY_MS = 300;
+
 export default function WhatsAppLeadButton({
   href,
   vehicleId,
   children,
   className,
 }: WhatsAppLeadButtonProps) {
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     trackLead(vehicleId);
-    // El navegador abrirá el href normalmente
+    setTimeout(() => {
+      window.open(href, "_blank", "noopener,noreferrer");
+    }, LEAD_DELAY_MS);
   };
 
   return (
@@ -30,8 +31,8 @@ export default function WhatsAppLeadButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={handleClick}
       className={className}
+      onClick={handleClick}
     >
       {children ?? (
         <>

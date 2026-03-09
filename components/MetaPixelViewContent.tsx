@@ -4,19 +4,15 @@ import { useEffect } from "react";
 import { trackViewContent } from "@/lib/meta-pixel";
 
 interface MetaPixelViewContentProps {
-  /** ID del vehículo (debe coincidir con el ID en el catálogo de Meta) */
   vehicleId: string;
 }
 
 /**
- * Dispara el evento ViewContent del Meta Pixel al cargar la página de detalle del vehículo.
- * Necesario para que Meta calcule la proporción de coincidencias del catálogo.
+ * Dispara ViewContent al montar (ficha de vehículo) para coincidencia con el catálogo de Meta.
  */
 export default function MetaPixelViewContent({ vehicleId }: MetaPixelViewContentProps) {
   useEffect(() => {
-    if (vehicleId) {
-      trackViewContent(vehicleId);
-    }
+    trackViewContent(vehicleId);
   }, [vehicleId]);
 
   return null;
